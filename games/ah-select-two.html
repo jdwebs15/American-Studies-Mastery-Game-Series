@@ -235,67 +235,455 @@
 ========================================================= */
 
 const questions = [
+  /* =========================
+     CS 8 — Industrialization transforms economy
+  ========================== */
   {
-    stem: "Which TWO factors MOST directly contributed to rapid urbanization during industrialization?",
+    stem: "Which TWO developments MOST directly helped shift the U.S. workforce from farms to factories in the late 1800s?",
     choices: {
-      A: "Growth of factory jobs in cities",
-      B: "Increased demand for workers in industrial centers",
-      C: "Federal laws requiring city residents to move to farms",
-      D: "Mechanized farming reducing the need for rural labor"
+      A: "Mechanized farming reduced the need for rural labor",
+      B: "Mass production increased the need for factory workers",
+      C: "Federal laws required workers to remain on farms",
+      D: "Most Americans returned to subsistence farming"
     },
-    answers: ["A","D"],
-    hint: "One factor pulled people to cities; one factor pushed them off farms.",
-    explain: "Urbanization increased as factory jobs attracted workers while mechanized farming reduced rural labor needs, pushing people toward cities."
+    answers: ["A","B"],
+    hint: "One change reduced farm labor; the other increased factory production.",
+    explain: "Mechanized farming lowered labor needs on farms, while mass production expanded factory work—pushing and pulling workers toward industrial jobs."
   },
   {
-    stem: "Which TWO conditions were commonly associated with tenement housing in rapidly growing cities?",
+    stem: "Which TWO innovations MOST directly improved production efficiency during industrialization?",
     choices: {
-      A: "Overcrowding",
-      B: "Poor sanitation and limited clean water",
-      C: "Large private yards for each family",
-      D: "Strict building inspections that prevented disease spread"
+      A: "Mechanized assembly line",
+      B: "Machine replacement of human labor",
+      C: "Handcrafted, small-batch production",
+      D: "Decreased use of technology in factories"
+    },
+    answers: ["A","B"],
+    hint: "Think: faster production + fewer human tasks.",
+    explain: "Assembly lines and machines replacing human labor increased efficiency and output, supporting mass production."
+  },
+  {
+    stem: "Which TWO technological innovations MOST clearly reflect the changing industrial economy of the late 1800s and early 1900s?",
+    choices: {
+      A: "Telephone",
+      B: "Incandescent light bulb",
+      C: "Horse-drawn plow becoming the dominant farm tool again",
+      D: "Return to sailing ships as the primary transportation"
+    },
+    answers: ["A","B"],
+    hint: "Pick the inventions tied to modern communication and electrification.",
+    explain: "New technologies like the telephone and light bulb helped modernize work and daily life during industrialization."
+  },
+  {
+    stem: "Which TWO conditions were MOST commonly associated with rapid urban growth during industrialization?",
+    choices: {
+      A: "Crowded living conditions",
+      B: "Unsanitary conditions that contributed to disease",
+      C: "Low-density housing with large private yards",
+      D: "Declining city populations as people moved to farms"
     },
     answers: ["A","B"],
     hint: "Think: density + sanitation problems.",
-    explain: "Tenements were often overcrowded and lacked proper sanitation, contributing to the spread of diseases such as tuberculosis and cholera."
+    explain: "Urbanization often produced overcrowding and poor sanitation, contributing to disease and difficult living conditions."
   },
   {
-    stem: "Which TWO developments MOST directly encouraged the growth of labor unions?",
+    stem: "Which TWO changes BEST describe how industrialization affected labor skills in factories?",
+    choices: {
+      A: "A shift from skilled labor to more unskilled labor",
+      B: "Workers performing specialized, repeated tasks",
+      C: "Factories relying mainly on artisan guilds",
+      D: "Most factory work requiring advanced apprenticeships"
+    },
+    answers: ["A","B"],
+    hint: "Assembly lines often break work into simpler repeated tasks.",
+    explain: "Mass production and assembly lines increased unskilled labor and specialized repetitive tasks rather than artisan-style skilled work."
+  },
+
+  /* =========================
+     CS 9 — Labor, Unions, Laissez-faire, Violence
+  ========================== */
+  {
+    stem: "Which TWO factors MOST directly contributed to the growth of labor unions during industrialization?",
     choices: {
       A: "Unsafe working conditions",
       B: "Long hours and low wages",
-      C: "Immediate government enforcement of strong labor protections",
-      D: "The end of industrial work in northern cities"
+      C: "Strong federal workplace protections already enforced everywhere",
+      D: "Factories eliminating the need for workers"
     },
     answers: ["A","B"],
-    hint: "Unions formed to address workplace problems.",
-    explain: "Unions grew as workers organized to respond to unsafe conditions, long hours, and low pay in industrial workplaces."
+    hint: "Unions grew to respond to workplace problems.",
+    explain: "Workers organized unions largely because conditions were unsafe and pay/hours were unfair in many industrial workplaces."
   },
   {
-    stem: "Which TWO outcomes MOST directly resulted from laissez-faire policies during industrialization?",
+    stem: "Which TWO actions are examples of labor union tactics used to achieve workplace reforms?",
     choices: {
-      A: "Rapid growth of corporations with limited regulation",
-      B: "Expansion of trusts and monopolies",
+      A: "Collective bargaining",
+      B: "Strikes",
+      C: "Corporate consolidation through trusts",
+      D: "A boycott-free workplace policy"
+    },
+    answers: ["A","B"],
+    hint: "Think: negotiation + work stoppage.",
+    explain: "Unions commonly used collective bargaining and strikes (and also boycotts) to pressure employers for reforms."
+  },
+  {
+    stem: "Which TWO reforms were MOST commonly demanded by labor unions in the late 1800s and early 1900s?",
+    choices: {
+      A: "Shorter work days",
+      B: "Safer working conditions",
+      C: "An end to all factory production",
+      D: "Higher tariffs on imported luxury goods"
+    },
+    answers: ["A","B"],
+    hint: "Focus on workplace conditions and hours.",
+    explain: "Unions advocated for reforms like shorter workdays and safer conditions (and also better pay and limits on child labor)."
+  },
+  {
+    stem: "Which TWO outcomes MOST directly resulted from laissez-faire policies toward big business?",
+    choices: {
+      A: "Growth of monopolies and trusts",
+      B: "Rapid expansion of large corporations with limited regulation",
       C: "Immediate equality in wages across industries",
-      D: "The elimination of corporate influence on politics"
+      D: "Elimination of corporate influence on politics"
     },
     answers: ["A","B"],
-    hint: "Hands-off regulation allowed business to expand and consolidate.",
-    explain: "Laissez-faire reduced oversight, enabling rapid corporate growth and consolidation through trusts and monopolies."
+    hint: "Hands-off regulation allowed growth and consolidation.",
+    explain: "Limited regulation encouraged corporate expansion and consolidation into trusts/monopolies."
   },
   {
-    stem: "Which TWO factors MOST directly contributed to the Great Migration?",
+    stem: "Which TWO statements BEST explain why government sometimes became involved in labor disputes during industrialization?",
     choices: {
-      A: "Escape from Jim Crow segregation and violence",
-      B: "Industrial job opportunities in northern cities",
-      C: "A sudden end to industrial jobs in the North",
-      D: "The elimination of discrimination in the South by 1900"
+      A: "Violent backlash sometimes erupted during strikes and protests",
+      B: "Large-scale disruptions affected commerce and public order",
+      C: "Workers had no interest in workplace reforms",
+      D: "Businesses refused to operate in any city"
     },
     answers: ["A","B"],
-    hint: "One factor pushed people out; one factor pulled them in.",
-    explain: "The Great Migration was driven by push factors (Jim Crow oppression) and pull factors (northern job opportunities)."
+    hint: "Think: violence + disruption pushes government response.",
+    explain: "Strikes could turn violent and disrupt economic activity, prompting government intervention to restore order or protect interests."
+  },
+
+  /* =========================
+     CS 10 — Immigration, Internal Migration, Urbanization
+  ========================== */
+  {
+    stem: "Which TWO effects MOST directly resulted from mass immigration at the turn of the 20th century?",
+    choices: {
+      A: "Filling a demand for workers",
+      B: "Diffusion of ethnic traits into American culture",
+      C: "A major decline in city populations",
+      D: "A complete end to nativist attitudes"
+    },
+    answers: ["A","B"],
+    hint: "Think: labor + culture.",
+    explain: "Mass immigration helped meet labor demand and increased cultural diversity through the diffusion of ethnic traits."
+  },
+  {
+    stem: "Which TWO factors MOST directly contributed to internal migration from farms to cities?",
+    choices: {
+      A: "Greater job opportunities in cities",
+      B: "Industrial centers needing workers",
+      C: "Federal policies requiring migration to rural farms",
+      D: "Factories closing in northern cities"
+    },
+    answers: ["A","B"],
+    hint: "Industry pulled workers toward urban jobs.",
+    explain: "Industrial job opportunities and worker demand encouraged many Americans to leave rural areas for city employment."
+  },
+  {
+    stem: "Which TWO factors MOST directly contributed to the Great Migration of African Americans to northern cities?",
+    choices: {
+      A: "Escaping discrimination in the South",
+      B: "Seeking better-paying jobs in the North",
+      C: "A sudden end to northern factory jobs",
+      D: "The elimination of segregation in the South by 1900"
+    },
+    answers: ["A","B"],
+    hint: "One factor pushed out; one factor pulled in.",
+    explain: "The Great Migration was driven by push factors (discrimination) and pull factors (better employment opportunities)."
+  },
+  {
+    stem: "Which TWO conditions were MOST commonly associated with tenement housing in rapidly growing cities?",
+    choices: {
+      A: "Overcrowding",
+      B: "Poor sanitation contributing to disease",
+      C: "Large private yards for each family",
+      D: "Strict building inspections that prevented public health problems"
+    },
+    answers: ["A","B"],
+    hint: "Think: density + sanitation.",
+    explain: "Tenements were often overcrowded and unsanitary, which increased health risks and the spread of disease."
+  },
+  {
+    stem: "Which TWO urban developments MOST directly reflect how cities physically changed during urbanization?",
+    choices: {
+      A: "Taller buildings, including skyscrapers",
+      B: "Growth of tenement buildings for working families",
+      C: "Cities shrinking as people moved to isolated homesteads",
+      D: "The disappearance of public transportation"
+    },
+    answers: ["A","B"],
+    hint: "Look for vertical growth and dense housing.",
+    explain: "Urbanization changed city skylines (taller buildings) and expanded dense housing like tenements."
+  },
+
+  /* =========================
+     CS 11 — Westward Settlement & American Indians
+  ========================== */
+  {
+    stem: "Which TWO factors MOST directly encouraged westward migration by Americans during industrialization?",
+    choices: {
+      A: "Increased demand for natural resources",
+      B: "Desire for land and economic opportunity",
+      C: "A national ban on settlement beyond the Mississippi River",
+      D: "A policy requiring Americans to remain in eastern cities"
+    },
+    answers: ["A","B"],
+    hint: "Think: resources + land opportunity.",
+    explain: "Industrial growth increased demand for resources and land, encouraging expansion and settlement westward."
+  },
+  {
+    stem: "Which TWO events were consequences of conflict between the U.S. government/settlers and American Indians in the West?",
+    choices: {
+      A: "Battle of Little Bighorn",
+      B: "Wounded Knee Massacre",
+      C: "Boston Tea Party",
+      D: "Seneca Falls Convention"
+    },
+    answers: ["A","B"],
+    hint: "Choose conflicts from the late 1800s Plains/West era.",
+    explain: "The Battle of Little Bighorn and Wounded Knee were major conflict points tied to westward expansion and U.S.–Indian relations."
+  },
+  {
+    stem: "Which TWO U.S. actions MOST directly contributed to the displacement of American Indians from ancestral lands?",
+    choices: {
+      A: "Homestead Acts encouraging settlement",
+      B: "Reservation system restricting Native land use",
+      C: "A national policy guaranteeing tribal sovereignty over all western land",
+      D: "Eliminating all treaties with American Indians and returning land immediately"
+    },
+    answers: ["A","B"],
+    hint: "One encourages settlers to claim land; one confines Native peoples.",
+    explain: "Homestead Acts encouraged settlers to move west, while the reservation system confined Native peoples and reduced access to traditional lands."
+  },
+  {
+    stem: "Which TWO policies MOST directly reflect attempts to pressure American Indians to assimilate into European American culture?",
+    choices: {
+      A: "Indian residential schools",
+      B: "Americanization and assimilation efforts",
+      C: "Granting full autonomy to all tribes to maintain traditional lifeways",
+      D: "Ending all federal involvement with Native education"
+    },
+    answers: ["A","B"],
+    hint: "Think: schooling + cultural pressure.",
+    explain: "Boarding schools and assimilation policies aimed to replace Native languages/cultures with European American norms."
+  },
+  {
+    stem: "Which TWO statements BEST explain why conflict increased as Americans moved west?",
+    choices: {
+      A: "Settlers and the U.S. government sought land and resources used by American Indians",
+      B: "Expansion brought increasing contact and competition over territory",
+      C: "American Indians voluntarily abandoned ancestral lands without pressure",
+      D: "All groups agreed to share land equally without disputes"
+    },
+    answers: ["A","B"],
+    hint: "Conflict rises when land/resources are contested.",
+    explain: "As settlement expanded, competition for land/resources and increased contact intensified conflict with American Indians."
+  },
+
+  /* =========================
+     CS 12 — Post-Reconstruction Racism Institutionalized
+  ========================== */
+  {
+    stem: "Which TWO developments MOST directly followed the end of Reconstruction and the removal of federal troops from the South?",
+    choices: {
+      A: "Restoration of Democratic control in many southern state governments",
+      B: "Repeal of many Reconstruction-era reforms",
+      C: "Immediate nationwide enforcement of full civil rights protections",
+      D: "Elimination of segregation across the South"
+    },
+    answers: ["A","B"],
+    hint: "Think: political control + rollback of reforms.",
+    explain: "With federal troops removed, Democrats regained control in many states and many Reconstruction reforms were repealed."
+  },
+  {
+    stem: "Which TWO discriminatory policies were commonly enforced through Jim Crow laws?",
+    choices: {
+      A: "Racial segregation",
+      B: "Limited ballot access for African Americans",
+      C: "Guaranteed equal access to public services",
+      D: "Required integration of public schools"
+    },
+    answers: ["A","B"],
+    hint: "Jim Crow restricted both daily life and political participation.",
+    explain: "Jim Crow laws enforced segregation and used barriers to limit African American voting access."
+  },
+  {
+    stem: "Which TWO outcomes BEST describe the impact of Plessy v. Ferguson on American society?",
+    choices: {
+      A: "The Supreme Court affirmed segregation as constitutional",
+      B: "‘Separate but equal’ became a legal justification for segregation",
+      C: "Segregation was declared unconstitutional nationwide",
+      D: "Jim Crow laws were immediately overturned"
+    },
+    answers: ["A","B"],
+    hint: "Plessy supported segregation rather than ending it.",
+    explain: "Plessy v. Ferguson upheld segregation, giving legal cover to ‘separate but equal’ practices."
+  },
+  {
+    stem: "Which TWO examples BEST represent institutionalized racist practices in the post-Reconstruction South?",
+    choices: {
+      A: "Local ordinances enforcing segregation in public spaces",
+      B: "Restrictions and intimidation limiting political participation",
+      C: "Federal protection of voting rights consistently enforced in all states",
+      D: "Mandatory equal treatment laws adopted statewide by 1880"
+    },
+    answers: ["A","B"],
+    hint: "Think: segregation + voting barriers.",
+    explain: "Post-Reconstruction racism was institutionalized through segregation laws and political restrictions that limited civil rights."
+  },
+  {
+    stem: "Which TWO statements BEST explain how organizations like the Ku Klux Klan affected African Americans in the late 1800s?",
+    choices: {
+      A: "They increased violence and intimidation",
+      B: "They reinforced racial hierarchy and segregation",
+      C: "They protected African Americans from discrimination",
+      D: "They eliminated the need for Jim Crow laws"
+    },
+    answers: ["A","B"],
+    hint: "These groups used terror and intimidation.",
+    explain: "White supremacist organizations used violence and intimidation to reinforce segregation and suppress African American rights."
+  },
+
+  /* =========================
+     CS 13 — Progressive Era Reforms
+  ========================== */
+  {
+    stem: "Which TWO issues MOST directly fueled the rise of the Progressive movement?",
+    choices: {
+      A: "Problems stemming from industrial capitalism",
+      B: "Political corruption",
+      C: "A complete absence of urban growth",
+      D: "The elimination of all corporate power by 1890"
+    },
+    answers: ["A","B"],
+    hint: "Progressives responded to economic abuses and political problems.",
+    explain: "Progressivism grew in response to the social and economic problems of industrial capitalism and widespread political corruption."
+  },
+  {
+    stem: "Which TWO actions BEST represent how muckrakers influenced Progressive reforms?",
+    choices: {
+      A: "Exposed corporate and industrial abuses",
+      B: "Revealed corruption and social injustice in cities",
+      C: "Promoted a return to laissez-faire with no regulation",
+      D: "Discouraged the public from learning about reform issues"
+    },
+    answers: ["A","B"],
+    hint: "Muckrakers exposed problems to build public pressure.",
+    explain: "Muckrakers investigated and exposed corruption and abuses, increasing public demand for reform."
+  },
+  {
+    stem: "Which TWO reforms MOST directly aimed to reduce the power of monopolies and trusts?",
+    choices: {
+      A: "Antitrust legislation (e.g., Sherman/Clayton)",
+      B: "Antitrust lawsuits and enforcement actions",
+      C: "Repeal of all government authority to regulate business",
+      D: "Legal protection for monopolies to expand without limits"
+    },
+    answers: ["A","B"],
+    hint: "Both choices involve breaking up or limiting monopoly power.",
+    explain: "Progressives used antitrust laws and enforcement (including lawsuits) to curb monopolies and trusts."
+  },
+  {
+    stem: "Which TWO Progressive reforms MOST directly addressed consumer safety?",
+    choices: {
+      A: "Pure Food and Drug Act",
+      B: "Meat Inspection Act",
+      C: "Dawes Act",
+      D: "Kellogg-Briand Pact"
+    },
+    answers: ["A","B"],
+    hint: "Think: food and medicine safety reforms.",
+    explain: "The Pure Food and Drug Act and the Meat Inspection Act targeted unsafe products and poor industry standards affecting consumers."
+  },
+  {
+    stem: "Which TWO reforms MOST directly addressed problems caused by urbanization in the Progressive era?",
+    choices: {
+      A: "Settlement houses",
+      B: "Improved public sanitation and building codes",
+      C: "Expanding tenement overcrowding to reduce rent",
+      D: "Eliminating city services to lower taxes"
+    },
+    answers: ["A","B"],
+    hint: "Look for solutions that improve living conditions and public health.",
+    explain: "Progressives supported settlement houses and public health measures like sanitation improvements and building codes."
+  },
+
+  /* =========================
+     Mixed / Integration (CS 8–13)
+  ========================== */
+  {
+    stem: "Which TWO statements BEST connect industrialization to urbanization in the late 1800s?",
+    choices: {
+      A: "Factories created jobs that drew workers into cities",
+      B: "More people moved to cities, increasing overcrowding and sanitation challenges",
+      C: "Factory work disappeared, sending workers back to isolated farms",
+      D: "Cities became smaller because fewer workers were needed"
+    },
+    answers: ["A","B"],
+    hint: "Industry pulls people to cities; cities then face crowding problems.",
+    explain: "Industrial jobs attracted workers to cities, and rapid growth often produced overcrowding and sanitation issues."
+  },
+  {
+    stem: "Which TWO effects of immigration MOST directly increased social tension in some communities?",
+    choices: {
+      A: "Increased nativist sentiment",
+      B: "Competition for jobs in industrial centers",
+      C: "The immediate end of cultural diversity",
+      D: "A nationwide policy of open housing without conflict"
+    },
+    answers: ["A","B"],
+    hint: "Think: fear/hostility + job competition.",
+    explain: "Immigration could increase job competition and trigger nativist reactions among some native-born Americans."
+  },
+  {
+    stem: "Which TWO choices BEST describe why labor conflict increased during industrialization?",
+    choices: {
+      A: "Corporations often resisted union demands for reforms",
+      B: "Unregulated conditions created disputes over wages, hours, and safety",
+      C: "Workers refused to organize for better conditions",
+      D: "All employers voluntarily improved conditions without pressure"
+    },
+    answers: ["A","B"],
+    hint: "Conflict grows when conditions are bad and reforms are resisted.",
+    explain: "Disputes grew because conditions were harsh and employers often resisted union-led reforms."
+  },
+  {
+    stem: "Which TWO policies BEST reflect the federal government’s role in making politics more democratic during the Progressive era?",
+    choices: {
+      A: "17th Amendment (direct election of U.S. Senators)",
+      B: "19th Amendment (women’s suffrage)",
+      C: "Plessy v. Ferguson",
+      D: "Dawes Act"
+    },
+    answers: ["A","B"],
+    hint: "Pick amendments that expanded voter influence and participation.",
+    explain: "Progressive political reforms included direct election of senators and expanding voting rights to women."
+  },
+  {
+    stem: "Which TWO statements BEST describe how the Great Migration transformed northern cities?",
+    choices: {
+      A: "It increased the labor force and consumer base in urban areas",
+      B: "It contributed to cultural change through art, music, and literature",
+      C: "It reduced city populations and ended industrial growth",
+      D: "It eliminated discrimination and racial tension nationwide"
+    },
+    answers: ["A","B"],
+    hint: "Think: economic impact + cultural impact.",
+    explain: "The Great Migration helped shape northern cities economically (workers/consumers) and culturally (music, art, literature)."
   }
 ];
+
 
 const $ = (id)=>document.getElementById(id);
 
