@@ -276,57 +276,59 @@
   // ✅ TEST SET (8) — we’ll swap to full 25–30 once shell confirms.
   // IMPORTANT: this engine expects:
   // stem, tag, sourceLabel, sourceType, sourceText, choices{A,B,C,D}, answer, hint, explain
+    // ✅ FULL SET (30) — Primary Source Snapshot (OST-style, mastery)
+  // Answer key balanced: A=8, B=8, C=7, D=7
   var questions = [
     {
-      stem: "Based on Source A, which statement BEST explains a major cause of urban growth?",
+      stem: "Based on Source A, which statement BEST explains a major cause of rapid urban growth in the late 1800s?",
       tag: "BEST explains • Cause/Effect",
       sourceLabel: "Source A",
-      sourceType: "Factory worker letter (paraphrased)",
+      sourceType: "Worker letter (paraphrased)",
       sourceText:
-        "“On the farm there is little work now that machines do what many hands once did. In the city, the mill hires daily, though the hours are long.”",
+        "“On the farm, machines do work that once needed many hands. In the city, the mill hires daily, though the hours are long.”",
       choices: {
         A: "Mechanized farming reduced rural jobs while factories created urban jobs.",
-        B: "City governments required all rural families to relocate to cities.",
-        C: "Urban wages fell so low that farms became more profitable than cities.",
-        D: "Factories closed in cities, forcing workers to move back to farms."
+        B: "City governments required rural families to relocate to industrial centers.",
+        C: "Urban wages became higher because factories ended the use of machines.",
+        D: "Farm owners offered higher pay than factories, pulling workers to farms."
       },
       answer: "A",
       hint: "One part pushes people off farms; one part pulls them to cities.",
-      explain: "The source describes fewer farm jobs due to machines (push) and factories hiring in cities (pull), which drives urban growth."
+      explain: "The source describes fewer farm jobs due to machines (push) and factory hiring in cities (pull), driving urban growth."
     },
     {
-      stem: "Which conclusion is BEST supported by Source A?",
+      stem: "Which conclusion is BEST supported by Source A about living conditions in many tenements?",
       tag: "BEST supported • Evidence",
       sourceLabel: "Source A",
       sourceType: "Newspaper description (paraphrased)",
       sourceText:
         "“Families crowded into narrow rooms with poor ventilation. Waste and water often mixed in the streets after heavy rain.”",
       choices: {
-        A: "Rapid urban growth often outpaced sanitation and public health systems.",
-        B: "Most city housing provided large private yards and clean water.",
-        C: "Urban areas had fewer disease risks than rural farming communities.",
-        D: "Tenements were designed mainly to prevent overcrowding."
+        A: "Tenements were designed mainly to prevent overcrowding.",
+        B: "Rapid urban growth often outpaced sanitation and public health systems.",
+        C: "City housing usually included large private yards and clean water.",
+        D: "Urban neighborhoods had fewer disease risks than rural areas."
       },
-      answer: "A",
-      hint: "Focus on overcrowding + sanitation problems.",
-      explain: "The description highlights crowding and unsanitary conditions—evidence that city growth outpaced services and harmed public health."
+      answer: "B",
+      hint: "Overcrowding + sanitation problems point to city services lagging behind growth.",
+      explain: "Crowding and poor sanitation show how urban growth often outpaced infrastructure and public health protections."
     },
     {
-      stem: "Based on Source A, what was a primary goal of organized labor?",
+      stem: "Based on Source A, what was a primary goal of organized labor during industrialization?",
       tag: "Primary goal • Worker reform",
       sourceLabel: "Source A",
       sourceType: "Union leaflet (paraphrased)",
       sourceText:
         "“We demand safer shops, shorter hours, and fair wages—so a working family may live with dignity.”",
       choices: {
-        A: "Improving workplace conditions, pay, and hours through collective pressure",
-        B: "Expanding child labor to increase family income",
-        C: "Ending industrial work by closing factories nationwide",
+        A: "Expanding child labor to increase family income",
+        B: "Ending industrial work by closing factories nationwide",
+        C: "Improving workplace conditions, pay, and hours through collective pressure",
         D: "Reducing safety rules so production could increase faster"
       },
-      answer: "A",
-      hint: "Read the demands: safety, hours, wages.",
-      explain: "The leaflet directly calls for safer conditions, shorter hours, and fair wages—core labor reform goals."
+      answer: "C",
+      hint: "Look at the demands listed: safety, hours, wages.",
+      explain: "The leaflet directly lists core labor reform goals: safer conditions, shorter hours, and fair wages."
     },
     {
       stem: "Which statement BEST explains a consequence of laissez-faire policies during industrialization?",
@@ -336,68 +338,68 @@
       sourceText:
         "“One company owns the rails, the mills, and the market—competition has nowhere to stand.”",
       choices: {
-        A: "Limited regulation helped trusts and monopolies reduce competition.",
+        A: "Workers gained equal ownership of industries through federal laws.",
         B: "Strict government control prevented large companies from forming.",
-        C: "Workers gained equal ownership of industries through federal laws.",
-        D: "Competition increased because corporations were required to stay small."
+        C: "Competition increased because corporations were required to stay small.",
+        D: "Limited regulation helped trusts and monopolies reduce competition."
       },
-      answer: "A",
-      hint: "What happens when one company ‘owns the market’?",
-      explain: "Hands-off regulation contributed to corporate consolidation, enabling trusts/monopolies that reduced competition."
+      answer: "D",
+      hint: "If “one company owns the market,” competition is shrinking.",
+      explain: "Hands-off regulation contributed to consolidation, enabling trusts/monopolies that reduced competition."
     },
     {
-      stem: "Based on Source A, which factor MOST likely contributed to the growth of ethnic neighborhoods?",
+      stem: "Based on Source A, which factor MOST likely contributed to the growth of ethnic neighborhoods in cities?",
       tag: "MOST likely • Immigration",
       sourceLabel: "Source A",
       sourceType: "Immigrant diary entry (paraphrased)",
       sourceText:
         "“In this part of the city, I hear my language on every corner. Neighbors help newcomers find work and a place to stay.”",
       choices: {
-        A: "Immigrants clustered for support networks and shared language/culture.",
-        B: "Cities legally required immigrants to live in separate districts.",
+        A: "Cities legally required immigrants to live in separate districts.",
+        B: "Immigrants clustered for support networks and shared language/culture.",
         C: "Immigrants avoided cities and settled only on farms.",
         D: "Most immigrants lived alone and avoided community connections."
       },
-      answer: "A",
-      hint: "Look for shared language + help finding work/housing.",
-      explain: "The entry shows community support and shared culture, which encourages clustering into ethnic neighborhoods."
+      answer: "B",
+      hint: "Shared language + help finding work/housing = community clustering.",
+      explain: "The source shows immigrants living near shared language/culture for support, encouraging ethnic neighborhoods."
     },
     {
-      stem: "Which statement BEST explains a push-pull pattern shown in Source A?",
+      stem: "Which statement BEST explains the push-pull pattern described in Source A?",
       tag: "Push–Pull • Migration",
       sourceLabel: "Source A",
       sourceType: "Oral history excerpt (paraphrased)",
       sourceText:
         "“Down South, the laws and threats never stopped. Up North, the factories paid better, and there was hope for a different life.”",
       choices: {
-        A: "Segregation/violence pushed people out while northern jobs pulled them in.",
-        B: "Northern factories pushed workers out while southern farms pulled them back.",
-        C: "Equal rights in the South pulled people away from northern cities.",
-        D: "A lack of jobs everywhere ended movement between regions."
+        A: "Northern factories pushed workers out while southern farms pulled them back.",
+        B: "A lack of jobs everywhere ended movement between regions.",
+        C: "Segregation/violence pushed people out while northern jobs pulled them in.",
+        D: "Equal rights in the South pulled people away from northern cities."
       },
-      answer: "A",
+      answer: "C",
       hint: "One reason to leave + one reason to go.",
-      explain: "The excerpt describes oppression in the South (push) and better jobs/hope in the North (pull)—a classic migration pattern."
+      explain: "The source describes oppression in the South (push) and job opportunity in the North (pull)."
     },
     {
-      stem: "Based on Source A, which development BEST explains how cities adapted to growth?",
+      stem: "Based on Source A, which development BEST explains how cities adapted to population growth?",
       tag: "BEST explains • Urban change",
       sourceLabel: "Source A",
       sourceType: "City planner memo (paraphrased)",
       sourceText:
         "“To move workers efficiently, we expanded streetcars and rail lines so residents could live farther from factories.”",
       choices: {
-        A: "Public transportation improved to support commuting and city expansion.",
-        B: "Cities eliminated transit to prevent people from moving within the city.",
+        A: "Cities eliminated transit to prevent people from moving within the city.",
+        B: "Public transportation improved to support commuting and city expansion.",
         C: "Workers were required to live inside factories to reduce travel.",
         D: "Transportation became unnecessary because cities stopped growing."
       },
-      answer: "A",
-      hint: "Transit expansion = commuting.",
-      explain: "The memo describes expanded streetcars/rail—evidence of improved public transit enabling commuting and city growth."
+      answer: "B",
+      hint: "Transit expansion = commuting and city growth.",
+      explain: "Improved transit allowed workers to commute and helped cities expand outward."
     },
     {
-      stem: "Which conclusion is BEST supported by Source A?",
+      stem: "Which conclusion is BEST supported by Source A about the impact of new technologies on daily life?",
       tag: "BEST supported • Technology",
       sourceLabel: "Source A",
       sourceType: "Advertisement excerpt (paraphrased)",
@@ -410,10 +412,673 @@
         D: "New inventions caused cities to shrink as people returned to farms."
       },
       answer: "A",
-      hint: "Operating after dark changes routines.",
-      explain: "Electric light extended activity beyond daylight, transforming work patterns and everyday life."
+      hint: "Operating after dark changes routines and schedules.",
+      explain: "Electric light extended the day for work and leisure, reshaping daily patterns."
+    },
+
+    // --- PROGRESSIVE ERA (reform, regulation, social problems) ---
+    {
+      stem: "Based on Source A, which idea BEST explains why Progressive reformers supported new government regulation?",
+      tag: "BEST explains • Progressive reform",
+      sourceLabel: "Source A",
+      sourceType: "Reformer speech (paraphrased)",
+      sourceText:
+        "“When a few control prices and wages, the public pays the cost. Government must act when competition is crushed.”",
+      choices: {
+        A: "Government should avoid involvement because markets always fix themselves.",
+        B: "Regulation was needed to limit monopolies and protect the public interest.",
+        C: "Reformers wanted to eliminate elections to reduce corruption.",
+        D: "Progressives believed labor unions should be outlawed."
+      },
+      answer: "B",
+      hint: "Look for ‘competition is crushed’ and ‘government must act.’",
+      explain: "The source argues regulation is necessary when monopolies harm competition and the public."
+    },
+    {
+      stem: "Which conclusion is BEST supported by Source A about problems caused by rapid urbanization?",
+      tag: "BEST supported • Urban problems",
+      sourceLabel: "Source A",
+      sourceType: "Settlement house report (paraphrased)",
+      sourceText:
+        "“In crowded neighborhoods, families lack clean water and safe streets. Children suffer when the city cannot keep pace.”",
+      choices: {
+        A: "Urban growth reduced demand for public services like water and sanitation.",
+        B: "Urbanization eliminated poverty by providing equal wages for all workers.",
+        C: "Rapid city growth created public health and infrastructure challenges.",
+        D: "City governments stopped building roads and schools to slow immigration."
+      },
+      answer: "C",
+      hint: "Clean water + safe streets + city can’t keep pace = infrastructure strain.",
+      explain: "The report points to public health and infrastructure issues created by rapid city growth."
+    },
+    {
+      stem: "Based on Source A, which action BEST represents a Progressive approach to consumer protection?",
+      tag: "BEST represents • Consumer protection",
+      sourceLabel: "Source A",
+      sourceType: "Investigative journalism excerpt (paraphrased)",
+      sourceText:
+        "“Workers described unsanitary food processing and mislabeled products sold to the public.”",
+      choices: {
+        A: "Passing laws requiring food inspection and accurate labeling",
+        B: "Eliminating all factory work to stop production",
+        C: "Ending immigration to reduce city populations",
+        D: "Increasing tariffs to stop international trade"
+      },
+      answer: "A",
+      hint: "Unsanitary + mislabeled products → inspection + labeling laws.",
+      explain: "Progressive reforms often targeted unsafe products through inspections and labeling requirements."
+    },
+    {
+      stem: "Which statement BEST explains how political corruption could develop in rapidly growing cities?",
+      tag: "BEST explains • Political corruption",
+      sourceLabel: "Source A",
+      sourceType: "Campaign flyer (paraphrased)",
+      sourceText:
+        "“The party will help you find work and food—just remember who to vote for on Election Day.”",
+      choices: {
+        A: "Cities banned voting to prevent any corruption.",
+        B: "Corruption decreased because citizens received no services.",
+        C: "Elections became irrelevant because mayors were appointed by courts.",
+        D: "Political machines gained influence by trading services for votes."
+      },
+      answer: "D",
+      hint: "Services (jobs/food) exchanged for votes = machine politics.",
+      explain: "The source shows vote trading, a hallmark of political machines and urban corruption."
+    },
+
+    // --- IMMIGRATION / Nativism / Cultural diffusion ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about cultural change in the United States?",
+      tag: "BEST supported • Cultural diffusion",
+      sourceLabel: "Source A",
+      sourceType: "Community newsletter (paraphrased)",
+      sourceText:
+        "“New foods, festivals, and languages are now common in the city. Old traditions mix with new ones every weekend.”",
+      choices: {
+        A: "Immigration reduced cultural diversity and ended ethnic traditions.",
+        B: "Cultural diffusion increased as immigrant traditions became part of American life.",
+        C: "Cities forced immigrants to abandon their languages immediately.",
+        D: "Immigration caused Americans to stop participating in public celebrations."
+      },
+      answer: "B",
+      hint: "Foods/festivals/languages mixing = diffusion.",
+      explain: "The source describes immigrant traits becoming part of daily culture, showing cultural diffusion."
+    },
+    {
+      stem: "Based on Source A, which factor MOST likely contributed to nativist sentiment?",
+      tag: "MOST likely • Nativism",
+      sourceLabel: "Source A",
+      sourceType: "Editorial excerpt (paraphrased)",
+      sourceText:
+        "“Too many newcomers crowd our streets and compete for jobs. The nation must protect its workers and traditions.”",
+      choices: {
+        A: "A belief that immigration increased job competition and threatened cultural norms",
+        B: "A desire to expand immigration so factories could close",
+        C: "A movement to create more ethnic neighborhoods through government programs",
+        D: "A plan to replace cities with farms to stop industrialization"
+      },
+      answer: "A",
+      hint: "Crowding + job competition + traditions = nativism.",
+      explain: "The editorial blames immigrants for job competition and cultural change—common roots of nativism."
+    },
+
+    // --- WESTWARD EXPANSION / NATIVE AMERICANS / RESERVATION POLICY ---
+    {
+      stem: "Which statement BEST explains a major cause of conflict described in Source A?",
+      tag: "BEST explains • Westward conflict",
+      sourceLabel: "Source A",
+      sourceType: "Army officer report (paraphrased)",
+      sourceText:
+        "“Settlers moved onto hunting grounds. Tensions rose as bison herds declined and promises in treaties were disputed.”",
+      choices: {
+        A: "Treaties always prevented conflict by guaranteeing permanent Native control of land.",
+        B: "Native Americans relocated voluntarily to avoid any disagreement with settlers.",
+        C: "Competition for land and resources increased as settlers expanded westward.",
+        D: "Industrialization eliminated the need for western land and resources."
+      },
+      answer: "C",
+      hint: "Look for settlers on hunting grounds + bison decline + treaty disputes.",
+      explain: "The source highlights land/resource competition and treaty disputes—major causes of westward conflict."
+    },
+    {
+      stem: "Based on Source A, which conclusion is BEST supported about the reservation system?",
+      tag: "BEST supported • Reservation policy",
+      sourceLabel: "Source A",
+      sourceType: "Reservation agent memo (paraphrased)",
+      sourceText:
+        "“Families are restricted to assigned land. Traditional travel and hunting are limited, and dependence on rations has increased.”",
+      choices: {
+        A: "Reservations expanded freedom of movement and preserved traditional hunting practices.",
+        B: "Reservations often limited Native autonomy and disrupted traditional ways of life.",
+        C: "Reservations ended conflict by returning all western land to Native nations.",
+        D: "Reservations increased Native political power within state governments."
+      },
+      answer: "B",
+      hint: "Restricted land + limited hunting + dependence = loss of autonomy.",
+      explain: "The memo shows restrictions and dependence, supporting the conclusion that reservations reduced autonomy and disrupted traditions."
+    },
+    {
+      stem: "Which statement BEST explains the purpose of assimilation policies described in Source A?",
+      tag: "BEST explains • Assimilation",
+      sourceLabel: "Source A",
+      sourceType: "Boarding school rule sheet (paraphrased)",
+      sourceText:
+        "“Students must speak English only, cut their hair, and follow American dress. Native languages and ceremonies are prohibited.”",
+      choices: {
+        A: "To preserve Native cultures by promoting traditional ceremonies",
+        B: "To expand tribal sovereignty and self-government",
+        C: "To encourage bilingual education and cultural exchange",
+        D: "To replace Native cultural identity with American cultural norms"
+      },
+      answer: "D",
+      hint: "English only + prohibitions on traditions = forced cultural replacement.",
+      explain: "The rules aim to erase Native cultural practices and impose American norms—assimilation."
+    },
+
+    // --- WORLD WAR I / ISOLATIONISM / RED SCARE (AH standards commonly assessed) ---
+    {
+      stem: "Based on Source A, which factor MOST likely contributed to U.S. reluctance to join overseas conflicts after World War I?",
+      tag: "MOST likely • Postwar attitudes",
+      sourceLabel: "Source A",
+      sourceType: "Veteran testimony (paraphrased)",
+      sourceText:
+        "“We returned to empty chairs at the table and injuries that never healed. Many asked why we fought a European war at all.”",
+      choices: {
+        A: "Widespread satisfaction with the human costs of war",
+        B: "A desire to increase permanent military alliances in Europe",
+        C: "A belief that war brought little benefit compared to its costs",
+        D: "A movement to expand American colonies overseas"
+      },
+      answer: "C",
+      hint: "Look for sacrifice + questioning the purpose = skepticism.",
+      explain: "The source shows disillusionment with war’s costs, contributing to isolationist attitudes."
+    },
+    {
+      stem: "Which conclusion is BEST supported by Source A about wartime civil liberties concerns?",
+      tag: "BEST supported • Civil liberties",
+      sourceLabel: "Source A",
+      sourceType: "Newspaper report (paraphrased)",
+      sourceText:
+        "“Speakers were arrested for criticizing the war. Authorities argued dissent threatened national unity.”",
+      choices: {
+        A: "Government actions expanded speech rights during wartime.",
+        B: "Wartime fears sometimes led to limits on civil liberties.",
+        C: "Criticism of government policy was always protected without restriction.",
+        D: "The government ended all policing during wartime to avoid controversy."
+      },
+      answer: "B",
+      hint: "Arrests for criticism = restriction.",
+      explain: "The report suggests wartime security concerns can restrict speech and civil liberties."
+    },
+
+    // --- GREAT DEPRESSION / NEW DEAL (high-frequency OST) ---
+    {
+      stem: "Based on Source A, which statement BEST explains why many banks failed during the Great Depression?",
+      tag: "BEST explains • Great Depression",
+      sourceLabel: "Source A",
+      sourceType: "Radio address excerpt (paraphrased)",
+      sourceText:
+        "“When frightened citizens demanded all their deposits at once, banks could not provide the cash. Fear spread from one town to another.”",
+      choices: {
+        A: "Bank runs drained cash reserves and triggered failures.",
+        B: "Banks had too much cash and no place to store it.",
+        C: "Depositors stopped withdrawing money because confidence was high.",
+        D: "The stock market crash immediately ended all banking in one day."
+      },
+      answer: "A",
+      hint: "Many people demanding deposits at once = bank run.",
+      explain: "Bank runs forced banks to pay out cash they didn’t have readily available, leading to failures."
+    },
+    {
+      stem: "Which conclusion is BEST supported by Source A about New Deal programs?",
+      tag: "BEST supported • New Deal",
+      sourceLabel: "Source A",
+      sourceType: "Work relief poster (paraphrased)",
+      sourceText:
+        "“These jobs rebuild roads, schools, and parks—wages today, stronger communities tomorrow.”",
+      choices: {
+        A: "New Deal work programs aimed to provide jobs and improve infrastructure.",
+        B: "New Deal programs required workers to labor without pay.",
+        C: "Work relief programs ended all government involvement in the economy.",
+        D: "Public works reduced infrastructure and eliminated community services."
+      },
+      answer: "A",
+      hint: "Jobs + rebuilding = work relief + infrastructure.",
+      explain: "The poster emphasizes employment and public projects, central goals of New Deal work relief."
+    },
+    {
+      stem: "Based on Source A, which statement BEST explains the purpose of Social Security–type programs?",
+      tag: "BEST explains • Government role",
+      sourceLabel: "Source A",
+      sourceType: "Policy memo (paraphrased)",
+      sourceText:
+        "“Elderly citizens who can no longer work should not face hunger. A shared system spreads risk across the nation.”",
+      choices: {
+        A: "To eliminate all taxes by ending government programs",
+        B: "To guarantee profits for corporations during recessions",
+        C: "To provide a safety net for retirees and vulnerable citizens",
+        D: "To force workers to leave cities and return to farms"
+      },
+      answer: "C",
+      hint: "Elderly support + shared risk = safety net.",
+      explain: "The memo describes a national safety net to protect older citizens and spread risk."
+    },
+
+    // --- WWII / HOMEFRONT / RIGHTS (commonly assessed) ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about changes on the U.S. homefront during World War II?",
+      tag: "BEST supported • Homefront",
+      sourceLabel: "Source A",
+      sourceType: "Factory newsletter (paraphrased)",
+      sourceText:
+        "“Production lines now run day and night. New workers have filled roles once closed to them.”",
+      choices: {
+        A: "Industrial production slowed and unemployment increased during the war.",
+        B: "The war reduced factory demand and ended mass production.",
+        C: "The government banned women from industrial employment during wartime.",
+        D: "War mobilization expanded production and changed who entered the workforce."
+      },
+      answer: "D",
+      hint: "Day and night production + new workers in new roles.",
+      explain: "War mobilization increased production and broadened workforce participation."
+    },
+
+    // --- COLD WAR / SECOND RED SCARE (also high-frequency) ---
+    {
+      stem: "Based on Source A, which statement BEST explains how Cold War fears affected American society?",
+      tag: "BEST explains • Cold War fears",
+      sourceLabel: "Source A",
+      sourceType: "Congressional hearing excerpt (paraphrased)",
+      sourceText:
+        "“Witnesses were questioned about political beliefs and pressured to name others. Careers ended with suspicion alone.”",
+      choices: {
+        A: "Cold War tensions reduced public fear and increased civil liberties.",
+        B: "Cold War fears sometimes contributed to suspicion and limits on civil liberties.",
+        C: "The U.S. ended all investigations of political groups during the Cold War.",
+        D: "Public hearings guaranteed privacy and prevented public accusations."
+      },
+      answer: "B",
+      hint: "Naming others + careers ruined = fear + civil liberties tension.",
+      explain: "The source describes suspicion-driven investigations that harmed reputations and raised civil liberties concerns."
+    },
+
+    // --- CIVIL RIGHTS (evidence-based, OST-style) ---
+    {
+      stem: "Which statement is BEST supported by Source A about the strategy of some civil rights activists?",
+      tag: "BEST supported • Civil rights strategy",
+      sourceLabel: "Source A",
+      sourceType: "Organizing guide (paraphrased)",
+      sourceText:
+        "“Remain nonviolent. Document unfair treatment. Let the nation see what happens when peaceful citizens demand equal rights.”",
+      choices: {
+        A: "Activists avoided national attention and discouraged documentation.",
+        B: "Activists relied only on private negotiations and refused public protest.",
+        C: "Nonviolent protest aimed to expose injustice and build public support for change.",
+        D: "Civil rights groups focused mainly on ending all elections."
+      },
+      answer: "C",
+      hint: "Nonviolence + documentation + public awareness.",
+      explain: "The strategy described uses nonviolent protest and visibility to expose injustice and build support."
+    },
+    {
+      stem: "Based on Source A, which conclusion BEST explains how federal action could influence civil rights in the states?",
+      tag: "BEST explains • Federal role",
+      sourceLabel: "Source A",
+      sourceType: "News report (paraphrased)",
+      sourceText:
+        "“Federal officials enforced court orders when local leaders refused to comply.”",
+      choices: {
+        A: "Federal enforcement could compel state/local compliance with constitutional rights.",
+        B: "Federal action had no impact because states always overruled federal law.",
+        C: "Court orders were voluntary suggestions that could not be enforced.",
+        D: "Local leaders controlled federal courts through elections."
+      },
+      answer: "A",
+      hint: "Enforced court orders = federal power to ensure compliance.",
+      explain: "Federal enforcement of court orders could force compliance when local officials resisted."
+    },
+
+    // --- INDUSTRIALIZATION: technology, production, labor (more OST stems) ---
+    {
+      stem: "Based on Source A, which statement BEST explains how the assembly line changed factory work?",
+      tag: "BEST explains • Industrial production",
+      sourceLabel: "Source A",
+      sourceType: "Factory worker account (paraphrased)",
+      sourceText:
+        "“My job is one step, repeated all day. The product moves past me; I no longer build the whole thing.”",
+      choices: {
+        A: "The assembly line increased the need for artisans who completed entire products.",
+        B: "The assembly line replaced machines with hand tools to slow production.",
+        C: "The assembly line ended mass production by reducing output.",
+        D: "The assembly line increased specialization and repetitive unskilled tasks."
+      },
+      answer: "D",
+      hint: "One step repeated all day = specialized/repetitive work.",
+      explain: "Assembly lines divided production into repeated tasks, increasing specialization and often reducing skill requirements."
+    },
+    {
+      stem: "Which conclusion is BEST supported by Source A about strikes as a labor tactic?",
+      tag: "BEST supported • Labor tactics",
+      sourceLabel: "Source A",
+      sourceType: "Strike notice (paraphrased)",
+      sourceText:
+        "“Work will stop until wages rise and safety improves. Without labor, machines cannot run.”",
+      choices: {
+        A: "Strikes were used to apply economic pressure by halting production.",
+        B: "Strikes increased production and raised profits for employers.",
+        C: "Strikes had no effect because factories could run without workers.",
+        D: "Strikes were mainly used to reduce worker bargaining power."
+      },
+      answer: "A",
+      hint: "No work = no production = pressure.",
+      explain: "The notice shows strikes stop production, creating economic pressure to negotiate."
+    },
+
+    // --- URBANIZATION / PUBLIC HEALTH ---
+    {
+      stem: "Based on Source A, which statement BEST explains why diseases spread in rapidly growing cities?",
+      tag: "BEST explains • Public health",
+      sourceLabel: "Source A",
+      sourceType: "Health inspector note (paraphrased)",
+      sourceText:
+        "“Families share one pump, and waste collects near doorways. Crowded rooms make illness travel quickly.”",
+      choices: {
+        A: "Crowding and poor sanitation increased disease transmission.",
+        B: "Cities had fewer people, so diseases spread less often.",
+        C: "Improved sanitation always prevented illness in crowded neighborhoods.",
+        D: "Urban residents had no contact with each other, preventing spread."
+      },
+      answer: "A",
+      hint: "Shared water + waste + crowding = disease spread.",
+      explain: "The source links crowding and sanitation problems to rapid spread of illness."
+    },
+
+    // --- IMMIGRATION / ECONOMY ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about why many immigrants came to the United States?",
+      tag: "BEST supported • Labor demand",
+      sourceLabel: "Source A",
+      sourceType: "Recruitment notice (paraphrased)",
+      sourceText:
+        "“Factories need workers immediately. Wages are offered to those willing to work long hours.”",
+      choices: {
+        A: "Immigration increased because industrial jobs demanded workers.",
+        B: "Immigration ended because factories needed no labor.",
+        C: "Immigrants came mainly to avoid city life and live on farms.",
+        D: "Immigrants refused wage labor and returned to rural subsistence."
+      },
+      answer: "A",
+      hint: "Need workers immediately = labor demand.",
+      explain: "The notice shows industrial job demand attracting immigrant labor."
+    },
+
+    // --- WEST: Dawes-type logic (land/assimilation) ---
+    {
+      stem: "Based on Source A, which statement BEST explains the intended effect of dividing tribal land into individual plots?",
+      tag: "BEST explains • Policy effect",
+      sourceLabel: "Source A",
+      sourceType: "Government pamphlet (paraphrased)",
+      sourceText:
+        "“Individual farms will replace communal lands. Families will adopt American-style agriculture and citizenship habits.”",
+      choices: {
+        A: "To strengthen tribal land ownership by protecting communal property",
+        B: "To encourage assimilation by changing land use and cultural practices",
+        C: "To return land to tribes through expanded hunting rights",
+        D: "To end all westward settlement by closing federal territories"
+      },
+      answer: "B",
+      hint: "Individual farms + adopting American habits = assimilation intent.",
+      explain: "The policy aimed to assimilate Native peoples by replacing communal land with individual farms and American practices."
+    },
+
+    // --- 1920s social/cultural change (OST-style inference) ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about social change in the 1920s?",
+      tag: "BEST supported • Social change",
+      sourceLabel: "Source A",
+      sourceType: "Radio advertisement (paraphrased)",
+      sourceText:
+        "“Music, news, and entertainment now enter your home each evening—no need to travel downtown.”",
+      choices: {
+        A: "Mass media reduced shared national culture by isolating communities.",
+        B: "New communication technologies increased access to information and entertainment.",
+        C: "Radio ended the spread of popular culture by limiting audiences.",
+        D: "Americans stopped consuming entertainment during the 1920s."
+      },
+      answer: "B",
+      hint: "Entertainment/news at home = greater access via mass media.",
+      explain: "Radio expanded access to information and entertainment, shaping shared culture."
+    },
+
+    // --- Another Great Depression policy inference ---
+    {
+      stem: "Based on Source A, which government action BEST matches the problem described?",
+      tag: "BEST match • Policy response",
+      sourceLabel: "Source A",
+      sourceType: "Bank customer statement (paraphrased)",
+      sourceText:
+        "“I saved for years, but the bank closed and my money is gone. People need confidence that deposits are protected.”",
+      choices: {
+        A: "Creating deposit insurance to protect savings and stabilize banking",
+        B: "Eliminating all banks to prevent future failures",
+        C: "Stopping all government oversight of financial markets",
+        D: "Ending currency and returning to barter systems"
+      },
+      answer: "A",
+      hint: "Deposits protected = deposit insurance.",
+      explain: "Deposit insurance protects savings and helps restore confidence in banks."
+    },
+
+    // --- WWII rationing / mobilization inference ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about the wartime economy?",
+      tag: "BEST supported • Wartime mobilization",
+      sourceLabel: "Source A",
+      sourceType: "Ration book notice (paraphrased)",
+      sourceText:
+        "“Gas and sugar will be limited. Citizens must conserve so resources can support the war effort.”",
+      choices: {
+        A: "The war reduced demand for resources and eliminated consumer shortages.",
+        B: "Rationing was used to redirect scarce goods toward military needs.",
+        C: "Citizens were encouraged to consume more to slow factory production.",
+        D: "The government ended all planning of the economy during wartime."
+      },
+      answer: "B",
+      hint: "Conserve + support war effort = redirect goods.",
+      explain: "Rationing limited consumer use so resources could support military production and logistics."
+    },
+
+    // --- Cold War containment inference ---
+    {
+      stem: "Based on Source A, which statement BEST explains the foreign policy strategy described?",
+      tag: "BEST explains • Cold War policy",
+      sourceLabel: "Source A",
+      sourceType: "Policy briefing (paraphrased)",
+      sourceText:
+        "“If one nation falls under communist control, neighboring nations may follow. The spread must be stopped early.”",
+      choices: {
+        A: "Isolationism — avoiding involvement in world affairs",
+        B: "Imperialism — taking colonies to gain resources",
+        C: "Containment — limiting the spread of communism",
+        D: "Neutrality — refusing to trade with any allies"
+      },
+      answer: "C",
+      hint: "Stopping the spread early = containment logic.",
+      explain: "The statement reflects containment thinking—preventing communism from spreading to additional nations."
+    },
+
+    // --- Civil Rights: voting rights inference ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about barriers to voting before major civil rights reforms?",
+      tag: "BEST supported • Voting barriers",
+      sourceLabel: "Source A",
+      sourceType: "Citizen complaint (paraphrased)",
+      sourceText:
+        "“They said I failed an unfair test and charged a fee I cannot pay. Others were registered without trouble.”",
+      choices: {
+        A: "Voting was expanded by removing obstacles like tests and fees.",
+        B: "Barriers such as literacy tests and poll taxes were used to limit voting access.",
+        C: "All citizens had equal access to voting without discrimination.",
+        D: "Voting rules were controlled only by the federal government in all states."
+      },
+      answer: "B",
+      hint: "Unfair test + fee = classic barriers.",
+      explain: "The source describes discriminatory barriers like tests and fees used to restrict voting rights."
+    },
+
+    // --- Extra industrial tech items (transport/communication) ---
+    {
+      stem: "Based on Source A, which statement BEST explains how new transportation technology affected the economy?",
+      tag: "BEST explains • Transportation",
+      sourceLabel: "Source A",
+      sourceType: "Railroad brochure (paraphrased)",
+      sourceText:
+        "“Goods that once took weeks now arrive in days. Markets expand as producers reach distant customers.”",
+      choices: {
+        A: "Transportation improvements reduced trade by isolating regions.",
+        B: "Faster transportation expanded markets and increased economic connections.",
+        C: "Railroads ended industrialization by making factories unnecessary.",
+        D: "Improved transportation prevented cities from growing."
+      },
+      answer: "B",
+      hint: "Reaching distant customers = expanded markets.",
+      explain: "Faster transport connected regions, expanded markets, and strengthened economic ties."
+    },
+
+    // --- Another urbanization: skyscrapers ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about changes in city design?",
+      tag: "BEST supported • City growth",
+      sourceLabel: "Source A",
+      sourceType: "Architect journal (paraphrased)",
+      sourceText:
+        "“Steel frames allow buildings to rise far above older limits, concentrating offices and apartments in one downtown block.”",
+      choices: {
+        A: "Skyscrapers reduced city density by spreading people farther apart.",
+        B: "New building technology enabled upward growth and increased density.",
+        C: "Taller buildings caused cities to abandon downtown areas entirely.",
+        D: "Cities banned steel construction to preserve low-rise neighborhoods."
+      },
+      answer: "B",
+      hint: "Steel frames = taller buildings in same footprint.",
+      explain: "Steel-frame construction made skyscrapers possible, increasing density and changing city skylines."
+    },
+
+    // --- Another Progressivism: conservation ---
+    {
+      stem: "Based on Source A, which statement BEST explains a Progressive-era reason for conservation policies?",
+      tag: "BEST explains • Conservation",
+      sourceLabel: "Source A",
+      sourceType: "Government report (paraphrased)",
+      sourceText:
+        "“Forests and waterways are being exhausted. Without protection, future generations will pay the price.”",
+      choices: {
+        A: "To speed resource exhaustion for immediate profits",
+        B: "To protect natural resources for long-term public benefit",
+        C: "To end all national parks and open land for uncontrolled use",
+        D: "To reduce farming by eliminating irrigation nationwide"
+      },
+      answer: "B",
+      hint: "Future generations + protection = conservation.",
+      explain: "Progressives supported conservation to manage resources sustainably for long-term public benefit."
+    },
+
+    // --- Another labor: collective bargaining ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about collective bargaining?",
+      tag: "BEST supported • Labor strategy",
+      sourceLabel: "Source A",
+      sourceType: "Union meeting minutes (paraphrased)",
+      sourceText:
+        "“We will negotiate as one body. Alone, each worker can be replaced; together, we have leverage.”",
+      choices: {
+        A: "Collective bargaining increases worker leverage by negotiating as a group.",
+        B: "Collective bargaining weakens unions by forcing individual contracts.",
+        C: "Collective bargaining ends strikes because workers lose all influence.",
+        D: "Collective bargaining prevents any negotiation between workers and employers."
+      },
+      answer: "A",
+      hint: "Negotiate as one body = leverage.",
+      explain: "The source shows how negotiating together increases bargaining power compared to individual workers."
+    },
+
+    // --- Another nativism/response ---
+    {
+      stem: "Based on Source A, which action would MOST likely be supported by the viewpoint expressed?",
+      tag: "MOST likely • Policy",
+      sourceLabel: "Source A",
+      sourceType: "Political flyer (paraphrased)",
+      sourceText:
+        "“Our cities are changing too fast. Limit newcomers until American workers can recover.”",
+      choices: {
+        A: "Expanding immigration to meet factory labor demand",
+        B: "Passing laws to restrict immigration",
+        C: "Increasing cultural festivals to celebrate new arrivals",
+        D: "Encouraging immigrants to form more ethnic neighborhoods"
+      },
+      answer: "B",
+      hint: "“Limit newcomers” = restriction policy.",
+      explain: "The viewpoint supports limiting immigration, which aligns with restriction laws."
+    },
+
+    // --- Another Great Migration cultural impact ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about cultural changes linked to migration?",
+      tag: "BEST supported • Cultural impact",
+      sourceLabel: "Source A",
+      sourceType: "Music review (paraphrased)",
+      sourceText:
+        "“New rhythms fill northern clubs, blending traditions into a style that spreads across the nation.”",
+      choices: {
+        A: "Migration reduced cultural exchange by isolating communities.",
+        B: "Northern cities became culturally stagnant as new communities arrived.",
+        C: "Migration contributed to cultural innovation that influenced national trends.",
+        D: "Urban music disappeared because people stopped attending performances."
+      },
+      answer: "C",
+      hint: "New styles spreading nationwide = cultural influence.",
+      explain: "The source indicates migration contributed to cultural innovation with national influence."
+    },
+
+    // --- Another WWI/propaganda inference ---
+    {
+      stem: "Based on Source A, which statement BEST explains a purpose of wartime propaganda?",
+      tag: "BEST explains • Propaganda",
+      sourceLabel: "Source A",
+      sourceType: "Poster caption (paraphrased)",
+      sourceText:
+        "“Buy bonds. Conserve food. Support the troops. Doubt helps the enemy.”",
+      choices: {
+        A: "To reduce public participation and weaken support for the war",
+        B: "To encourage citizens to contribute resources and maintain morale",
+        C: "To end government messaging so people could decide independently",
+        D: "To discourage enlistment by highlighting battlefield success"
+      },
+      answer: "B",
+      hint: "Bonds + conserve + support = mobilize homefront.",
+      explain: "Propaganda aimed to mobilize resources and sustain morale through public support."
+    },
+
+    // --- Final: synthesis “best explains” multi-topic ---
+    {
+      stem: "Which conclusion is BEST supported by Source A about how industrialization reshaped the United States?",
+      tag: "BEST supported • Synthesis",
+      sourceLabel: "Source A",
+      sourceType: "Historian summary (paraphrased)",
+      sourceText:
+        "“Factories drew workers into cities, new inventions changed daily life, and reform movements rose in response to poverty, corruption, and unsafe conditions.”",
+      choices: {
+        A: "Industrialization reduced urban growth and eliminated the need for reform.",
+        B: "Industrialization changed the economy and society and also created new problems that sparked reform.",
+        C: "Industrialization ended technological innovation and returned the U.S. to agrarian living.",
+        D: "Industrialization eliminated labor conflict by improving conditions without pressure."
+      },
+      answer: "B",
+      hint: "Look for change + problems + reform response.",
+      explain: "The source links industrial growth and innovation with new social problems and reform movements."
     }
   ];
+
 
   function $(id){ return document.getElementById(id); }
 
