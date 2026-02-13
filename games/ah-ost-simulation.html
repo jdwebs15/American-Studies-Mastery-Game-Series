@@ -1,1 +1,713 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>American Studies — Game 7: OST Simulation Mixer (Mastery)</title>
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <!-- Hardened fallback so it never looks “blank” -->
+  <style>
+    :root{
+      --bg:#0b1220; --text:#e7eefc; --muted:#a8b4cf;
+      --line:rgba(255,255,255,.12); --radius:18px;
+      --accent:#7aa2ff; --good:#2bd576; --bad:#ff5c7a; --warn:#ffd166;
+    }
+    body{
+      margin:0;
+      background:radial-gradient(1200px 800px at 30% 10%, rgba(122,162,255,.18), transparent 60%), var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:18px;
+    }
+    .gameShell{ width:min(980px,100%); }
+    .panel{
+      background:rgba(17,26,47,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 12px 35px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between}
+    .kpis{display:flex; gap:10px; flex-wrap:wrap}
+    .kpi{
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .kpi strong{color:var(--text)}
+    .title{font-weight:900; font-size:18px}
+    .desc{color:var(--muted); margin-top:2px; font-size:13px}
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+    }
+    .hr{height:1px; background:var(--line); margin:14px 0}
+
+    .qwrap{margin-top:14px}
+    .qmeta{display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+    .stem{margin-top:10px; font-size:18px; line-height:1.35; font-weight:900;}
+    .miniTag{
+      display:inline-block;
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:4px 8px;
+      margin-top:10px;
+      background:rgba(0,0,0,.15);
+    }
+
+    .choices{display:grid; gap:10px; margin-top:12px}
+    .choice{
+      text-align:left;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      transition:transform .08s ease, border-color .12s ease, background .12s ease;
+      font-size:15px;
+      line-height:1.35;
+    }
+    .choice:hover{transform:translateY(-1px); border-color:rgba(122,162,255,.35)}
+    .choice[disabled]{opacity:.55; cursor:not-allowed; transform:none}
+
+    .msg{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(0,0,0,.18);
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .msg.good{border-color:rgba(43,213,118,.35)}
+    .msg.bad{border-color:rgba(255,92,122,.35)}
+    .msg.warn{border-color:rgba(255,209,102,.35)}
+    .msgTitle{font-weight:900; margin-bottom:6px; color:var(--text)}
+
+    .hintBox{
+      margin-top:10px;
+      border:1px dashed rgba(255,209,102,.45);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(255,209,102,.06);
+      color:var(--muted);
+      display:none;
+    }
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .btn:hover{border-color:rgba(122,162,255,.35)}
+    .btn.primary{background:rgba(122,162,255,.18); border-color:rgba(122,162,255,.35)}
+    .btn.good{background:rgba(43,213,118,.14); border-color:rgba(43,213,118,.35)}
+    .btn.bad{background:rgba(255,92,122,.12); border-color:rgba(255,92,122,.35)}
+    .btn[disabled]{opacity:.5; cursor:not-allowed}
+
+    .nameGate{display:grid; gap:10px; margin-top:10px;}
+    input[type="text"]{
+      width:min(420px,100%);
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+      font-size:15px;
+    }
+
+    .finishCard{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+    }
+    .code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+    .small{font-size:13px; color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <div class="gameShell">
+    <div class="panel">
+
+      <div class="row">
+        <div>
+          <div class="title">American Studies — Game 7</div>
+          <div class="desc">OST Simulation Mixer • Mixed stems • 100% mastery required</div>
+          <div class="pill">Directions: Choose the best answer. Wrong answer = hint; miss counts once; mastery requires 100%.</div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong>Name:</strong> <span id="nameOut">—</span></div>
+          <div class="kpi"><strong>Score:</strong> <span id="scoreOut">0 / 0</span></div>
+          <div class="kpi"><strong>Accuracy:</strong> <span id="accOut">0%</span></div>
+          <div class="kpi"><strong>Progress:</strong> <span id="progOut">0 / 0</span></div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <!-- NAME GATE -->
+      <div id="gate">
+        <div class="msg warn">
+          <div class="msgTitle">Start</div>
+          <div>Enter your name to begin. Questions are randomized each run. Mastery requires <strong>100% accuracy</strong> across all questions.</div>
+        </div>
+        <div class="nameGate">
+          <input id="nameIn" type="text" placeholder="Student Name" maxlength="40" />
+          <div class="actions">
+            <button class="btn primary" id="btnStart">Start Game</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAME -->
+      <div id="game" style="display:none;">
+        <div class="qwrap">
+          <div class="qmeta">
+            <div><strong>Question:</strong> <span id="qNum">1</span> / <span id="qTotal">0</span></div>
+            <div><strong>Attempt on this question:</strong> <span id="attemptThis">0</span></div>
+          </div>
+
+          <div class="stem" id="stem">—</div>
+          <div class="miniTag" id="tag">—</div>
+
+          <div class="choices" id="choices"></div>
+
+          <div class="hintBox" id="hintBox"></div>
+
+          <div class="msg" id="feedback" style="display:none;">
+            <div class="msgTitle" id="fbTitle">—</div>
+            <div id="fbText">—</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn bad" id="btnRestart">Restart Run</button>
+            <button class="btn good" id="btnFinish" disabled>Finish / Submit</button>
+          </div>
+
+          <div class="small" style="margin-top:10px;">
+            Mastery unlocks only when <strong>all questions are completed</strong> and <strong>accuracy is 100%</strong>.
+          </div>
+        </div>
+
+        <!-- FINISH SCREEN -->
+        <div id="finish" style="display:none;">
+          <div class="finishCard">
+            <div class="msgTitle">Run Summary</div>
+            <div class="small" id="summaryLine">—</div>
+            <div class="hr"></div>
+            <div class="code" id="summaryCode">—</div>
+            <div class="actions" style="margin-top:12px;">
+              <button class="btn primary" id="btnNewRun">New Randomized Run</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  // 30 mixed OST-style questions (single best answer)
+  // Balanced answer keys across A/B/C/D.
+  var questions = [
+    { tag:"Most Direct Cause",
+      stem:"Which factor MOST directly contributed to rapid urbanization in the late 1800s?",
+      choices:{A:"Factory jobs attracted workers to cities",B:"The end of immigration reduced city growth",C:"Railroads eliminated the need for cities",D:"Voting rights expanded in rural areas"},
+      answer:"A",
+      hint:"Think: what pulled workers into cities?",
+      explain:"Industrial factory jobs acted as a pull factor drawing people into cities."
+    },
+    { tag:"Best Explains",
+      stem:"Which statement BEST explains why tenements contributed to disease outbreaks?",
+      choices:{A:"Tenements had large private yards",B:"Tenements were overcrowded and lacked sanitation",C:"Tenements were located only in rural areas",D:"Tenements required strict health inspections"},
+      answer:"B",
+      hint:"Link housing density to sanitation.",
+      explain:"Overcrowding and poor sanitation made it easier for diseases like tuberculosis and cholera to spread."
+    },
+    { tag:"Most Likely Result",
+      stem:"A city’s population doubles faster than housing and sewer systems expand. Which outcome is MOST likely?",
+      choices:{A:"Improved public health immediately",B:"Less crowding in neighborhoods",C:"Overcrowding and sanitation problems increase",D:"Factories shut down nationwide"},
+      answer:"C",
+      hint:"Fast growth strains infrastructure.",
+      explain:"Rapid growth often overwhelms housing and sanitation, worsening living conditions."
+    },
+    { tag:"Best Supports",
+      stem:"Which evidence BEST supports the claim that laissez-faire policies strengthened big business?",
+      choices:{A:"Businesses faced strict federal oversight",B:"Corporations grew with limited regulation and formed trusts",C:"Labor unions controlled most industries",D:"Immigration ended due to factory closures"},
+      answer:"B",
+      hint:"Look for limited regulation + consolidation.",
+      explain:"Minimal oversight helped corporations expand and consolidate into trusts and monopolies."
+    },
+    { tag:"Cause & Effect",
+      stem:"Mechanized farming increased efficiency. What was a major effect on rural labor?",
+      choices:{A:"More farm jobs were created",B:"Fewer workers were needed on farms",C:"Farm wages rose everywhere",D:"Urban factories closed"},
+      answer:"B",
+      hint:"Machines replace labor.",
+      explain:"Mechanization reduced labor needs, pushing some workers off farms."
+    },
+    { tag:"Best Explains",
+      stem:"Which statement BEST explains why labor unions grew during industrialization?",
+      choices:{A:"Workers wanted to reduce voting rights",B:"Workers organized to address unsafe conditions and low wages",C:"Workers preferred fewer protections in factories",D:"Workers tried to end immigration completely"},
+      answer:"B",
+      hint:"Unions form to improve work conditions.",
+      explain:"Unions expanded as workers collectively pursued safer workplaces and better pay."
+    },
+    { tag:"Most Direct Result",
+      stem:"Which was a direct result of immigrants forming ethnic neighborhoods in cities?",
+      choices:{A:"Cultural traditions were preserved and spread",B:"Cities became less diverse",C:"Industrialization ended",D:"Reservation policies expanded"},
+      answer:"A",
+      hint:"Think cultural diffusion.",
+      explain:"Ethnic neighborhoods preserved traditions while contributing to cultural diffusion."
+    },
+    { tag:"Best Explains",
+      stem:"Which statement BEST explains the relationship between nativism and job competition?",
+      choices:{A:"Nativism decreased when jobs were scarce",B:"Nativism increased as some blamed immigrants for economic competition",C:"Nativism ended as cities grew",D:"Nativism had no connection to immigration"},
+      answer:"B",
+      hint:"Competition can fuel scapegoating.",
+      explain:"Job competition often increased anti-immigrant attitudes and policies."
+    },
+    { tag:"Most Likely Cause",
+      stem:"Which factor MOST likely contributed to the Great Migration?",
+      choices:{A:"End of Jim Crow laws in the South",B:"Expanded segregation and racial violence in the South",C:"No job opportunities in the North",D:"Elimination of discrimination nationwide by 1900"},
+      answer:"B",
+      hint:"Push factors from the South.",
+      explain:"Segregation and violence pushed many African Americans to relocate."
+    },
+    { tag:"Most Likely Result",
+      stem:"Northern factories expanded during wartime production. Which outcome is MOST likely?",
+      choices:{A:"Reduced demand for workers",B:"More rural farm labor",C:"Increased migration to northern industrial cities",D:"An end to urbanization"},
+      answer:"C",
+      hint:"Industry needs labor.",
+      explain:"Industrial demand pulled migrants to northern cities."
+    },
+
+    { tag:"Most Direct Cause",
+      stem:"Which factor MOST directly encouraged western settlement in the 1800s?",
+      choices:{A:"The Dawes Act ended all land sales",B:"The Homestead Act offered land to settlers",C:"Tenements improved rural living",D:"Plessy ended segregation"},
+      answer:"B",
+      hint:"Think land incentives.",
+      explain:"Land opportunities encouraged settlement in western territories."
+    },
+    { tag:"Cause & Effect",
+      stem:"The Dawes Act divided tribal land into individual plots. What was a major effect?",
+      choices:{A:"Tribal landholdings decreased as land was sold",B:"Tribal land increased nationwide",C:"Cities depopulated rapidly",D:"Industrial unions dissolved"},
+      answer:"A",
+      hint:"What happened to surplus land?",
+      explain:"The policy reduced tribal land and opened land to settlers."
+    },
+    { tag:"Best Explains",
+      stem:"Which statement BEST explains how railroads transformed the West?",
+      choices:{A:"They reduced trade by isolating territories",B:"They improved transportation and expanded markets",C:"They ended immigration in cities",D:"They eliminated factory jobs"},
+      answer:"B",
+      hint:"Transportation + markets.",
+      explain:"Railroads connected regions, boosted trade, and encouraged settlement."
+    },
+    { tag:"Best Supports",
+      stem:"Which evidence BEST supports the claim that Progressive reformers wanted to reduce political corruption?",
+      choices:{A:"They promoted patronage and machine control",B:"They opposed all government reform",C:"They supported reforms targeting political machines",D:"They eliminated elections in cities"},
+      answer:"C",
+      hint:"Look for reforms aimed at machines.",
+      explain:"Progressives pushed changes to reduce patronage and increase accountability."
+    },
+    { tag:"Most Likely Result",
+      stem:"Muckrakers published investigations of unsafe food production. What was a likely result?",
+      choices:{A:"Less public awareness of problems",B:"Increased pressure for consumer protection laws",C:"End of industrialization",D:"Expansion of Jim Crow laws"},
+      answer:"B",
+      hint:"Exposure → public pressure → reform.",
+      explain:"Public outrage often increased support for food and drug regulation."
+    },
+    { tag:"Most Direct Cause",
+      stem:"Which factor MOST directly led to antitrust legislation?",
+      choices:{A:"Overcrowding in tenements",B:"Trusts and monopolies limiting competition",C:"The end of westward settlement",D:"Reduced immigration to cities"},
+      answer:"B",
+      hint:"Think monopoly power.",
+      explain:"Antitrust laws aimed to curb monopolies and restore competition."
+    },
+    { tag:"Best Explains",
+      stem:"Plessy v. Ferguson had what effect on segregation?",
+      choices:{A:"It legally supported segregation under 'separate but equal'",B:"It ended segregation nationwide",C:"It expanded voting rights protections",D:"It required integrated schools immediately"},
+      answer:"A",
+      hint:"Plessy upheld segregation.",
+      explain:"The ruling gave legal cover to Jim Crow segregation for decades."
+    },
+    { tag:"Most Likely Result",
+      stem:"Literacy tests and poll taxes were used in the South primarily to—",
+      choices:{A:"Increase voter turnout",B:"Expand immigrant voting access",C:"Disenfranchise African American voters",D:"Strengthen labor unions"},
+      answer:"C",
+      hint:"These are barriers to voting.",
+      explain:"These restrictions reduced political participation by targeting African Americans and poor voters."
+    },
+    { tag:"Best Supports",
+      stem:"Which evidence BEST supports the claim that urbanization strained city services?",
+      choices:{A:"Cities had excess housing and empty streets",B:"Cities expanded sewer and transit systems instantly",C:"Overcrowding and sanitation problems increased",D:"Cities stopped attracting new residents"},
+      answer:"C",
+      hint:"Look for infrastructure strain signs.",
+      explain:"Overcrowding and sanitation breakdowns indicate services couldn’t keep pace."
+    },
+    { tag:"Most Direct Result",
+      stem:"Which was a direct result of unsafe working conditions in factories?",
+      choices:{A:"Workers formed unions and demanded reforms",B:"Trusts disappeared immediately",C:"Cities became less populated",D:"Immigration ended permanently"},
+      answer:"A",
+      hint:"Worker response.",
+      explain:"Unsafe conditions contributed to union growth and reform efforts."
+    },
+
+    // Remaining 10 (kept OST-style + balanced answers)
+    { tag:"Best Explains",
+      stem:"Which statement BEST explains why cities grew into industrial centers?",
+      choices:{A:"Cities eliminated factory jobs",B:"Cities concentrated capital, labor, and transportation networks",C:"Cities reduced access to markets",D:"Cities forced all residents to farm"},
+      answer:"B",
+      hint:"Think: money + workers + transportation.",
+      explain:"Cities concentrated resources and networks that supported industrial growth."
+    },
+    { tag:"Most Likely Cause",
+      stem:"A reformer argues that political machines weaken democracy. Which concern is MOST likely behind this claim?",
+      choices:{A:"Machines increase voter choice through fair elections",B:"Machines trade favors for votes and control services",C:"Machines eliminate corruption in city government",D:"Machines stop immigration to cities"},
+      answer:"B",
+      hint:"Patronage and vote trading.",
+      explain:"Machines often used patronage and favors to maintain power."
+    },
+    { tag:"Most Likely Result",
+      stem:"If factory wages remain low while the cost of city housing rises, which outcome is MOST likely?",
+      choices:{A:"More workers can afford spacious homes",B:"Working-class families crowd into cheaper housing",C:"Cities immediately reduce population",D:"Industrialization ends"},
+      answer:"B",
+      hint:"Housing pressure forces crowding.",
+      explain:"High housing costs push workers into overcrowded, cheaper housing options."
+    },
+    { tag:"Best Supports",
+      stem:"Which evidence BEST supports the claim that mechanized farming contributed to urbanization?",
+      choices:{A:"Farm labor needs increased sharply",B:"Rural workers moved to cities after losing farm jobs",C:"Cities eliminated factory employment",D:"Railroads stopped transporting goods"},
+      answer:"B",
+      hint:"Look for movement from rural to urban.",
+      explain:"Reduced farm labor demand pushed workers toward city employment."
+    },
+    { tag:"Cause & Effect",
+      stem:"When corporations gained greater influence in politics during industrialization, one likely effect was—",
+      choices:{A:"Greater pressure to keep government regulation limited",B:"Immediate elimination of trusts",C:"Instant equal wages for all workers",D:"End of immigration to cities"},
+      answer:"A",
+      hint:"Business influence often resists regulation.",
+      explain:"Corporate influence often supported policies favoring limited regulation."
+    },
+    { tag:"Best Explains",
+      stem:"Why did settlement houses emerge in many cities during the Progressive Era?",
+      choices:{A:"To reduce immigration by force",B:"To provide services and support to immigrant and working-class communities",C:"To expand political machines",D:"To encourage child labor in factories"},
+      answer:"B",
+      hint:"Community aid and services.",
+      explain:"Settlement houses offered education, childcare, and social services to improve urban living."
+    },
+    { tag:"Most Likely Result",
+      stem:"If a city improves clean water access and waste removal, which outcome is MOST likely?",
+      choices:{A:"Higher disease rates",B:"Lower public health outcomes",C:"Improved public health and fewer outbreaks",D:"More tenement overcrowding"},
+      answer:"C",
+      hint:"Sanitation reduces disease.",
+      explain:"Clean water and sanitation reduce the spread of infectious disease."
+    },
+    { tag:"Best Supports",
+      stem:"Which evidence BEST supports the idea that industrialization changed daily life for consumers?",
+      choices:{A:"Goods were produced more slowly and became rare",B:"Mass production lowered costs and increased availability",C:"Factories disappeared from cities",D:"Transportation networks collapsed"},
+      answer:"B",
+      hint:"Cost + availability.",
+      explain:"Mass production increased supply and lowered prices for many goods."
+    },
+    { tag:"Most Direct Cause",
+      stem:"Which factor MOST directly contributed to labor strikes becoming more common?",
+      choices:{A:"Shorter hours and higher pay everywhere",B:"Workers were satisfied with conditions",C:"Long hours, low wages, and unsafe workplaces",D:"An end to industrial employment"},
+      answer:"C",
+      hint:"Strikes respond to bad conditions.",
+      explain:"Poor conditions and low pay led workers to strike and organize."
+    },
+    { tag:"Best Explains",
+      stem:"Which statement BEST explains why reformers criticized child labor during industrialization?",
+      choices:{A:"It reduced the need for schools and education",B:"It protected children from unsafe work",C:"It placed children in dangerous conditions and limited education",D:"It increased wages for adult workers"},
+      answer:"C",
+      hint:"Safety + schooling.",
+      explain:"Child labor exposed children to danger and reduced educational opportunities."
+    }
+  ];
+
+  function $(id){ return document.getElementById(id); }
+
+  var state = {
+    player:"",
+    startISO:null,
+    endISO:null,
+    order:[],
+    idx:0,
+    correct:0,
+    misses:0,
+    missedSet:{},
+    attemptThis:0,
+    locked:false,
+    timer:null
+  };
+
+  function nowISO(){ return new Date().toISOString(); }
+  function fmt(dt){ return new Date(dt).toLocaleString(); }
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t=a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+
+  function calcAcc(){
+    var totalQ = questions.length;
+    var perfectCorrect = totalQ - state.misses;
+    var acc = Math.round((perfectCorrect / totalQ) * 100);
+    if(acc<0) acc=0; if(acc>100) acc=100;
+    return acc;
+  }
+
+  function updateKPIs(){
+    $("nameOut").textContent = state.player || "—";
+    $("scoreOut").textContent = state.correct + " / " + questions.length;
+    $("accOut").textContent = calcAcc() + "%";
+    $("progOut").textContent = state.idx + " / " + questions.length;
+  }
+
+  function showFeedback(type, title, text){
+    var box = $("feedback");
+    box.style.display = "block";
+    box.className = "msg " + type;
+    $("fbTitle").textContent = title;
+    $("fbText").textContent = text;
+  }
+  function hideFeedback(){ $("feedback").style.display = "none"; }
+
+  function setHint(text){
+    var hb = $("hintBox");
+    if(!text){
+      hb.style.display = "none";
+      hb.textContent = "";
+      return;
+    }
+    hb.style.display = "block";
+    hb.textContent = "Hint: " + text;
+  }
+
+  function disableChoices(disabled){
+    var btns = $("choices").querySelectorAll("button.choice");
+    for(var i=0;i<btns.length;i++) btns[i].disabled = disabled;
+  }
+
+  function updateFinishLock(){
+    var acc = calcAcc();
+    var doneAll = state.idx >= questions.length;
+    var mastery = doneAll && acc === 100;
+    $("btnFinish").disabled = !mastery;
+
+    if(doneAll){
+      if(mastery){
+        showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
+      }else{
+        showFeedback("warn","Run complete — not mastery",
+          "You finished the run, but accuracy is " + acc + "%. Start a new randomized run and try again.");
+      }
+    }
+  }
+
+  function advance(){
+    state.idx++;
+    updateKPIs();
+    if(state.idx >= questions.length){
+      disableChoices(true);
+      setHint("");
+      updateFinishLock();
+      return;
+    }
+    renderQuestion();
+  }
+
+  function renderQuestion(){
+    hideFeedback();
+    setHint("");
+    state.attemptThis = 0;
+    $("attemptThis").textContent = "0";
+
+    var qIndex = state.order[state.idx];
+    var q = questions[qIndex];
+
+    $("qNum").textContent = String(state.idx + 1);
+    $("qTotal").textContent = String(questions.length);
+    $("stem").textContent = q.stem;
+    $("tag").textContent = q.tag;
+
+    var keys = ["A","B","C","D"];
+    var html = "";
+    for(var i=0;i<keys.length;i++){
+      var k = keys[i];
+      html += '<button class="choice" data-key="' + k + '"><strong>' + k + '.</strong> ' + q.choices[k] + '</button>';
+    }
+    $("choices").innerHTML = html;
+
+    var btns = $("choices").querySelectorAll("button.choice");
+    for(var j=0;j<btns.length;j++){
+      btns[j].addEventListener("click", function(){
+        if(state.locked) return;
+        checkAnswer(this.getAttribute("data-key"));
+      });
+    }
+
+    updateKPIs();
+  }
+
+  function checkAnswer(choice){
+    var qIndex = state.order[state.idx];
+    var q = questions[qIndex];
+
+    state.attemptThis++;
+    $("attemptThis").textContent = String(state.attemptThis);
+
+    var correctNow = (choice === q.answer);
+
+    if(correctNow){
+      state.correct = Math.min(questions.length, state.correct + 1);
+      updateKPIs();
+
+      disableChoices(true);
+      state.locked = true;
+
+      var firstTry = (state.attemptThis === 1);
+      clearTimeout(state.timer);
+
+      if(firstTry){
+        showFeedback("good","Correct (first try)", q.explain || "Correct.");
+        state.timer = setTimeout(function(){
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 3000);
+      }else{
+        showFeedback("good","Correct (after hint)", q.explain || "Correct.");
+        state.timer = setTimeout(function(){
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 800);
+      }
+      return;
+    }
+
+    // wrong: count miss once per question
+    if(!state.missedSet[qIndex]){
+      state.missedSet[qIndex] = true;
+      state.misses++;
+      updateKPIs();
+    }
+
+    showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
+    setHint(q.hint || "Re-read the stem and eliminate two choices first.");
+  }
+
+  function startRun(){
+    var idxs = [];
+    for(var i=0;i<questions.length;i++) idxs.push(i);
+    state.order = shuffle(idxs);
+    state.idx = 0;
+    state.correct = 0;
+    state.misses = 0;
+    state.missedSet = {};
+    state.attemptThis = 0;
+    state.locked = false;
+    clearTimeout(state.timer);
+    state.timer = null;
+
+    state.startISO = nowISO();
+    state.endISO = null;
+
+    $("finish").style.display = "none";
+    renderQuestion();
+  }
+
+  function finishRun(){
+    state.endISO = nowISO();
+    var acc = calcAcc();
+    var mastery = (acc === 100 && state.idx >= questions.length);
+
+    $("summaryLine").textContent = mastery
+      ? "Mastery earned. Show this screen to your teacher."
+      : "Not mastery. Start a new randomized run and try again.";
+
+    $("summaryCode").textContent =
+      "NAME: " + state.player + "\n" +
+      "GAME: Game 7 — OST Simulation Mixer\n" +
+      "DATE: " + new Date(state.startISO).toLocaleDateString() + "\n" +
+      "START: " + fmt(state.startISO) + "\n" +
+      "END: " + fmt(state.endISO) + "\n" +
+      "QUESTIONS: " + questions.length + "\n" +
+      "MISSES: " + state.misses + "\n" +
+      "ACCURACY: " + acc + "%\n" +
+      "MASTERY: " + (mastery ? "YES" : "NO") + "\n";
+
+    $("finish").style.display = "block";
+    $("choices").innerHTML = "";
+    setHint("");
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    $("btnStart").addEventListener("click", function(){
+      var name = $("nameIn").value.trim();
+      if(!name){ alert("Please enter your name to begin."); return; }
+      state.player = name;
+      $("gate").style.display = "none";
+      $("game").style.display = "block";
+      startRun();
+    });
+
+    $("btnRestart").addEventListener("click", function(){
+      if(confirm("Restart with a new randomized run?")) startRun();
+    });
+
+    $("btnFinish").addEventListener("click", finishRun);
+    $("btnNewRun").addEventListener("click", startRun);
+
+    updateKPIs();
+  });
+
+})();
+</script>
+</body>
+</html>
 
