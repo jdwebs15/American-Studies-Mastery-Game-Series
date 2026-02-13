@@ -275,147 +275,338 @@
 
   // ✅ TEST SET (10) — confirm it runs, then we swap to full 25–30
   var questions = [
-    {
-      stem:"Which option BEST completes the cause–effect chain?",
-      cause:"Mechanized farming reduced the need for rural labor.",
-      effect:"City populations increased rapidly, leading to overcrowding and strained infrastructure.",
-      choices:{
-        A:"Workers moved to cities seeking factory jobs",
-        B:"Industrial production ended in northern cities",
-        C:"Immigration stopped completely",
-        D:"City governments eliminated sanitation systems"
-      },
-      answer:"A",
-      hint:"What happens to workers when farms need fewer laborers?",
-      explain:"Mechanization pushed workers off farms; many moved to cities for industrial jobs, fueling urban growth."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Laissez-faire ideas limited government regulation of business.",
-      effect:"Some industries became dominated by a few powerful corporations.",
-      choices:{
-        A:"Businesses consolidated through trusts and monopolies",
-        B:"Competition increased because corporations were broken up immediately",
-        C:"Factories shut down nationwide",
-        D:"Workers stopped organizing labor unions"
-      },
-      answer:"A",
-      hint:"Less regulation often allows consolidation.",
-      explain:"Limited regulation allowed corporations to expand and consolidate into trusts and monopolies."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Rapid immigration increased city populations.",
-      effect:"Disease spread more easily in crowded neighborhoods.",
-      choices:{
-        A:"Overcrowded tenements and poor sanitation developed",
-        B:"Cities became less diverse",
-        C:"Factories moved to rural areas",
-        D:"Public transit disappeared"
-      },
-      answer:"A",
-      hint:"Think: housing and infrastructure strain.",
-      explain:"Population growth contributed to crowded tenements and sanitation problems, increasing disease spread."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Unsafe working conditions and long hours were common in factories.",
-      effect:"Employers sometimes faced organized pressure to improve conditions.",
-      choices:{
-        A:"Workers formed labor unions to bargain collectively",
-        B:"Workers abandoned collective action permanently",
-        C:"Government ended industrial production",
-        D:"Workers moved to farms to increase agricultural labor"
-      },
-      answer:"A",
-      hint:"What collective response did workers take?",
-      explain:"Workers formed unions to increase bargaining power for safer conditions and better wages."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Jim Crow laws enforced racial segregation and discrimination.",
-      effect:"African Americans sought greater safety and opportunity outside the South.",
-      choices:{
-        A:"Many participated in the Great Migration to northern cities",
-        B:"Segregation ended nationwide by 1900",
-        C:"The Supreme Court banned discrimination in Plessy",
-        D:"Factories eliminated the need for workers"
-      },
-      answer:"A",
-      hint:"Look for movement away from oppression.",
-      explain:"Jim Crow pushed many African Americans to move north during the Great Migration."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Westward settlement increased competition for land and resources.",
-      effect:"Native American communities lost land and autonomy.",
-      choices:{
-        A:"Federal policies expanded the reservation system",
-        B:"The government ended settlement and returned all land",
-        C:"Tribal sovereignty increased everywhere without conflict",
-        D:"Railroads stopped expanding into the West"
-      },
-      answer:"A",
-      hint:"Think: policy response to conflict and land pressure.",
-      explain:"Settlement pressure and conflict contributed to policies confining tribes to reservations."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Muckrakers exposed corruption and unsafe consumer practices.",
-      effect:"Government expanded regulation and reform efforts.",
-      choices:{
-        A:"Public pressure increased support for Progressive reforms",
-        B:"The public became less aware of social problems",
-        C:"Corporations gained more power with no resistance",
-        D:"Urbanization ended as cities lost population"
-      },
-      answer:"A",
-      hint:"Exposure often creates outrage and demands for action.",
-      explain:"Muckrakers raised awareness, which increased support for Progressive reforms and regulation."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Plessy v. Ferguson upheld 'separate but equal.'",
-      effect:"Racial inequality remained institutionalized for decades.",
-      choices:{
-        A:"Segregation gained legal support and expanded",
-        B:"Segregation was declared unconstitutional immediately",
-        C:"Voting barriers disappeared across the South",
-        D:"Industrialization ended in the United States"
-      },
-      answer:"A",
-      hint:"Plessy strengthened segregation rather than ending it.",
-      explain:"Plessy upheld segregation, giving Jim Crow legal backing and reinforcing inequality."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Cities grew faster than housing construction and infrastructure improvements.",
-      effect:"Living conditions worsened in many working-class neighborhoods.",
-      choices:{
-        A:"Tenement overcrowding increased and sanitation problems spread",
-        B:"Cities became less populated and more rural",
-        C:"Immigration ended and factories closed",
-        D:"Public health improved immediately"
-      },
-      answer:"A",
-      hint:"Fast growth often strains housing and sanitation.",
-      explain:"Rapid growth contributed to overcrowded tenements and sanitation failures that worsened living conditions."
-    },
-    {
-      stem:"Which option BEST completes the chain?",
-      cause:"Progressive reformers believed democracy was weakened by political machines.",
-      effect:"Cities began adopting changes to reduce corruption.",
-      choices:{
-        A:"Reforms targeted patronage and expanded accountability in city government",
-        B:"Machines gained more control through bribery",
-        C:"Elections were eliminated to end disagreement",
-        D:"Cities stopped providing public services"
-      },
-      answer:"A",
-      hint:"Think: reforms aimed at corruption and patronage.",
-      explain:"Progressives pushed reforms to reduce machine power, patronage, and corruption and increase accountability."
-    }
-  ];
+
+/* INDUSTRIALIZATION */
+
+{
+stem:"Which option BEST completes the cause–effect chain?",
+cause:"Mechanized farming reduced the need for agricultural labor.",
+effect:"Urban populations increased rapidly during the late 19th century.",
+choices:{
+A:"Workers migrated to cities seeking factory employment",
+B:"Southern segregation laws ended",
+C:"Industrial production declined nationwide",
+D:"Railroads were dismantled across the country"
+},
+answer:"A",
+hint:"Where did displaced farm workers go?",
+explain:"Mechanization pushed rural workers toward urban factory jobs, increasing city populations."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Laissez-faire economic policies limited federal regulation of business.",
+effect:"Some industries became dominated by a small number of corporations.",
+choices:{
+A:"Trusts and monopolies expanded",
+B:"Labor unions dissolved",
+C:"Cities depopulated rapidly",
+D:"Immigration stopped entirely"
+},
+answer:"A",
+hint:"Less regulation allowed what kind of consolidation?",
+explain:"Minimal regulation allowed corporations to merge and form trusts and monopolies."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Rapid industrial growth created unsafe factory conditions.",
+effect:"Employers faced organized pressure for workplace reforms.",
+choices:{
+A:"Workers formed labor unions",
+B:"Factories closed immediately",
+C:"Industrialization ended",
+D:"Westward migration increased"
+},
+answer:"A",
+hint:"How did workers respond collectively?",
+explain:"Labor unions formed to demand safer conditions and better wages."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Mass production increased efficiency in factories.",
+effect:"Consumer goods became more affordable and widely available.",
+choices:{
+A:"Production costs decreased per item",
+B:"Factories reduced output",
+C:"Urban populations declined",
+D:"Monopolies disappeared"
+},
+answer:"A",
+hint:"Efficiency lowers what?",
+explain:"Assembly-line efficiency reduced production costs, lowering consumer prices."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Urban populations grew faster than infrastructure development.",
+effect:"Public health problems increased in many cities.",
+choices:{
+A:"Overcrowded tenements lacked sanitation",
+B:"Factories relocated to farms",
+C:"Railroads stopped operating",
+D:"Immigration laws eliminated disease"
+},
+answer:"A",
+hint:"Think housing + sanitation.",
+explain:"Overcrowding and poor sanitation increased disease spread."
+},
+
+/* IMMIGRATION */
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Immigrants settled in ethnic neighborhoods.",
+effect:"Cultural traditions were preserved while influencing broader American society.",
+choices:{
+A:"Cultural diffusion expanded",
+B:"Industrialization declined",
+C:"Jim Crow laws ended",
+D:"Political machines dissolved"
+},
+answer:"A",
+hint:"Cultural blending is called what?",
+explain:"Ethnic neighborhoods contributed to cultural diffusion."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Competition for urban jobs intensified during industrialization.",
+effect:"Anti-immigrant attitudes increased in some communities.",
+choices:{
+A:"Nativism grew",
+B:"Immigration ended permanently",
+C:"Factories closed",
+D:"Trusts dissolved"
+},
+answer:"A",
+hint:"Hostility toward immigrants is called?",
+explain:"Economic competition fueled nativist sentiment."
+},
+
+/* GREAT MIGRATION */
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Jim Crow laws enforced racial segregation in the South.",
+effect:"African American populations increased in northern cities.",
+choices:{
+A:"The Great Migration occurred",
+B:"Plessy v. Ferguson was overturned",
+C:"Southern factories expanded",
+D:"Reservation policies ended"
+},
+answer:"A",
+hint:"Think movement north.",
+explain:"Segregation and discrimination pushed many African Americans north."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Northern factories needed workers during wartime production.",
+effect:"African Americans relocated to industrial cities.",
+choices:{
+A:"Job opportunities acted as pull factors",
+B:"Southern agriculture expanded",
+C:"Industrialization ended",
+D:"Voting restrictions increased"
+},
+answer:"A",
+hint:"Pull factor.",
+explain:"Industrial jobs attracted migrants north."
+},
+
+/* WESTWARD EXPANSION */
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"The Homestead Act offered land to settlers willing to farm it.",
+effect:"Western territories experienced rapid population growth.",
+choices:{
+A:"Migration to the West increased",
+B:"Railroads stopped expanding",
+C:"Native tribes gained autonomy",
+D:"Industrialization slowed"
+},
+answer:"A",
+hint:"Land incentives cause what?",
+explain:"Land grants encouraged settlement."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"The Dawes Act divided tribal lands into individual plots.",
+effect:"Native American landholdings declined significantly.",
+choices:{
+A:"Surplus land was sold to settlers",
+B:"Tribal sovereignty strengthened",
+C:"Industrial unions formed",
+D:"Cities depopulated"
+},
+answer:"A",
+hint:"What happened to 'unused' land?",
+explain:"Remaining land was sold, reducing tribal land."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Railroad expansion connected eastern markets to western territories.",
+effect:"Economic development increased in the West.",
+choices:{
+A:"Transportation of goods became more efficient",
+B:"Urban populations declined",
+C:"Immigration stopped",
+D:"Political machines dissolved"
+},
+answer:"A",
+hint:"Think transportation efficiency.",
+explain:"Railroads stimulated trade and settlement."
+},
+
+/* PROGRESSIVE ERA */
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Muckrakers exposed unsafe food production practices.",
+effect:"Federal laws regulating food safety were passed.",
+choices:{
+A:"Public outrage increased pressure for reform",
+B:"Industrialization ended",
+C:"Laissez-faire strengthened",
+D:"Labor unions dissolved"
+},
+answer:"A",
+hint:"Exposure leads to what reaction?",
+explain:"Public awareness increased support for regulation."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Political machines used patronage to control city governments.",
+effect:"Reformers sought structural changes to reduce corruption.",
+choices:{
+A:"Progressive reforms targeted political machines",
+B:"Urbanization ended",
+C:"Immigration stopped",
+D:"Segregation expanded"
+},
+answer:"A",
+hint:"Reform response.",
+explain:"Progressives pushed reforms to reduce machine power."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Corporate consolidation limited competition.",
+effect:"Congress passed legislation to restrict monopolistic practices.",
+choices:{
+A:"Antitrust laws were enacted",
+B:"Industrial output declined",
+C:"Jim Crow ended",
+D:"Urban growth slowed"
+},
+answer:"A",
+hint:"Think Sherman Act.",
+explain:"Antitrust legislation targeted monopolies."
+},
+
+/* CIVIL RIGHTS ROOTS */
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Plessy v. Ferguson upheld 'separate but equal.'",
+effect:"Segregation remained legally protected.",
+choices:{
+A:"Jim Crow laws gained constitutional support",
+B:"Civil rights expanded immediately",
+C:"Voting restrictions ended",
+D:"Urban reform accelerated"
+},
+answer:"A",
+hint:"Legal reinforcement.",
+explain:"Plessy legitimized segregation."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Literacy tests and poll taxes restricted voting.",
+effect:"African American political participation declined.",
+choices:{
+A:"Disenfranchisement increased",
+B:"Industrial unions expanded",
+C:"Immigration declined",
+D:"Monopolies ended"
+},
+answer:"A",
+hint:"Loss of voting rights.",
+explain:"Voting barriers disenfranchised many African Americans."
+},
+
+/* REVIEW MIX — BALANCED ANSWERS */
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Industrial job growth attracted rural workers.",
+effect:"Cities became centers of economic opportunity.",
+choices:{
+A:"Urbanization accelerated",
+B:"Reservation policy expanded",
+C:"Plessy overturned segregation",
+D:"Railroads disappeared"
+},
+answer:"A",
+hint:"City growth.",
+explain:"Industrial jobs drove urban expansion."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Overcrowded tenements lacked proper sanitation.",
+effect:"Tuberculosis and cholera spread more easily.",
+choices:{
+A:"Public health crises intensified",
+B:"Industrial production declined",
+C:"Settlement houses closed",
+D:"Segregation ended"
+},
+answer:"A",
+hint:"Disease outbreak.",
+explain:"Poor sanitation increased disease transmission."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Workers organized strikes to protest low wages.",
+effect:"Employers negotiated new labor agreements.",
+choices:{
+A:"Collective bargaining increased",
+B:"Industrialization stopped",
+C:"Westward migration slowed",
+D:"Trusts expanded"
+},
+answer:"A",
+hint:"Negotiation.",
+explain:"Strikes increased bargaining power."
+},
+
+{
+stem:"Which option BEST completes the chain?",
+cause:"Urban growth overwhelmed local governments.",
+effect:"Progressive reformers pushed for city management changes.",
+choices:{
+A:"Municipal reforms expanded",
+B:"Industrial unions dissolved",
+C:"Jim Crow ended",
+D:"Railroads declined"
+},
+answer:"A",
+hint:"City reform.",
+explain:"Urban strain increased demand for reform."
+}
+
+];
+
 
   function $(id){ return document.getElementById(id); }
 
