@@ -741,37 +741,50 @@
   }
 
   function renderQuestion(){
-    hideFeedback();
-    setHint("");
-    state.attemptThis = 0;
-    $("attemptThis").textContent = "0";
+  hideFeedback();
+  setHint("");
+  state.attemptThis = 0;
+  $("attemptThis").textContent = "0";
 
-    var qIndex = state.order[state.idx];
-    var q = questions[qIndex];
+  var qIndex = state.order[state.idx];
+  var q = questions[qIndex];
 
-    $("qNum").textContent = String(state.idx + 1);
-    $("qTotal").textContent = String(questions.length);
-    $("stem").textContent = q.stem;
-    $("tag").textContent = q.tag;
+  $("qNum").textContent = String(state.idx + 1);
+  $("qTotal").textContent = String(questions.length);
 
-    var keys = ["A","B","C","D"];
-    var html = "";
-    for(var i=0;i<keys.length;i++){
-      var k = keys[i];
-      html += '<button class="choice" data-key="' + k + '"><strong>' + k + '.</strong> ' + q.choices[k] + '</button>';
-    }
-    $("choices").innerHTML = html;
+  // ✅ Support BOTH formats:
+  // - Game 7 "normal" format: stem/tag/choices
+  // - Your current format: cause/prompt/options/effect
+  var stemText = q.stem
+    ? q.stem
+    : (q.cause + " " + (q.prompt || "") + "\n\n" + "Effect: " + q.effect);
 
-    var btns = $("choices").querySelectorAll("button.choice");
-    for(var j=0;j<btns.length;j++){
-      btns[j].addEventListener("click", function(){
-        if(state.locked) return;
-        checkAnswer(this.getAttribute("data-key"));
-      });
-    }
+  var tagText = q.tag ? q.tag : "Cause → Link → Effect";
 
-    updateKPIs();
+  var choicesObj = q.choices ? q.choices : q.options;
+
+  $("stem").textContent = stemText;
+  $("tag").textContent = tagText;
+
+  var keys = ["A","B","C","D"];
+  var html = "";
+  for(var i=0;i<keys.length;i++){
+    var k = keys[i];
+    html += '<button class="choice" data-key="' + k + '"><strong>' + k + '.</strong> ' + (choicesObj[k] || "") + '</button>';
   }
+  $("choices").innerHTML = html;
+
+  var btns = $("choices").querySelectorAll("button.choice");
+  for(var j=0;j<btns.length;j++){
+    btns[j].addEventListener("click", function(){
+      if(state.locked) return;
+      checkAnswer(this.getAttribute("data-key"));
+    });
+  }
+
+  updateKPIs();
+}
+
 
   function checkAnswer(choice){
     var qIndex = state.order[state.idx];
