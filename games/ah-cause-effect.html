@@ -1,603 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>American Studies — Game 1: Cause & Effect (Mastery)</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* Game-specific layout additions (keeps your global styles.css intact) */
+    .gameShell{ width:min(980px,100%); margin:0 auto; padding:18px; }
+    .panel{
+      background:rgba(17,26,47,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 12px 35px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between}
+    .kpis{display:flex; gap:10px; flex-wrap:wrap}
+    .kpi{
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .kpi strong{color:var(--text)}
+    .qwrap{margin-top:14px}
+    .qmeta{display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+    .stem{margin-top:10px; font-size:18px; line-height:1.35; font-weight:800;}
+    .choices{display:grid; gap:10px; margin-top:12px}
+    .choice{
+      text-align:left;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      transition:transform .08s ease, border-color .12s ease;
+      font-size:15px;
+      line-height:1.35;
+    }
+    .choice:hover{transform:translateY(-1px); border-color:rgba(122,162,255,.35)}
+    .choice[disabled]{opacity:.55; cursor:not-allowed; transform:none}
+    .msg{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(0,0,0,.18);
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .msg.good{border-color:rgba(43,213,118,.35)}
+    .msg.bad{border-color:rgba(255,92,122,.35)}
+    .msg.warn{border-color:rgba(255,209,102,.35)}
+    .msgTitle{font-weight:900; margin-bottom:6px; color:var(--text)}
+    .hintBox{
+      margin-top:10px;
+      border:1px dashed rgba(255,209,102,.45);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(255,209,102,.06);
+      color:var(--muted);
+      display:none;
+    }
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .btn:hover{border-color:rgba(122,162,255,.35)}
+    .btn.primary{background:rgba(122,162,255,.18); border-color:rgba(122,162,255,.35)}
+    .btn.good{background:rgba(43,213,118,.14); border-color:rgba(43,213,118,.35)}
+    .btn.bad{background:rgba(255,92,122,.12); border-color:rgba(255,92,122,.35)}
+    .btn[disabled]{opacity:.5; cursor:not-allowed}
+    .nameGate{display:grid; gap:10px; margin-top:10px;}
+    input[type="text"]{
+      width:min(420px,100%);
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    .small{font-size:13px; color:var(--muted)}
+    .hr{height:1px; background:var(--line); margin:14px 0}
+    .finishCard{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+    }
+    .code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gameShell">
+    <div class="panel">
+      <div class="row">
+        <div>
+          <div class="title">American Studies — Game 1</div>
+          <div class="desc">Cause & Effect • OST-style stems • 100% mastery required</div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong id="kpiName">Name:</strong> <span id="nameOut">—</span></div>
+          <div class="kpi"><strong>Score:</strong> <span id="scoreOut">0 / 0</span></div>
+          <div class="kpi"><strong>Accuracy:</strong> <span id="accOut">0%</span></div>
+          <div class="kpi"><strong>Progress:</strong> <span id="progOut">0 / 0</span></div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <!-- NAME GATE -->
+      <div id="gate">
+        <div class="msg warn">
+          <div class="msgTitle">Start</div>
+          <div>Enter your name to begin. Questions are randomized each run. Mastery requires <strong>100% accuracy</strong> across all questions.</div>
+        </div>
+        <div class="nameGate">
+          <input id="nameIn" type="text" placeholder="Student Name" maxlength="40" />
+          <div class="actions">
+            <button class="btn primary" id="btnStart">Start Game</button>
+          </div>
+          <div class="small">Tip: If you miss any question, you can still finish the run — but mastery will not unlock unless accuracy is 100%.</div>
+        </div>
+      </div>
+
+      <!-- GAME -->
+      <div id="game" style="display:none;">
+        <div class="qwrap">
+          <div class="qmeta">
+            <div><strong>Question:</strong> <span id="qNum">1</span> / <span id="qTotal">0</span></div>
+            <div><strong>Attempt on this question:</strong> <span id="attemptThis">0</span></div>
+          </div>
+
+          <div class="stem" id="stem">—</div>
+
+          <div class="choices" id="choices"></div>
+
+          <div class="hintBox" id="hintBox"></div>
+
+          <div class="msg" id="feedback" style="display:none;">
+            <div class="msgTitle" id="fbTitle">—</div>
+            <div id="fbText">—</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn bad" id="btnRestart">Restart Run</button>
+            <button class="btn good" id="btnFinish" disabled>Finish / Submit</button>
+          </div>
+
+          <div class="small" style="margin-top:10px;">
+            Mastery unlocks only when <strong>all questions are completed</strong> and <strong>accuracy is 100%</strong>.
+          </div>
+        </div>
+
+        <!-- FINISH SCREEN -->
+        <div id="finish" style="display:none;">
+          <div class="finishCard">
+            <div class="msgTitle">Run Summary</div>
+            <div class="small" id="summaryLine">—</div>
+            <div class="hr"></div>
+            <div class="code" id="summaryCode">—</div>
+            <div class="actions" style="margin-top:12px;">
+              <button class="btn primary" id="btnNewRun">New Randomized Run</button>
+            </div>
+            <div class="small" style="margin-top:10px;">
+              If accuracy is not 100%, mastery is not earned — hit <strong>New Randomized Run</strong> and try again.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 <script>
-/* =========================================================
-   UNIVERSAL MASTERY GAME SHELL (Legend Rules)
-========================================================= */
+  const questions = [
+    {"stem":"Which factor MOST directly contributed to rapid urbanization in the late 1800s?","choices":{"A":"Industrial jobs attracting workers to growing cities","B":"A nationwide decline in immigration to the United States","C":"Federal laws requiring families to move from cities to farms","D":"The end of factory production due to high shipping costs"},"answer":"A","hint":"Where were the new jobs concentrated during industrial growth?","explain":"Industrialization created large numbers of factory and service jobs in cities, pulling workers from rural areas and from overseas into urban centers."},
+    {"stem":"Which outcome MOST directly resulted from mechanized farming in the late 19th and early 20th centuries?","choices":{"A":"A sudden end to industrial growth in major cities","B":"A reduced need for human labor on farms","C":"A shift of the population from cities back to rural areas","D":"A decrease in crop yields because machines harmed soil"},"answer":"B","hint":"Machines replaced what kind of work on farms?","explain":"Mechanized farming increased efficiency, meaning fewer workers were needed to plant, harvest, and process crops—pushing many people toward towns and cities."},
+    {"stem":"Which change MOST directly resulted from the introduction of assembly lines in early 20th-century industry?","choices":{"A":"Factories produced fewer goods, raising prices","B":"Workers gained more control over the pace of production","C":"Mass production increased output and lowered costs","D":"Industrial jobs moved away from cities into remote farms"},"answer":"C","hint":"Assembly lines are about speed and standardization.","explain":"Assembly lines standardized tasks and increased speed, allowing factories to produce more goods at lower cost, helping expand consumer markets."},
+    {"stem":"Between 1877 and 1900, why did the percentage of people living in agricultural regions decline?","choices":{"A":"Farm wages rose above factory wages","B":"Immigration to cities ended during this period","C":"Most farms were abandoned due to drought alone","D":"New farming technology reduced the need for farm labor"},"answer":"D","hint":"Think: fewer workers needed per acre.","explain":"Mechanization reduced the need for farm labor, while industrial jobs expanded—contributing to migration toward urban areas."},
+    {"stem":"Which factor MOST directly contributed to the growth of labor unions in the early 1900s?","choices":{"A":"Safer working conditions eliminated worker concerns","B":"Workers wanted fewer protections and less regulation","C":"Unsafe working conditions and long hours in factories","D":"Laissez-faire policies guaranteed higher wages for all workers"},"answer":"C","hint":"Why would workers organize at all?","explain":"Many workers faced low wages, long hours, and dangerous conditions, so unions formed to push for reforms like safer workplaces and fair pay."},
+    {"stem":"Which government approach MOST directly allowed corporations to expand with limited oversight during the late 1800s?","choices":{"A":"Strict regulation of business activity by federal agencies","B":"Laissez-faire policies that limited government intervention","C":"A ban on trusts and monopolies before they formed","D":"A requirement that unions approve all business decisions"},"answer":"B","hint":"Which approach means 'hands off'?","explain":"Laissez-faire policies limited regulation, enabling rapid corporate growth, consolidation, and the rise of trusts and monopolies."},
+    {"stem":"Which result MOST directly followed the rise of trusts and monopolies during industrialization?","choices":{"A":"Competition increased and prices always fell","B":"Workers gained immediate control over factory management","C":"Consumers stopped buying manufactured goods","D":"A small number of companies controlled markets and limited competition"},"answer":"D","hint":"What happens when one company controls most of a market?","explain":"Trusts and monopolies reduced competition by concentrating market power, often influencing prices, wages, and politics."},
+    {"stem":"Which factor MOST directly encouraged mass immigration to the United States in the late 1800s and early 1900s?","choices":{"A":"The demand for industrial labor in growing cities","B":"The collapse of all factory systems in the North","C":"Federal laws requiring immigrants to settle on farms only","D":"An end to urban job opportunities"},"answer":"A","hint":"Immigrants often followed job demand.","explain":"Rapid industrial growth created a strong demand for workers, drawing immigrants to U.S. cities where factories needed labor."},
+    {"stem":"Which condition MOST directly contributed to the spread of disease in urban tenement housing?","choices":{"A":"Strict building codes requiring sanitation systems","B":"Overcrowding with poor ventilation and limited clean water","C":"Low population density and wide open spaces","D":"High-quality housing built for every new arrival"},"answer":"B","hint":"Think: crowding + sanitation.","explain":"Tenements were often overcrowded and lacked sanitation and ventilation, making diseases like tuberculosis and cholera spread more easily."},
+    {"stem":"Which factor MOST directly influenced internal migration to northern cities in the early 1900s?","choices":{"A":"A national policy banning factory work","B":"A decline in industrial jobs in the North","C":"Industrial job opportunities and higher wages in urban areas","D":"A rapid expansion of farming jobs in the South"},"answer":"C","hint":"People move toward opportunity.","explain":"Northern cities offered industrial jobs and wages that attracted internal migrants, including many seeking better economic prospects."},
+    {"stem":"Which factor MOST directly contributed to the Great Migration of African Americans from the South to the North?","choices":{"A":"A lack of jobs in northern industry","B":"A decline in racial discrimination in the South","C":"The end of segregation laws in southern states","D":"Escape from Jim Crow oppression and pursuit of better opportunities"},"answer":"D","hint":"Push + pull: what were they fleeing, and what were they seeking?","explain":"Jim Crow segregation and violence pushed many African Americans out of the South, while northern job opportunities pulled them toward urban centers."},
+    {"stem":"Which was the MOST significant effect of continued westward settlement by Americans in the late 1800s?","choices":{"A":"Fewer conflicts occurred as settlers avoided western lands","B":"American Indians were driven off land through conflict and federal policy","C":"American Indians gained expanded control of western resources","D":"The reservation system was ended to promote independence"},"answer":"B","hint":"Land pressure drove conflict and policy.","explain":"Westward settlement increased conflict and led to policies (treaties, reservations, assimilation) that displaced American Indians from their lands."},
+    {"stem":"Which goal MOST directly explains federal assimilation policies toward American Indians (e.g., reservation system, boarding schools)?","choices":{"A":"To preserve tribal cultures unchanged","B":"To encourage bilingual education and tribal sovereignty","C":"To pressure American Indians to adopt European American culture","D":"To expand American Indian control over natural resources"},"answer":"C","hint":"What did 'Americanization' mean in practice?","explain":"Assimilation policies sought to replace tribal languages, traditions, and governance with European American cultural norms."},
+    {"stem":"Which statement BEST explains the MOST direct impact of treaties on American Indians in the late 1800s?","choices":{"A":"They expanded American Indian landholdings across the West","B":"They limited American Indian access to western lands and resources","C":"They guaranteed equal political power in state governments","D":"They ended conflict by permanently stopping settlement"},"answer":"B","hint":"Treaties often meant land cessions.","explain":"Many treaties resulted in American Indians losing land and being confined to reservations, reducing access to traditional resources."},
+    {"stem":"Which development MOST directly allowed racial discrimination to become institutionalized in the South after Reconstruction?","choices":{"A":"Continued federal military enforcement across southern states","B":"A national ban on segregation laws","C":"Expansion of Reconstruction-era protections nationwide","D":"Removal of federal troops and the return of white Democratic control"},"answer":"D","hint":"What changed when federal enforcement ended?","explain":"When federal troops were removed, southern governments regained control and enacted policies that built Jim Crow segregation and disenfranchisement."},
+    {"stem":"Which impact MOST directly resulted from Jim Crow laws?","choices":{"A":"Legal segregation and unequal public facilities","B":"Immediate equal protection enforcement in every state","C":"A nationwide end to discrimination in education","D":"A rapid expansion of voting rights for African Americans"},"answer":"A","hint":"Jim Crow = legally enforced separation.","explain":"Jim Crow laws enforced segregation and inequality in public spaces, education, transportation, and civic life."},
+    {"stem":"Which Supreme Court decision MOST directly supported segregation policies by upholding “separate but equal”?","choices":{"A":"Brown v. Board of Education","B":"Plessy v. Ferguson","C":"Dred Scott v. Sandford","D":"Marbury v. Madison"},"answer":"B","hint":"Think: 'separate but equal' case name.","explain":"Plessy v. Ferguson (1896) upheld segregation under the “separate but equal” doctrine, giving legal cover to Jim Crow systems."},
+    {"stem":"Which factor MOST directly contributed to the rise of the Progressive movement in the early 1900s?","choices":{"A":"A belief that unregulated industrial capitalism caused social problems","B":"A desire to eliminate all government regulation permanently","C":"A decline in political corruption at local and state levels","D":"A belief that monopolies increased competition and fairness"},"answer":"A","hint":"Progressives reacted to problems created by rapid change.","explain":"Progressives sought reforms to address problems tied to industrialization, urbanization, and political corruption."},
+    {"stem":"Which reform MOST directly resulted from Progressive efforts to improve consumer safety?","choices":{"A":"The Dawes Act","B":"The Pure Food and Drug Act","C":"The Kansas-Nebraska Act","D":"The Chinese Exclusion Act"},"answer":"B","hint":"Think: food + medicine regulation.","explain":"Progressive consumer protection reforms included laws like the Pure Food and Drug Act aimed at safety and truthful labeling."},
+    {"stem":"Which Progressive reform MOST directly targeted the power of monopolies?","choices":{"A":"Strict enforcement of antitrust laws","B":"The creation of Jim Crow segregation policies","C":"The elimination of labor unions","D":"The end of all regulation of large corporations"},"answer":"A","hint":"Which reform breaks up or limits market control?","explain":"Progressives used antitrust enforcement to curb monopolies and trusts that dominated markets and reduced competition."},
+    {"stem":"Which statement BEST explains why muckrakers influenced Progressive Era reforms?","choices":{"A":"They reduced public awareness of corruption","B":"They exposed social and economic problems to the public","C":"They argued that trusts improved democracy","D":"They demanded the end of all workplace protections"},"answer":"B","hint":"Muckrakers = investigators who publicized problems.","explain":"Muckrakers used journalism to expose corruption and unsafe conditions, building public pressure for reforms."},
+    {"stem":"Which outcome MOST directly resulted from rapid urbanization during industrialization?","choices":{"A":"Cities faced overcrowding and strain on services like sanitation and housing","B":"Urban populations declined as people returned to farms","C":"Housing improved immediately for all workers","D":"Public transportation disappeared because fewer people needed it"},"answer":"A","hint":"What problems occur when population grows faster than infrastructure?","explain":"Urban growth often outpaced infrastructure, creating overcrowding, poor sanitation, and unsafe housing conditions."},
+    {"stem":"Which factor MOST directly explains why some cities expanded public transportation systems in the late 1800s and early 1900s?","choices":{"A":"To reduce the movement of workers to job centers","B":"To keep neighborhoods isolated from each other","C":"To help large urban populations commute to work","D":"To encourage workers to move back to rural farms"},"answer":"C","hint":"Think: commuting in growing cities.","explain":"As cities grew, transportation systems expanded to move workers efficiently between housing areas and workplaces."},
+    {"stem":"Which effect MOST directly followed increased industrial demand for workers?","choices":{"A":"A decrease in immigration because jobs vanished","B":"A rise in immigration and internal migration toward industrial cities","C":"A shift of workers away from cities and into isolated rural areas","D":"An end to urban population growth across the country"},"answer":"B","hint":"Labor demand pulls people in.","explain":"Industrial growth created job demand that drew immigrants and internal migrants to cities, accelerating urbanization."},
+    {"stem":"Which statement BEST explains how violent backlash affected labor organizations?","choices":{"A":"Violence increased worker confidence and eliminated all opposition","B":"Violence ended all labor unions permanently by 1900","C":"Violence often weakened unions by intimidating workers and reducing participation","D":"Violence caused the government to ban all businesses"},"answer":"C","hint":"What does intimidation do to organizing?","explain":"Violence, firings, and intimidation could discourage participation, weaken strikes, and limit union power—even as unions continued to push for reforms."},
+    {"stem":"Which factor MOST directly explains the rise of ethnic neighborhoods in major U.S. cities?","choices":{"A":"Immigrants often settled near people with shared language and culture","B":"Federal law forced immigrants to live in isolated rural communities","C":"Factories banned immigrants from living near city centers","D":"Cities prevented immigrants from owning businesses and forming communities"},"answer":"A","hint":"People cluster where they feel support and familiarity.","explain":"Ethnic neighborhoods formed as immigrants settled near others who shared language, religion, and customs, creating support networks and cultural continuity."},
+    {"stem":"Which statement BEST explains how laissez-faire policies influenced the economy during industrialization?","choices":{"A":"They required strict limits on business expansion and corporate size","B":"They ensured all workers received equal wages by law","C":"They reduced the role of government, allowing corporations to grow with fewer limits","D":"They forced factories to close because government controlled production"},"answer":"C","hint":"Laissez-faire = limited regulation.","explain":"Laissez-faire limited government intervention, enabling rapid corporate growth and consolidation, which shaped labor conditions and market power."},
+    {"stem":"Which effect MOST directly resulted from Progressive reforms aimed at improving working conditions?","choices":{"A":"The elimination of consumer protection laws","B":"The expansion of workplace safety expectations and labor protections","C":"The end of all unions because reforms replaced them","D":"The repeal of antitrust enforcement"},"answer":"B","hint":"Progressives pushed for safer workplaces and reforms.","explain":"Progressive reforms addressed unsafe workplaces through regulation, inspections, and new expectations for worker protections."},
+    {"stem":"Which event BEST illustrates how westward settlement intensified conflict with American Indians?","choices":{"A":"The immediate recognition of full tribal sovereignty in western territories","B":"The end of military campaigns in the Plains after 1860","C":"Settlers expanding onto tribal lands, leading to armed conflict and forced relocation","D":"The removal of all federal policies related to American Indian land"},"answer":"C","hint":"Settlement pressure → conflict → displacement.","explain":"As settlers moved west, conflict increased and policies often forced American Indians onto reservations or off valuable land and resources."}
+  ];
 
-/** ✅ 30 questions: CS 8–13 Industrialization → Progressivism */
-const questions = [
-  {
-    stem: "Which factor MOST directly contributed to rapid urbanization in the late 1800s?",
-    choices: {
-      A: "Industrial jobs attracting workers to growing cities",
-      B: "A nationwide decline in immigration to the United States",
-      C: "Federal laws requiring families to move from cities to farms",
-      D: "The end of factory production due to high shipping costs"
-    },
-    answer: "A",
-    hint: "Where were the new jobs concentrated during industrial growth?",
-    explain: "Industrialization created large numbers of factory and service jobs in cities, pulling workers from rural areas and from overseas into urban centers."
-  },
-  {
-    stem: "Which outcome MOST directly resulted from mechanized farming in the late 19th and early 20th centuries?",
-    choices: {
-      A: "A sudden end to industrial growth in major cities",
-      B: "A reduced need for human labor on farms",
-      C: "A shift of the population from cities back to rural areas",
-      D: "A decrease in crop yields because machines harmed soil"
-    },
-    answer: "B",
-    hint: "Machines replaced what kind of work on farms?",
-    explain: "Mechanized farming increased efficiency, meaning fewer workers were needed to plant, harvest, and process crops—pushing many people toward towns and cities."
-  },
-  {
-    stem: "Which change MOST directly resulted from the introduction of assembly lines in early 20th-century industry?",
-    choices: {
-      A: "Factories produced fewer goods, raising prices",
-      B: "Workers gained more control over the pace of production",
-      C: "Mass production increased output and lowered costs",
-      D: "Industrial jobs moved away from cities into remote farms"
-    },
-    answer: "C",
-    hint: "Assembly lines are about speed and standardization.",
-    explain: "Assembly lines standardized tasks and increased speed, allowing factories to produce more goods at lower cost, helping expand consumer markets."
-  },
-  {
-    stem: "Between 1877 and 1900, why did the percentage of people living in agricultural regions decline?",
-    choices: {
-      A: "Farm wages rose above factory wages",
-      B: "Immigration to cities ended during this period",
-      C: "Most farms were abandoned due to drought alone",
-      D: "New farming technology reduced the need for farm labor"
-    },
-    answer: "D",
-    hint: "Think: fewer workers needed per acre.",
-    explain: "Mechanization reduced the need for farm labor, while industrial jobs expanded—contributing to migration toward urban areas."
-  },
-  {
-    stem: "Which factor MOST directly contributed to the growth of labor unions in the early 1900s?",
-    choices: {
-      A: "Safer working conditions eliminated worker concerns",
-      B: "Workers wanted fewer protections and less regulation",
-      C: "Unsafe working conditions and long hours in factories",
-      D: "Laissez-faire policies guaranteed higher wages for all workers"
-    },
-    answer: "C",
-    hint: "Why would workers organize at all?",
-    explain: "Many workers faced low wages, long hours, and dangerous conditions, so unions formed to push for reforms like safer workplaces and fair pay."
-  },
-  {
-    stem: "Which government approach MOST directly allowed corporations to expand with limited oversight during the late 1800s?",
-    choices: {
-      A: "Strict regulation of business activity by federal agencies",
-      B: "Laissez-faire policies that limited government intervention",
-      C: "A ban on trusts and monopolies before they formed",
-      D: "A requirement that unions approve all business decisions"
-    },
-    answer: "B",
-    hint: "Which approach means 'hands off'?",
-    explain: "Laissez-faire policies limited regulation, enabling rapid corporate growth, consolidation, and the rise of trusts and monopolies."
-  },
-  {
-    stem: "Which result MOST directly followed the rise of trusts and monopolies during industrialization?",
-    choices: {
-      A: "Competition increased and prices always fell",
-      B: "Workers gained immediate control over factory management",
-      C: "Consumers stopped buying manufactured goods",
-      D: "A small number of companies controlled markets and limited competition"
-    },
-    answer: "D",
-    hint: "What happens when one company controls most of a market?",
-    explain: "Trusts and monopolies reduced competition by concentrating market power, often influencing prices, wages, and politics."
-  },
-  {
-    stem: "Which factor MOST directly encouraged mass immigration to the United States in the late 1800s and early 1900s?",
-    choices: {
-      A: "The demand for industrial labor in growing cities",
-      B: "The collapse of all factory systems in the North",
-      C: "Federal laws requiring immigrants to settle on farms only",
-      D: "An end to urban job opportunities"
-    },
-    answer: "A",
-    hint: "Immigrants often followed job demand.",
-    explain: "Rapid industrial growth created a strong demand for workers, drawing immigrants to U.S. cities where factories needed labor."
-  },
-  {
-    stem: "Which condition MOST directly contributed to the spread of disease in urban tenement housing?",
-    choices: {
-      A: "Strict building codes requiring sanitation systems",
-      B: "Overcrowding with poor ventilation and limited clean water",
-      C: "Low population density and wide open spaces",
-      D: "High-quality housing built for every new arrival"
-    },
-    answer: "B",
-    hint: "Think: crowding + sanitation.",
-    explain: "Tenements were often overcrowded and lacked sanitation and ventilation, making diseases like tuberculosis and cholera spread more easily."
-  },
-  {
-    stem: "Which factor MOST directly influenced internal migration to northern cities in the early 1900s?",
-    choices: {
-      A: "A national policy banning factory work",
-      B: "A decline in industrial jobs in the North",
-      C: "Industrial job opportunities and higher wages in urban areas",
-      D: "A rapid expansion of farming jobs in the South"
-    },
-    answer: "C",
-    hint: "People move toward opportunity.",
-    explain: "Northern cities offered industrial jobs and wages that attracted internal migrants, including many seeking better economic prospects."
-  },
-  {
-    stem: "Which factor MOST directly contributed to the Great Migration of African Americans from the South to the North?",
-    choices: {
-      A: "A lack of jobs in northern industry",
-      B: "A decline in racial discrimination in the South",
-      C: "The end of segregation laws in southern states",
-      D: "Escape from Jim Crow oppression and pursuit of better opportunities"
-    },
-    answer: "D",
-    hint: "Push + pull: what were they fleeing, and what were they seeking?",
-    explain: "Jim Crow segregation and violence pushed many African Americans out of the South, while northern job opportunities pulled them toward urban centers."
-  },
-  {
-    stem: "Which was the MOST significant effect of continued westward settlement by Americans in the late 1800s?",
-    choices: {
-      A: "Fewer conflicts occurred as settlers avoided western lands",
-      B: "American Indians were driven off land through conflict and federal policy",
-      C: "American Indians gained expanded control of western resources",
-      D: "The reservation system was ended to promote independence"
-    },
-    answer: "B",
-    hint: "Land pressure drove conflict and policy.",
-    explain: "Westward settlement increased conflict and led to policies (treaties, reservations, assimilation) that displaced American Indians from their lands."
-  },
-  {
-    stem: "Which goal MOST directly explains federal assimilation policies toward American Indians (e.g., reservation system, boarding schools)?",
-    choices: {
-      A: "To preserve tribal cultures unchanged",
-      B: "To encourage bilingual education and tribal sovereignty",
-      C: "To pressure American Indians to adopt European American culture",
-      D: "To expand American Indian control over natural resources"
-    },
-    answer: "C",
-    hint: "What did 'Americanization' mean in practice?",
-    explain: "Assimilation policies sought to replace tribal languages, traditions, and governance with European American cultural norms."
-  },
-  {
-    stem: "Which statement BEST explains the MOST direct impact of treaties on American Indians in the late 1800s?",
-    choices: {
-      A: "They expanded American Indian landholdings across the West",
-      B: "They limited American Indian access to western lands and resources",
-      C: "They guaranteed equal political power in state governments",
-      D: "They ended conflict by permanently stopping settlement"
-    },
-    answer: "B",
-    hint: "Treaties often meant land cessions.",
-    explain: "Many treaties resulted in American Indians losing land and being confined to reservations, reducing access to traditional resources."
-  },
-  {
-    stem: "Which development MOST directly allowed racial discrimination to become institutionalized in the South after Reconstruction?",
-    choices: {
-      A: "Continued federal military enforcement across southern states",
-      B: "A national ban on segregation laws",
-      C: "Expansion of Reconstruction-era protections nationwide",
-      D: "Removal of federal troops and the return of white Democratic control"
-    },
-    answer: "D",
-    hint: "What changed when federal enforcement ended?",
-    explain: "When federal troops were removed, southern governments regained control and enacted policies that built Jim Crow segregation and disenfranchisement."
-  },
-  {
-    stem: "Which impact MOST directly resulted from Jim Crow laws?",
-    choices: {
-      A: "Legal segregation and unequal public facilities",
-      B: "Immediate equal protection enforcement in every state",
-      C: "A nationwide end to discrimination in education",
-      D: "A rapid expansion of voting rights for African Americans"
-    },
-    answer: "A",
-    hint: "Jim Crow = legally enforced separation.",
-    explain: "Jim Crow laws enforced segregation and inequality in public spaces, education, transportation, and civic life."
-  },
-  {
-    stem: "Which Supreme Court decision MOST directly supported segregation policies by upholding “separate but equal”?",
-    choices: {
-      A: "Brown v. Board of Education",
-      B: "Plessy v. Ferguson",
-      C: "Dred Scott v. Sandford",
-      D: "Marbury v. Madison"
-    },
-    answer: "B",
-    hint: "Think: 'separate but equal' case name.",
-    explain: "Plessy v. Ferguson (1896) upheld segregation under the “separate but equal” doctrine, giving legal cover to Jim Crow systems."
-  },
-  {
-    stem: "Which factor MOST directly contributed to the rise of the Progressive movement in the early 1900s?",
-    choices: {
-      A: "A belief that unregulated industrial capitalism caused social problems",
-      B: "A desire to eliminate all government regulation permanently",
-      C: "A decline in political corruption at local and state levels",
-      D: "A belief that monopolies increased competition and fairness"
-    },
-    answer: "A",
-    hint: "Progressives reacted to problems created by rapid change.",
-    explain: "Progressives sought reforms to address problems tied to industrialization, urbanization, and political corruption."
-  },
-  {
-    stem: "Which reform MOST directly resulted from Progressive efforts to improve consumer safety?",
-    choices: {
-      A: "The Dawes Act",
-      B: "The Pure Food and Drug Act",
-      C: "The Kansas-Nebraska Act",
-      D: "The Chinese Exclusion Act"
-    },
-    answer: "B",
-    hint: "Think: food + medicine regulation.",
-    explain: "Progressive consumer protection reforms included laws like the Pure Food and Drug Act aimed at safety and truthful labeling."
-  },
-  {
-    stem: "Which Progressive reform MOST directly targeted the power of monopolies?",
-    choices: {
-      A: "Strict enforcement of antitrust laws",
-      B: "The creation of Jim Crow segregation policies",
-      C: "The elimination of labor unions",
-      D: "The end of all regulation of large corporations"
-    },
-    answer: "A",
-    hint: "Which reform breaks up or limits market control?",
-    explain: "Progressives used antitrust enforcement to curb monopolies and trusts that dominated markets and reduced competition."
-  },
-  {
-    stem: "Which statement BEST explains why muckrakers influenced Progressive Era reforms?",
-    choices: {
-      A: "They reduced public awareness of corruption",
-      B: "They exposed social and economic problems to the public",
-      C: "They argued that trusts improved democracy",
-      D: "They demanded the end of all workplace protections"
-    },
-    answer: "B",
-    hint: "Muckrakers = investigators who publicized problems.",
-    explain: "Muckrakers used journalism to expose corruption and unsafe conditions, building public pressure for reforms."
-  },
-  {
-    stem: "Which outcome MOST directly resulted from rapid urbanization during industrialization?",
-    choices: {
-      A: "Cities faced overcrowding and strain on services like sanitation and housing",
-      B: "Urban populations declined as people returned to farms",
-      C: "Housing improved immediately for all workers",
-      D: "Public transportation disappeared because fewer people needed it"
-    },
-    answer: "A",
-    hint: "What problems occur when population grows faster than infrastructure?",
-    explain: "Urban growth often outpaced infrastructure, creating overcrowding, poor sanitation, and unsafe housing conditions."
-  },
-  {
-    stem: "Which factor MOST directly explains why some cities expanded public transportation systems in the late 1800s and early 1900s?",
-    choices: {
-      A: "To reduce the movement of workers to job centers",
-      B: "To keep neighborhoods isolated from each other",
-      C: "To help large urban populations commute to work",
-      D: "To encourage workers to move back to rural farms"
-    },
-    answer: "C",
-    hint: "Think: commuting in growing cities.",
-    explain: "As cities grew, transportation systems expanded to move workers efficiently between housing areas and workplaces."
-  },
-  {
-    stem: "Which effect MOST directly followed increased industrial demand for workers?",
-    choices: {
-      A: "A decrease in immigration because jobs vanished",
-      B: "A rise in immigration and internal migration toward industrial cities",
-      C: "A shift of workers away from cities and into isolated rural areas",
-      D: "An end to urban population growth across the country"
-    },
-    answer: "B",
-    hint: "Labor demand pulls people in.",
-    explain: "Industrial growth created job demand that drew immigrants and internal migrants to cities, accelerating urbanization."
-  },
-  {
-    stem: "Which statement BEST explains how violent backlash affected labor organizations?",
-    choices: {
-      A: "Violence increased worker confidence and eliminated all opposition",
-      B: "Violence ended all labor unions permanently by 1900",
-      C: "Violence often weakened unions by intimidating workers and reducing participation",
-      D: "Violence caused the government to ban all businesses"
-    },
-    answer: "C",
-    hint: "What does intimidation do to organizing?",
-    explain: "Violence, firings, and intimidation could discourage participation, weaken strikes, and limit union power—even as unions continued to push for reforms."
-  },
-  {
-    stem: "Which factor MOST directly explains the rise of ethnic neighborhoods in major U.S. cities?",
-    choices: {
-      A: "Immigrants often settled near people with shared language and culture",
-      B: "Federal law forced immigrants to live in isolated rural communities",
-      C: "Factories banned immigrants from living near city centers",
-      D: "Cities prevented immigrants from owning businesses and forming communities"
-    },
-    answer: "A",
-    hint: "People cluster where they feel support and familiarity.",
-    explain: "Ethnic neighborhoods formed as immigrants settled near others who shared language, religion, and customs, creating support networks and cultural continuity."
-  },
-  {
-    stem: "Which statement BEST explains how laissez-faire policies influenced the economy during industrialization?",
-    choices: {
-      A: "They required strict limits on business expansion and corporate size",
-      B: "They ensured all workers received equal wages by law",
-      C: "They reduced the role of government, allowing corporations to grow with fewer limits",
-      D: "They forced factories to close because government controlled production"
-    },
-    answer: "C",
-    hint: "Laissez-faire = limited regulation.",
-    explain: "Laissez-faire limited government intervention, enabling rapid corporate growth and consolidation, which shaped labor conditions and market power."
-  },
-  {
-    stem: "Which effect MOST directly resulted from Progressive reforms aimed at improving working conditions?",
-    choices: {
-      A: "The elimination of consumer protection laws",
-      B: "The expansion of workplace safety expectations and labor protections",
-      C: "The end of all unions because reforms replaced them",
-      D: "The repeal of antitrust enforcement"
-    },
-    answer: "B",
-    hint: "Progressives pushed for safer workplaces and reforms.",
-    explain: "Progressive reforms addressed unsafe workplaces through regulation, inspections, and new expectations for worker protections."
-  },
-  {
-    stem: "Which event BEST illustrates how westward settlement intensified conflict with American Indians?",
-    choices: {
-      A: "The immediate recognition of full tribal sovereignty in western territories",
-      B: "The end of military campaigns in the Plains after 1860",
-      C: "Settlers expanding onto tribal lands, leading to armed conflict and forced relocation",
-      D: "The removal of all federal policies related to American Indian land"
-    },
-    answer: "C",
-    hint: "Settlement pressure → conflict → displacement.",
-    explain: "As settlers moved west, conflict increased and policies often forced American Indians onto reservations or off valuable land and resources."
-  }
-];
+  const $ = (id)=>document.getElementById(id);
 
-// ---------- game engine ----------
-const $ = (id)=>document.getElementById(id);
-
-const state = {
-  player: "",
-  startISO: null,
-  endISO: null,
-  order: [],
-  idx: 0,
-  attempts: 0,
-  correct: 0,
-  misses: 0,
-  missedSet: new Set(),
-  attemptThis: 0,
-  locked: false,
-  timer: null
-};
-
-function nowISO(){ return new Date().toISOString(); }
-function fmt(dt){
-  const d = new Date(dt);
-  return d.toLocaleString();
-}
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
-  }
-  return a;
-}
-function calcAcc(){
-  const totalQ = questions.length;
-  const perfectCorrect = totalQ - state.misses;
-  const acc = Math.round((perfectCorrect / totalQ) * 100);
-  return Math.max(0, Math.min(100, acc));
-}
-function updateKPIs(){
-  $("nameOut").textContent = state.player || "—";
-  $("scoreOut").textContent = `${state.correct} / ${questions.length}`;
-  $("accOut").textContent = `${calcAcc()}%`;
-  $("progOut").textContent = `${state.idx} / ${questions.length}`;
-}
-function showFeedback(type, title, text){
-  const box = $("feedback");
-  box.style.display = "block";
-  box.className = `msg ${type}`;
-  $("fbTitle").textContent = title;
-  $("fbText").textContent = text;
-}
-function hideFeedback(){ $("feedback").style.display = "none"; }
-function setHint(text){
-  const hb = $("hintBox");
-  if(!text){
-    hb.style.display = "none";
-    hb.textContent = "";
-    return;
-  }
-  hb.style.display = "block";
-  hb.textContent = `Hint: ${text}`;
-}
-function disableChoices(disabled){
-  const buttons = $("choices").querySelectorAll("button.choice");
-  buttons.forEach(b => b.disabled = disabled);
-}
-function renderQuestion(){
-  hideFeedback();
-  setHint("");
-  state.attemptThis = 0;
-  $("attemptThis").textContent = "0";
-  const qIndex = state.order[state.idx];
-  const q = questions[qIndex];
-  $("qNum").textContent = String(state.idx + 1);
-  $("qTotal").textContent = String(questions.length);
-  $("stem").textContent = q.stem;
-
-  const entries = Object.entries(q.choices);
-  $("choices").innerHTML = entries.map(([k,v]) => {
-    return `<button class="choice" data-key="${k}"><strong>${k}.</strong> ${v}</button>`;
-  }).join("");
-
-  $("choices").querySelectorAll("button.choice").forEach(btn=>{
-    btn.addEventListener("click", ()=>handleAnswer(btn.dataset.key));
-  });
-
-  updateKPIs();
-  updateFinishLock();
-}
-function updateFinishLock(){
-  const acc = calcAcc();
-  const doneAll = state.idx >= questions.length;
-  const mastery = doneAll && acc === 100;
-  $("btnFinish").disabled = !mastery;
-  if(doneAll){
-    if(mastery){
-      showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
-    }else{
-      showFeedback("warn","Run complete — not mastery",
-        `You finished the run, but accuracy is ${acc}%. Start a new randomized run and try for 100%.`);
-    }
-  }
-}
-function advance(){
-  state.idx++;
-  updateKPIs();
-  if(state.idx >= questions.length){
-    disableChoices(true);
-    setHint("");
-    updateFinishLock();
-    return;
-  }
-  renderQuestion();
-}
-function handleAnswer(letter){
-  if(state.locked) return;
-  const qIndex = state.order[state.idx];
-  const q = questions[qIndex];
-  state.attempts++;
-  state.attemptThis++;
-  $("attemptThis").textContent = String(state.attemptThis);
-
-  const isCorrect = (letter === q.answer);
-
-  if(isCorrect){
-    state.correct = Math.min(questions.length, state.correct + 1);
-    updateKPIs();
-    disableChoices(true);
-    state.locked = true;
-
-    const firstTry = state.attemptThis === 1;
-
-    if(firstTry){
-      showFeedback("good","Correct (first try)", q.explain || "Correct.");
-      clearTimeout(state.timer);
-      state.timer = setTimeout(()=>{
-        state.locked = false;
-        disableChoices(false);
-        advance();
-      }, 3000);
-    }else{
-      showFeedback("good","Correct (after hint)", q.explain || "Correct.");
-      clearTimeout(state.timer);
-      state.timer = setTimeout(()=>{
-        state.locked = false;
-        disableChoices(false);
-        advance();
-      }, 800);
-    }
-    return;
-  }
-
-  if(!state.missedSet.has(qIndex)){
-    state.missedSet.add(qIndex);
-    state.misses++;
-    updateKPIs();
-  }
-
-  showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
-  setHint(q.hint || "Look for the key cause/effect language in the question.");
-}
-function startRun(){
-  state.order = shuffle([...Array(questions.length).keys()]);
-  state.idx = 0;
-  state.attempts = 0;
-  state.correct = 0;
-  state.misses = 0;
-  state.missedSet = new Set();
-  state.attemptThis = 0;
-  state.locked = false;
-  clearTimeout(state.timer);
-  state.timer = null;
-
-  state.startISO = nowISO();
-  state.endISO = null;
-
-  $("finish").style.display = "none";
-  $("game").style.display = "block";
-  renderQuestion();
-}
-function restartRun(){ startRun(); }
-function finishRun(){
-  state.endISO = nowISO();
-  const acc = calcAcc();
-  const mastery = acc === 100 && state.idx >= questions.length;
-
-  const summary = {
-    course: "American Studies",
-    game: "Game 1 — Cause & Effect",
-    name: state.player,
-    date: new Date(state.startISO).toLocaleDateString(),
-    started: fmt(state.startISO),
-    completed: fmt(state.endISO),
-    questions: questions.length,
-    misses: state.misses,
-    accuracy: `${acc}%`,
-    mastery: mastery ? "YES" : "NO"
+  const state = {
+    player: "",
+    startISO: null,
+    endISO: null,
+    order: [],
+    idx: 0,
+    attempts: 0,
+    correct: 0,
+    misses: 0,
+    missedSet: new Set(),
+    attemptThis: 0,
+    locked: false,
+    timer: null
   };
 
-  $("summaryLine").textContent = mastery
-    ? "Mastery earned. Show this screen to your teacher."
-    : "Not mastery. Start a new randomized run and try again.";
+  function nowISO(){ return new Date().toISOString(); }
+  function fmt(dt){ return new Date(dt).toLocaleString(); }
 
-  $("summaryCode").textContent =
-    `NAME: ${summary.name}\n` +
-    `GAME: ${summary.game}\n` +
-    `DATE: ${summary.date}\n` +
-    `START: ${summary.started}\n` +
-    `END: ${summary.completed}\n` +
-    `QUESTIONS: ${summary.questions}\n` +
-    `MISSES: ${summary.misses}\n` +
-    `ACCURACY: ${summary.accuracy}\n` +
-    `MASTERY: ${summary.mastery}\n`;
-
-  $("finish").style.display = "block";
-  $("choices").innerHTML = "";
-  setHint("");
-}
-
-$("btnStart").addEventListener("click", ()=>{
-  const name = $("nameIn").value.trim();
-  if(!name){
-    alert("Please enter your name to begin.");
-    return;
+  function shuffle(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]] = [a[j],a[i]];
+    }
+    return a;
   }
-  state.player = name;
-  $("gate").style.display = "none";
-  $("game").style.display = "block";
-  startRun();
-});
 
-$("btnRestart").addEventListener("click", ()=>{
-  if(confirm("Restart with a new randomized run?")){
-    restartRun();
+  function calcAcc(){
+    const totalQ = questions.length;
+    const perfectCorrect = totalQ - state.misses;
+    const acc = Math.round((perfectCorrect / totalQ) * 100);
+    return Math.max(0, Math.min(100, acc));
   }
-});
 
-$("btnFinish").addEventListener("click", ()=>{
-  finishRun();
-});
+  function updateKPIs(){
+    $("nameOut").textContent = state.player || "—";
+    $("scoreOut").textContent = `${state.correct} / ${questions.length}`;
+    $("accOut").textContent = `${calcAcc()}%`;
+    $("progOut").textContent = `${state.idx} / ${questions.length}`;
+  }
 
-$("btnNewRun").addEventListener("click", ()=>{
-  restartRun();
-});
+  function showFeedback(type, title, text){
+    const box = $("feedback");
+    box.style.display = "block";
+    box.className = `msg ${type}`;
+    $("fbTitle").textContent = title;
+    $("fbText").textContent = text;
+  }
+  function hideFeedback(){ $("feedback").style.display = "none"; }
 
-updateKPIs();
+  function setHint(text){
+    const hb = $("hintBox");
+    if(!text){
+      hb.style.display = "none";
+      hb.textContent = "";
+      return;
+    }
+    hb.style.display = "block";
+    hb.textContent = `Hint: ${text}`;
+  }
+
+  function disableChoices(disabled){
+    $("choices").querySelectorAll("button.choice").forEach(b => b.disabled = disabled);
+  }
+
+  function updateFinishLock(){
+    const acc = calcAcc();
+    const doneAll = state.idx >= questions.length;
+    const mastery = doneAll && acc === 100;
+    $("btnFinish").disabled = !mastery;
+
+    if(doneAll){
+      if(mastery){
+        showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
+      }else{
+        showFeedback("warn","Run complete — not mastery",
+          `You finished the run, but accuracy is ${acc}%. Start a new randomized run and try for 100%.`);
+      }
+    }
+  }
+
+  function renderQuestion(){
+    hideFeedback();
+    setHint("");
+
+    state.attemptThis = 0;
+    $("attemptThis").textContent = "0";
+
+    const qIndex = state.order[state.idx];
+    const q = questions[qIndex];
+
+    $("qNum").textContent = String(state.idx + 1);
+    $("qTotal").textContent = String(questions.length);
+    $("stem").textContent = q.stem;
+
+    const entries = Object.entries(q.choices);
+    $("choices").innerHTML = entries.map(([k,v]) =>
+      `<button class="choice" data-key="${k}"><strong>${k}.</strong> ${v}</button>`
+    ).join("");
+
+    $("choices").querySelectorAll("button.choice").forEach(btn=>{
+      btn.addEventListener("click", ()=>handleAnswer(btn.dataset.key));
+    });
+
+    updateKPIs();
+  }
+
+  function advance(){
+    state.idx++;
+    updateKPIs();
+
+    if(state.idx >= questions.length){
+      disableChoices(true);
+      setHint("");
+      updateFinishLock();
+      return;
+    }
+    renderQuestion();
+  }
+
+  function handleAnswer(letter){
+    if(state.locked) return;
+
+    const qIndex = state.order[state.idx];
+    const q = questions[qIndex];
+
+    state.attempts++;
+    state.attemptThis++;
+    $("attemptThis").textContent = String(state.attemptThis);
+
+    const isCorrect = (letter === q.answer);
+
+    if(isCorrect){
+      state.correct = Math.min(questions.length, state.correct + 1);
+      updateKPIs();
+
+      disableChoices(true);
+      state.locked = true;
+
+      const firstTry = state.attemptThis === 1;
+
+      if(firstTry){
+        showFeedback("good","Correct (first try)", q.explain || "Correct.");
+        clearTimeout(state.timer);
+        state.timer = setTimeout(()=>{
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 3000);
+      }else{
+        showFeedback("good","Correct (after hint)", q.explain || "Correct.");
+        clearTimeout(state.timer);
+        state.timer = setTimeout(()=>{
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 800);
+      }
+      return;
+    }
+
+    if(!state.missedSet.has(qIndex)){
+      state.missedSet.add(qIndex);
+      state.misses++;
+      updateKPIs();
+    }
+
+    showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
+    setHint(q.hint || "Look for the key cause/effect language in the question.");
+  }
+
+  function startRun(){
+    state.order = shuffle([...Array(questions.length).keys()]);
+    state.idx = 0;
+    state.attempts = 0;
+    state.correct = 0;
+    state.misses = 0;
+    state.missedSet = new Set();
+    state.attemptThis = 0;
+    state.locked = false;
+    clearTimeout(state.timer);
+    state.timer = null;
+
+    state.startISO = nowISO();
+    state.endISO = null;
+
+    $("finish").style.display = "none";
+    renderQuestion();
+  }
+
+  function restartRun(){ startRun(); }
+
+  function finishRun(){
+    state.endISO = nowISO();
+
+    const acc = calcAcc();
+    const mastery = acc === 100 && state.idx >= questions.length;
+
+    const summary = {
+      game: "Game 1 — Cause & Effect",
+      name: state.player,
+      date: new Date(state.startISO).toLocaleDateString(),
+      started: fmt(state.startISO),
+      completed: fmt(state.endISO),
+      questions: questions.length,
+      misses: state.misses,
+      accuracy: `${acc}%`,
+      mastery: mastery ? "YES" : "NO"
+    };
+
+    $("summaryLine").textContent = mastery
+      ? "Mastery earned. Show this screen to your teacher."
+      : "Not mastery. Start a new randomized run and try again.";
+
+    $("summaryCode").textContent =
+      `NAME: ${summary.name}\n` +
+      `GAME: ${summary.game}\n` +
+      `DATE: ${summary.date}\n` +
+      `START: ${summary.started}\n` +
+      `END: ${summary.completed}\n` +
+      `QUESTIONS: ${summary.questions}\n` +
+      `MISSES: ${summary.misses}\n` +
+      `ACCURACY: ${summary.accuracy}\n` +
+      `MASTERY: ${summary.mastery}\n`;
+
+    $("finish").style.display = "block";
+    $("choices").innerHTML = "";
+    setHint("");
+  }
+
+  $("btnStart").addEventListener("click", ()=>{
+    const name = $("nameIn").value.trim();
+    if(!name){
+      alert("Please enter your name to begin.");
+      return;
+    }
+    state.player = name;
+    $("gate").style.display = "none";
+    $("game").style.display = "block";
+    startRun();
+  });
+
+  $("btnRestart").addEventListener("click", ()=>{
+    if(confirm("Restart with a new randomized run?")) restartRun();
+  });
+
+  $("btnFinish").addEventListener("click", finishRun);
+  $("btnNewRun").addEventListener("click", restartRun);
+
+  updateKPIs();
 </script>
+</body>
+</html>
