@@ -202,117 +202,206 @@ Enter your name to begin. Mastery requires 100% accuracy.
 "use strict";
 
 var questions = [
+
+/* INDUSTRIALIZATION & URBANIZATION */
+
 {
 bullet:"Rapid factory expansion created high demand for industrial workers in urban centers.",
-choices:{
-A:"Urbanization",
-B:"Westward Settlement",
-C:"Plessy v. Ferguson",
-D:"Dawes Act"
-},
+choices:{A:"Urbanization",B:"Reservation System",C:"Plessy v. Ferguson",D:"Dawes Act"},
 answer:"A",
-explain:"Industrial job growth drew workers into cities, accelerating urbanization."
+explain:"Industrial job growth pulled workers into cities, accelerating urbanization."
 },
 {
-bullet:"The division of tribal lands into individual allotments aimed to assimilate Native Americans.",
-choices:{
-A:"Jim Crow Laws",
-B:"Dawes Act",
-C:"Settlement Houses",
-D:"Antitrust Legislation"
-},
+bullet:"Overcrowded housing with poor ventilation and sanitation increased the spread of tuberculosis and cholera.",
+choices:{A:"Settlement Houses",B:"Tenement Housing",C:"Laissez-Faire",D:"Homestead Act"},
 answer:"B",
-explain:"The Dawes Act divided tribal lands to encourage assimilation into Euro-American farming practices."
+explain:"Tenement housing often lacked sanitation and space, contributing to disease spread."
 },
 {
-bullet:"Investigative journalists exposed unsafe food production and political corruption.",
-choices:{
-A:"Laissez-Faire",
-B:"Muckrakers",
-C:"Great Migration",
-D:"Assembly Line"
-},
-answer:"B",
-explain:"Muckrakers publicized abuses, helping build support for Progressive reforms."
-},
-{
-bullet:"The Supreme Court upheld segregation under the doctrine of 'separate but equal.'",
-choices:{
-A:"Dawes Act",
-B:"Homestead Act",
-C:"Plessy v. Ferguson",
-D:"Sherman Antitrust Act"
-},
+bullet:"Assembly-line production divided manufacturing into repeated tasks to increase efficiency.",
+choices:{A:"Labor Unions",B:"Trusts",C:"Mass Production",D:"Sharecropping"},
 answer:"C",
-explain:"Plessy v. Ferguson upheld segregation, reinforcing Jim Crow laws."
-},
-{
-bullet:"Workers organized collectively to demand improved wages and safer working conditions.",
-choices:{
-A:"Labor Unions",
-B:"Monopolies",
-C:"Laissez-Faire",
-D:"Reservation System"
-},
-answer:"A",
-explain:"Labor unions formed to address unsafe conditions, long hours, and low wages."
+explain:"Mass production through assembly lines increased speed and output in factories."
 },
 {
 bullet:"Limited government regulation allowed businesses to expand rapidly with little oversight.",
-choices:{
-A:"Antitrust Reform",
-B:"Laissez-Faire",
-C:"Settlement Houses",
-D:"Populism"
-},
-answer:"B",
-explain:"Laissez-faire policies limited regulation, enabling rapid corporate growth."
-},
-{
-bullet:"African Americans migrated north seeking industrial jobs and escape from segregation.",
-choices:{
-A:"Homestead Movement",
-B:"Urbanization",
-C:"Great Migration",
-D:"Progressivism"
-},
-answer:"C",
-explain:"The Great Migration involved African Americans moving north for opportunity and safety."
-},
-{
-bullet:"Rapid population growth overwhelmed sanitation and housing infrastructure.",
-choices:{
-A:"Urbanization",
-B:"Isolationism",
-C:"Reconstruction",
-D:"Imperialism"
-},
+choices:{A:"Laissez-Faire",B:"Progressivism",C:"Antitrust Reform",D:"Populism"},
 answer:"A",
-explain:"Urban growth created overcrowding and public health challenges."
+explain:"Laissez-faire policies minimized regulation, enabling rapid corporate growth."
 },
 {
 bullet:"Large corporations combined to eliminate competition and control markets.",
-choices:{
-A:"Trusts and Monopolies",
-B:"Settlement Houses",
-C:"Jim Crow Laws",
-D:"Temperance Movement"
-},
-answer:"A",
+choices:{A:"Temperance Movement",B:"Trusts and Monopolies",C:"Urbanization",D:"Reservation Policy"},
+answer:"B",
 explain:"Trusts and monopolies consolidated industries to reduce competition."
 },
 {
-bullet:"Community centers provided education and assistance to immigrants in cities.",
-choices:{
-A:"Labor Strikes",
-B:"Settlement Houses",
-C:"Dawes Act",
-D:"Sharecropping"
+bullet:"Workers organized collectively to demand improved wages and safer working conditions.",
+choices:{A:"Labor Unions",B:"Jim Crow Laws",C:"Dawes Act",D:"Isolationism"},
+answer:"A",
+explain:"Labor unions formed to negotiate for better wages, hours, and safety."
 },
+{
+bullet:"Strikes and boycotts were used as tactics to pressure employers during labor disputes.",
+choices:{A:"Settlement Houses",B:"Labor Movement",C:"Plessy v. Ferguson",D:"Great Migration"},
 answer:"B",
-explain:"Settlement houses supported immigrant communities with education and services."
+explain:"The labor movement used strikes to gain bargaining power."
+},
+
+/* IMMIGRATION & URBAN LIFE */
+
+{
+bullet:"Immigrants often settled in ethnic neighborhoods where language and cultural traditions were preserved.",
+choices:{A:"Cultural Diffusion",B:"Jim Crow",C:"Assimilation Policy",D:"Trust Formation"},
+answer:"A",
+explain:"Ethnic neighborhoods helped preserve traditions while contributing to broader cultural diffusion."
+},
+{
+bullet:"Community centers provided education, childcare, and assistance to immigrants.",
+choices:{A:"Settlement Houses",B:"Reservation System",C:"Monopolies",D:"Reconstruction"},
+answer:"A",
+explain:"Settlement houses supported immigrant families in urban areas."
+},
+{
+bullet:"Competition for jobs and housing sometimes fueled anti-immigrant sentiment.",
+choices:{A:"Urban Reform",B:"Nativism",C:"Antitrust Policy",D:"Populism"},
+answer:"B",
+explain:"Nativism reflected hostility toward immigrants due to economic and cultural tensions."
+},
+
+/* GREAT MIGRATION & JIM CROW */
+
+{
+bullet:"African Americans migrated north seeking industrial jobs and escape from segregation.",
+choices:{A:"Homestead Act",B:"Great Migration",C:"Progressivism",D:"Isolationism"},
+answer:"B",
+explain:"The Great Migration involved movement north for jobs and freedom from Jim Crow oppression."
+},
+{
+bullet:"Segregation laws in the South limited African Americans’ political and social rights.",
+choices:{A:"Jim Crow Laws",B:"Dawes Act",C:"Settlement Houses",D:"Trust Policy"},
+answer:"A",
+explain:"Jim Crow laws enforced racial segregation and discrimination."
+},
+{
+bullet:"The Supreme Court upheld segregation under the doctrine of 'separate but equal.'",
+choices:{A:"Sherman Antitrust Act",B:"Plessy v. Ferguson",C:"Homestead Act",D:"Muckrakers"},
+answer:"B",
+explain:"Plessy v. Ferguson upheld segregation and legitimized discrimination."
+},
+
+/* WESTWARD EXPANSION */
+
+{
+bullet:"Tribal lands were divided into individual plots to encourage farming and assimilation.",
+choices:{A:"Homestead Act",B:"Dawes Act",C:"Settlement Houses",D:"Trust Formation"},
+answer:"B",
+explain:"The Dawes Act broke up communal tribal lands to promote assimilation."
+},
+{
+bullet:"Government policy confined Native American tribes to designated lands.",
+choices:{A:"Reservation System",B:"Urbanization",C:"Labor Reform",D:"Populism"},
+answer:"A",
+explain:"The reservation system restricted tribes to specific territories."
+},
+{
+bullet:"Railroad expansion encouraged settlement and economic development in western territories.",
+choices:{A:"Industrial Capitalism",B:"Westward Expansion",C:"Isolationism",D:"Jim Crow"},
+answer:"B",
+explain:"Railroads supported migration, trade, and economic growth in the West."
+},
+
+/* PROGRESSIVE ERA */
+
+{
+bullet:"Journalists exposed corruption, unsafe products, and political abuses.",
+choices:{A:"Muckrakers",B:"Monopolies",C:"Jim Crow",D:"Homestead Act"},
+answer:"A",
+explain:"Muckrakers increased public awareness and pressure for reform."
+},
+{
+bullet:"Reforms aimed to reduce the power of trusts and promote fair competition.",
+choices:{A:"Antitrust Legislation",B:"Reservation Policy",C:"Urban Decline",D:"Isolationism"},
+answer:"A",
+explain:"Antitrust laws targeted monopolies and corporate consolidation."
+},
+{
+bullet:"Public outrage over unsafe food production led to government regulation.",
+choices:{A:"Sherman Antitrust Act",B:"Pure Food and Drug Act",C:"Dawes Act",D:"Jim Crow Laws"},
+answer:"B",
+explain:"Food safety reforms were passed in response to investigative reports."
+},
+{
+bullet:"Political machines controlled city governments through patronage and corruption.",
+choices:{A:"Urban Political Machines",B:"Labor Unions",C:"Isolationism",D:"Trusts"},
+answer:"A",
+explain:"Political machines influenced elections and distributed jobs for loyalty."
+},
+
+/* ECONOMIC & SOCIAL TRANSFORMATION */
+
+{
+bullet:"Mechanized farming reduced the need for agricultural labor.",
+choices:{A:"Urbanization",B:"Industrial Capitalism",C:"Mechanization",D:"Settlement Houses"},
+answer:"C",
+explain:"Mechanization decreased rural job demand, pushing workers toward cities."
+},
+{
+bullet:"Electric power enabled new technologies that changed communication and daily life.",
+choices:{A:"Technological Innovation",B:"Jim Crow",C:"Reservation System",D:"Populism"},
+answer:"A",
+explain:"Electricity powered appliances and communication tools that transformed life."
+},
+{
+bullet:"Consumer culture expanded as goods became cheaper and more widely available.",
+choices:{A:"Mass Production",B:"Isolationism",C:"Reconstruction",D:"Temperance"},
+answer:"A",
+explain:"Mass production lowered costs and increased consumer access."
+},
+
+/* CIVIL RIGHTS ROOTS */
+
+{
+bullet:"Voting restrictions such as literacy tests reduced African American political participation.",
+choices:{A:"Jim Crow Laws",B:"Settlement Houses",C:"Monopolies",D:"Westward Expansion"},
+answer:"A",
+explain:"Voting barriers reinforced racial inequality and political exclusion."
+},
+{
+bullet:"Violence and intimidation were used to maintain white supremacy in the South.",
+choices:{A:"Industrial Capitalism",B:"Ku Klux Klan Activity",C:"Antitrust Reform",D:"Urbanization"},
+answer:"B",
+explain:"Groups like the KKK used violence to suppress civil rights."
+},
+
+/* REVIEW MIX */
+
+{
+bullet:"Government policies encouraged western settlers to claim land for farming.",
+choices:{A:"Homestead Act",B:"Jim Crow Laws",C:"Trust Formation",D:"Isolationism"},
+answer:"A",
+explain:"The Homestead Act granted land to settlers willing to farm it."
+},
+{
+bullet:"Rapid population growth overwhelmed city infrastructure, leading to sanitation crises.",
+choices:{A:"Urbanization",B:"Reservation Policy",C:"Isolationism",D:"Dawes Act"},
+answer:"A",
+explain:"Urban growth strained water, sewage, and housing systems."
+},
+{
+bullet:"Workers sought shorter hours and higher wages through collective bargaining.",
+choices:{A:"Labor Unions",B:"Settlement Houses",C:"Jim Crow",D:"Antitrust"},
+answer:"A",
+explain:"Collective bargaining was a key labor union strategy."
+},
+{
+bullet:"Corporations used horizontal and vertical integration to reduce competition.",
+choices:{A:"Trust Formation",B:"Populism",C:"Reconstruction",D:"Isolationism"},
+answer:"A",
+explain:"Integration strategies allowed corporations to dominate industries."
 }
 ];
+
 
 function $(id){return document.getElementById(id);}
 
