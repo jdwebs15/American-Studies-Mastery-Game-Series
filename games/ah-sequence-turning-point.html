@@ -248,137 +248,382 @@
 
   // ✅ TEST SET (10) — swap to full 25–30 after you confirm it runs
   var questions = [
-    {
-      stem:"Which sequence BEST represents a common pattern of change during rapid industrialization?",
-      prompt:"Choose the option that places events in the most logical order.",
-      choices:{
-        A:"Factory growth → increased demand for workers → city population rises → housing crowding/tenements",
-        B:"Tenements built first → factories close → workers move away → cities grow",
-        C:"Public sanitation improves first → disease increases → overcrowding decreases → urbanization begins",
-        D:"Cities shrink first → mechanized farming increases labor needs → people move to farms"
-      },
-      answer:"A",
-      hint:"Think: jobs pull people in, then cities strain to house them.",
-      explain:"Industrial jobs drew workers to cities, which increased population and led to overcrowding and tenement growth."
+  // 1
+  {
+    stem:"Which sequence BEST represents a typical pattern of urban growth during industrialization?",
+    prompt:"Choose the option that places events in the most logical order.",
+    choices:{
+      A:"Factories expand → demand for workers rises → migration to cities increases → overcrowding and tenements grow",
+      B:"Tenements expand → factories close → workers leave cities → city populations rise",
+      C:"Sanitation improves → disease increases → immigration ends → cities grow",
+      D:"Cities shrink → mechanized farming increases farm labor needs → factories expand"
     },
-    {
-      stem:"Which event is a turning point that helped speed up urban growth in the late 1800s?",
-      prompt:"A turning point is an event/change that causes major effects afterward.",
-      choices:{
-        A:"Mechanized farming reduced rural labor needs",
-        B:"A decrease in immigration to the U.S.",
-        C:"An end to factory production in northern cities",
-        D:"A requirement that families move from cities to farms"
-      },
-      answer:"A",
-      hint:"Look for a change that pushes workers off farms.",
-      explain:"Mechanized farming reduced the need for farm labor, pushing workers toward cities and accelerating urbanization."
+    answer:"A",
+    hint:"Jobs pull people into cities; housing struggles to keep up.",
+    explain:"Industrial jobs drew workers to cities; rapid growth created overcrowding and tenement expansion."
+  },
+
+  // 2
+  {
+    stem:"Which turning point MOST directly increased the speed of urbanization in the late 1800s?",
+    prompt:"A turning point is a change that causes major effects afterward.",
+    choices:{
+      A:"Mechanized farming reduced the need for rural labor",
+      B:"A drop in factory production in northern cities",
+      C:"A ban on immigration to the United States",
+      D:"A law requiring workers to return to farms"
     },
-    {
-      stem:"Which sequence BEST explains how poor city infrastructure contributed to disease outbreaks?",
-      prompt:"Choose the option that correctly shows cause → effect over time.",
-      choices:{
-        A:"Overcrowding increases → sanitation systems overwhelmed → contaminated water/filth → disease spreads",
-        B:"Disease decreases → sanitation collapses → overcrowding ends → cities shrink",
-        C:"Clean water expands → sanitation improves → overcrowding rises → disease increases",
-        D:"Cities shrink → tenements expand → clean water improves → disease spreads"
-      },
-      answer:"A",
-      hint:"Overcrowding strains services; sanitation failure increases risk.",
-      explain:"Rapid growth overwhelmed sanitation, increasing contamination and spreading diseases like cholera and tuberculosis."
+    answer:"A",
+    hint:"Think: a change that pushes people off farms.",
+    explain:"Mechanized farming reduced rural jobs, pushing people toward city work and accelerating urbanization."
+  },
+
+  // 3
+  {
+    stem:"Which sequence BEST explains how crowded housing contributed to disease outbreaks in cities?",
+    prompt:"Choose the option that correctly shows cause → effect over time.",
+    choices:{
+      A:"Overcrowding rises → sanitation systems are overwhelmed → water/air quality worsens → disease spreads",
+      B:"Disease decreases → sanitation collapses → overcrowding ends → cities shrink",
+      C:"Clean water expands → sanitation improves → disease increases → overcrowding rises",
+      D:"Cities shrink → tenements expand → public health improves → disease spreads"
     },
-    {
-      stem:"Which turning point BEST explains why labor unions expanded in the industrial era?",
-      prompt:"Choose the option that represents a key reason unions grew.",
-      choices:{
-        A:"Unsafe conditions and long hours led workers to organize for reforms",
-        B:"All employers voluntarily increased wages and safety",
-        C:"The government immediately enforced strong labor protections everywhere",
-        D:"Industrial jobs disappeared, eliminating workplace concerns"
-      },
-      answer:"A",
-      hint:"Unions grow when workers need collective power to change conditions.",
-      explain:"Workers organized to address unsafe conditions, long hours, and low pay, contributing to union growth."
+    answer:"A",
+    hint:"Rapid growth strains infrastructure first.",
+    explain:"Overcrowding often overwhelmed sanitation and clean water, increasing disease spread like cholera and tuberculosis."
+  },
+
+  // 4
+  {
+    stem:"Which turning point BEST explains why labor unions expanded during industrialization?",
+    prompt:"Choose the option that represents a key cause of union growth.",
+    choices:{
+      A:"Unsafe conditions and long hours led workers to organize for reforms",
+      B:"Employers voluntarily improved wages and safety nationwide",
+      C:"The government immediately enforced strong labor protections everywhere",
+      D:"Industrial jobs disappeared, ending workplace conflict"
     },
-    {
-      stem:"Which sequence BEST explains how laissez-faire policies contributed to trusts/monopolies?",
-      prompt:"Choose the option that correctly connects government policy to business outcomes.",
-      choices:{
-        A:"Limited regulation → corporations expand rapidly → consolidation → trusts/monopolies form",
-        B:"Strict regulation → corporations shrink → competition ends → monopolies form",
-        C:"High taxes on corporations → businesses close → trusts increase",
-        D:"Elections end → regulation increases → monopolies disappear"
-      },
-      answer:"A",
-      hint:"Hands-off oversight allows consolidation.",
-      explain:"Laissez-faire reduced oversight, enabling rapid growth and consolidation into trusts and monopolies."
+    answer:"A",
+    hint:"Unions grow when workers need collective leverage.",
+    explain:"Harsh working conditions and low pay pushed workers to organize for bargaining power and reforms."
+  },
+
+  // 5
+  {
+    stem:"Which sequence BEST explains how laissez-faire policies contributed to trusts and monopolies?",
+    prompt:"Choose the option that correctly connects policy to business outcomes.",
+    choices:{
+      A:"Limited regulation → corporations expand rapidly → consolidation increases → trusts/monopolies form",
+      B:"Strict regulation → corporations expand rapidly → competition increases → monopolies form",
+      C:"High tariffs → unions weaken → factories close → trusts expand",
+      D:"Elections end → regulation increases → monopolies disappear"
     },
-    {
-      stem:"Which sequence BEST explains a push-pull pattern behind the Great Migration?",
-      prompt:"Choose the option that correctly identifies push factors followed by pull factors.",
-      choices:{
-        A:"Jim Crow segregation/violence → African Americans leave South → industrial jobs in North → migration increases",
-        B:"Industrial jobs end in North → opportunities shrink → discrimination ends in South → migration increases",
-        C:"Segregation ends in South → people leave anyway → farms expand → migration increases",
-        D:"Factory wages drop in North → workers move South → Jim Crow expands → migration increases"
-      },
-      answer:"A",
-      hint:"Push = leaving oppression; pull = moving toward jobs.",
-      explain:"Oppression and violence pushed people out of the South, while northern jobs pulled migrants to cities."
+    answer:"A",
+    hint:"Hands-off oversight allows consolidation.",
+    explain:"Laissez-faire reduced oversight, enabling rapid growth and consolidation into trusts and monopolies."
+  },
+
+  // 6
+  {
+    stem:"Which sequence BEST explains a push-pull pattern behind the Great Migration?",
+    prompt:"Choose the option that correctly identifies push factors followed by pull factors.",
+    choices:{
+      A:"Jim Crow violence/segregation → people leave the South → northern industrial jobs → migration increases",
+      B:"Northern jobs disappear → people leave the North → discrimination ends in the South → migration increases",
+      C:"Segregation ends in the South → people leave anyway → farms expand → migration increases",
+      D:"Factory wages drop in the North → workers move South → Jim Crow expands → migration increases"
     },
-    {
-      stem:"Which turning point BEST explains the rise of reform movements in the Progressive Era?",
-      prompt:"Choose the option that most directly increased demand for reform.",
-      choices:{
-        A:"Public exposure of corruption and unsafe conditions increased pressure for reform",
-        B:"An end to political corruption in all cities",
-        C:"A complete removal of corporate influence from politics",
-        D:"The elimination of industrial workplaces"
-      },
-      answer:"A",
-      hint:"Look for what made people demand change.",
-      explain:"Exposés and public awareness of problems increased political pressure for reforms."
+    answer:"A",
+    hint:"Push = oppression; pull = jobs.",
+    explain:"Oppression pushed migrants out of the South, while northern job opportunities pulled them to cities."
+  },
+
+  // 7
+  {
+    stem:"Which turning point BEST explains why Progressive reforms gained support?",
+    prompt:"Choose the event/change that most increased demand for reform.",
+    choices:{
+      A:"Public exposure of corruption and unsafe conditions increased pressure for change",
+      B:"All political corruption ended in major cities",
+      C:"Corporations removed themselves from politics voluntarily",
+      D:"Industrial workplaces disappeared nationwide"
     },
-    {
-      stem:"Which sequence BEST explains how new technology changed daily life in the early 1900s?",
-      prompt:"Choose the option that shows technology → change in behavior/markets.",
-      choices:{
-        A:"Electricity expands → appliances available → home tasks easier → consumer markets grow",
-        B:"Appliances disappear → electricity spreads → tasks harder → markets shrink",
-        C:"Cities shrink → automobiles vanish → travel expands → markets grow",
-        D:"Communication declines → radios expand → information slows → markets shrink"
-      },
-      answer:"A",
-      hint:"Technology often reduces time/cost, increasing consumption.",
-      explain:"Electric power enabled appliances and conveniences, changing daily life and expanding consumer markets."
+    answer:"A",
+    hint:"What made people demand action?",
+    explain:"Investigations and publicity about corruption and dangers increased public pressure for reforms."
+  },
+
+  // 8
+  {
+    stem:"Which sequence BEST explains how new technology changed daily life during industrialization?",
+    prompt:"Choose the option that shows technology → change in behavior/markets.",
+    choices:{
+      A:"Electricity expands → appliances become common → home tasks become easier → consumer markets grow",
+      B:"Appliances vanish → electricity expands → home tasks become harder → markets grow",
+      C:"Cities shrink → automobiles vanish → travel expands → markets grow",
+      D:"Communication declines → radios expand → information slows → markets shrink"
     },
-    {
-      stem:"Which turning point BEST explains why the reservation system expanded in the West?",
-      prompt:"Choose the option that best shows policy shift with major effects.",
-      choices:{
-        A:"Federal policy moved toward confining tribes to specific lands as settlement expanded",
-        B:"The government ended westward settlement to protect tribal lands",
-        C:"All treaties guaranteed tribal sovereignty permanently without enforcement issues",
-        D:"Settlers avoided tribal lands, reducing conflict"
-      },
-      answer:"A",
-      hint:"Think: settlement pressure → policy to remove/confine.",
-      explain:"As settlement expanded, federal policy increasingly confined tribes to reservations, reshaping life and land control."
+    answer:"A",
+    hint:"Technology often reduces time/cost, expanding markets.",
+    explain:"Electricity enabled new appliances, improving convenience and helping expand consumer markets."
+  },
+
+  // 9
+  {
+    stem:"Which turning point BEST explains why the reservation system expanded in the West?",
+    prompt:"Choose the policy shift with major effects afterward.",
+    choices:{
+      A:"Federal policy increasingly confined tribes to specific lands as settlement expanded",
+      B:"The government ended westward settlement to protect tribal lands",
+      C:"All treaties guaranteed tribal sovereignty permanently with strong enforcement",
+      D:"Settlers avoided tribal lands, reducing conflict"
     },
-    {
-      stem:"Which sequence BEST explains the relationship between segregation laws and Supreme Court support in the late 1800s?",
-      prompt:"Choose the option that correctly links law → court decision → outcome.",
-      choices:{
-        A:"Jim Crow laws expand → Plessy upholds 'separate but equal' → segregation strengthens",
-        B:"Segregation ends → Plessy bans discrimination → Jim Crow expands",
-        C:"Voting rights expand → Plessy protects equality → segregation increases",
-        D:"Reconstruction continues → Plessy ends Jim Crow → equality achieved"
-      },
-      answer:"A",
-      hint:"Plessy supported segregation, not equality.",
-      explain:"Jim Crow expanded, and Plessy upheld segregation, enabling discrimination to continue and strengthen."
-    }
-  ];
+    answer:"A",
+    hint:"Settlement pressure → forced confinement.",
+    explain:"Expansion increased conflict and land pressure, leading to federal policies that confined tribes to reservations."
+  },
+
+  // 10
+  {
+    stem:"Which sequence BEST explains how Plessy v. Ferguson reinforced segregation?",
+    prompt:"Choose the option that links law → court decision → outcome.",
+    choices:{
+      A:"Jim Crow expands → Plessy upholds 'separate but equal' → segregation strengthens",
+      B:"Segregation ends → Plessy bans discrimination → Jim Crow expands",
+      C:"Voting rights expand → Plessy protects equality → segregation increases",
+      D:"Reconstruction continues → Plessy ends Jim Crow → equality achieved"
+    },
+    answer:"A",
+    hint:"Plessy supported segregation, not equality.",
+    explain:"Plessy upheld segregation, helping Jim Crow laws and practices continue and expand."
+  },
+
+  // 11
+  {
+    stem:"Which sequence BEST explains why tenement housing became widespread?",
+    prompt:"Choose the most logical cause → effect order.",
+    choices:{
+      A:"City populations rise quickly → housing demand increases → cheap crowded buildings built → living conditions worsen",
+      B:"Living conditions improve → housing demand drops → tenements spread",
+      C:"Tenements disappear → populations rise → jobs vanish → cities grow",
+      D:"Housing supply increases greatly → overcrowding increases → demand falls"
+    },
+    answer:"A",
+    hint:"Fast growth → cheap housing built quickly.",
+    explain:"Rapid urban growth increased housing demand, and inexpensive crowded tenements were built near jobs."
+  },
+
+  // 12
+  {
+    stem:"Which turning point MOST directly increased nativist tension in some cities?",
+    prompt:"Choose the change most likely to create backlash.",
+    choices:{
+      A:"A rise in immigration that increased competition for jobs and housing",
+      B:"A sharp decrease in city populations",
+      C:"An end to cultural diversity in urban neighborhoods",
+      D:"Immediate elimination of discrimination and inequality"
+    },
+    answer:"A",
+    hint:"Competition and unfamiliarity can fuel backlash.",
+    explain:"Large immigration waves sometimes increased job/housing competition and cultural tension, fueling nativism."
+  },
+
+  // 13
+  {
+    stem:"Which sequence BEST explains how unions used strikes as a tactic?",
+    prompt:"Choose the order that matches a typical strike strategy.",
+    choices:{
+      A:"Workers stop work → production slows → employer loses profit → negotiations become more likely",
+      B:"Employers raise wages → workers strike → production increases → negotiations end",
+      C:"Government bans unions → wages rise → strikes begin → reforms happen",
+      D:"Workers stop work → profits rise → employers refuse to negotiate → wages rise"
+    },
+    answer:"A",
+    hint:"A strike creates leverage by stopping production.",
+    explain:"Strikes pressured employers by disrupting production and profits, encouraging negotiation for reforms."
+  },
+
+  // 14
+  {
+    stem:"Which turning point MOST directly encouraged the growth of large corporations during industrialization?",
+    prompt:"Choose the factor that allowed expansion and consolidation.",
+    choices:{
+      A:"Limited government regulation of business practices",
+      B:"A nationwide ban on railroads and shipping",
+      C:"The end of mass production in factories",
+      D:"Strict enforcement of anti-monopoly laws before 1870"
+    },
+    answer:"A",
+    hint:"Think: fewer limits allowed faster growth.",
+    explain:"Laissez-faire ideas and limited regulation helped corporations grow quickly and consolidate power."
+  },
+
+  // 15
+  {
+    stem:"Which sequence BEST explains how the Dawes Act connects to assimilation policies?",
+    prompt:"Choose the option that matches allotment → cultural pressure.",
+    choices:{
+      A:"Tribal lands divided into individual plots → traditional communal life disrupted → assimilation pressures increase",
+      B:"Communal lands protected → tribal governments strengthened → assimilation ends",
+      C:"Land returned to tribes → reservations expand → conflicts disappear",
+      D:"Railroads end → farming declines → allotment disappears"
+    },
+    answer:"A",
+    hint:"Allotment undermined communal land and culture.",
+    explain:"Allotment broke up communal landholding and pressured Native people toward Euro-American farming and assimilation."
+  },
+
+  // 16
+  {
+    stem:"Which turning point MOST directly contributed to the end of Reconstruction’s protections in the South?",
+    prompt:"Choose the change that reduced enforcement of civil rights.",
+    choices:{
+      A:"Federal enforcement weakened, allowing state/local discrimination to expand",
+      B:"Federal troops expanded in the South, enforcing desegregation",
+      C:"The Supreme Court banned segregation nationwide",
+      D:"Voting rights expanded without restriction across the South"
+    },
+    answer:"A",
+    hint:"Less enforcement → more discriminatory laws.",
+    explain:"Reduced federal enforcement after Reconstruction enabled Jim Crow laws and discriminatory practices to spread."
+  },
+
+  // 17
+  {
+    stem:"Which sequence BEST explains how Progressive-era consumer protection laws developed?",
+    prompt:"Choose the order that fits problem → exposure → reform.",
+    choices:{
+      A:"Unsafe/unclean products → public outrage grows → government passes safety/labeling laws → consumer protection increases",
+      B:"Reforms pass first → unsafe products increase → public stops caring → protection decreases",
+      C:"Businesses self-regulate fully → government bans inspections → protection increases",
+      D:"Public outrage declines → laws pass → unsafe products disappear instantly"
+    },
+    answer:"A",
+    hint:"Reforms often follow exposure and pressure.",
+    explain:"Public awareness of unsafe products increased demand for reforms, leading to laws that improved safety and labeling."
+  },
+
+  // 18
+  {
+    stem:"Which turning point MOST directly encouraged the growth of settlement houses?",
+    prompt:"Choose the problem that created the need for these services.",
+    choices:{
+      A:"Rapid urbanization and immigration created needs for education and community support",
+      B:"A complete end to urban poverty and overcrowding",
+      C:"A disappearance of immigrant neighborhoods in cities",
+      D:"The elimination of social problems caused by industrialization"
+    },
+    answer:"A",
+    hint:"Settlement houses address needs in crowded immigrant areas.",
+    explain:"Urban growth and immigration created needs for services; settlement houses provided support and education."
+  },
+
+  // 19
+  {
+    stem:"Which sequence BEST explains how transportation improvements supported urban growth?",
+    prompt:"Choose the option that connects movement → expansion.",
+    choices:{
+      A:"Transportation improves → workers can travel farther → city areas expand → urban population grows",
+      B:"Transportation worsens → workers travel farther → cities expand faster",
+      C:"Transportation improves → factories close → urban population declines",
+      D:"Transportation ends → commuting increases → cities expand"
+    },
+    answer:"A",
+    hint:"Better travel increases commuting and city expansion.",
+    explain:"Improved transportation let people commute, enabling cities to spread outward and continue growing."
+  },
+
+  // 20
+  {
+    stem:"Which turning point MOST directly increased public support for antitrust action?",
+    prompt:"Choose the change that made monopoly power seem harmful.",
+    choices:{
+      A:"Public concerns grew that trusts limited competition and abused economic power",
+      B:"Monopolies disappeared from the economy entirely",
+      C:"All prices became equal across industries immediately",
+      D:"Competition ended because small businesses gained complete control"
+    },
+    answer:"A",
+    hint:"Antitrust targets abuse of concentrated power.",
+    explain:"Growing concern about trust power and unfair practices increased demand for antitrust enforcement."
+  },
+
+  // 21
+  {
+    stem:"Which sequence BEST explains how urbanization changed social and cultural life in cities?",
+    prompt:"Choose the most logical order.",
+    choices:{
+      A:"Migration increases → ethnic neighborhoods form → cultural diffusion occurs → cities become more diverse",
+      B:"Cultural diffusion ends → ethnic neighborhoods disappear → migration increases → cities diversify",
+      C:"Cities become less diverse → neighborhoods form → migration stops → diffusion grows",
+      D:"Neighborhoods disappear → migration stops → diversity increases → diffusion ends"
+    },
+    answer:"A",
+    hint:"New arrivals cluster, then culture spreads.",
+    explain:"Migration produced ethnic neighborhoods, and cultural traits diffused into broader city culture."
+  },
+
+  // 22
+  {
+    stem:"Which turning point MOST directly increased the likelihood of violent labor conflict in some strikes?",
+    prompt:"Choose the factor most likely to escalate a dispute.",
+    choices:{
+      A:"Employers and authorities resisted strikes, sometimes using force to protect production and property",
+      B:"All strikes ended immediately with peaceful agreements",
+      C:"Workers stopped using collective tactics in disputes",
+      D:"Factories closed permanently before any strike occurred"
+    },
+    answer:"A",
+    hint:"Resistance and force can escalate conflict.",
+    explain:"Employer/government resistance to strikes sometimes escalated tensions into violent confrontations."
+  },
+
+  // 23
+  {
+    stem:"Which sequence BEST explains how Jim Crow and voting restrictions reinforced discrimination?",
+    prompt:"Choose the cause → effect order.",
+    choices:{
+      A:"Segregation laws expand → voting barriers increase → political power decreases → inequality is reinforced",
+      B:"Voting rights expand → segregation ends → inequality increases → reforms disappear",
+      C:"Equality increases → barriers increase → power increases → segregation ends",
+      D:"Barriers disappear → segregation expands → power decreases → equality increases"
+    },
+    answer:"A",
+    hint:"Less political power makes change harder.",
+    explain:"Segregation and voting barriers reduced political influence, reinforcing discriminatory systems."
+  },
+
+  // 24
+  {
+    stem:"Which turning point MOST directly encouraged internal migration from farms to cities?",
+    prompt:"Choose the change that reduced rural job opportunities.",
+    choices:{
+      A:"Mechanized farming reduced the demand for farm labor",
+      B:"A nationwide increase in small family farms requiring more workers",
+      C:"The disappearance of city factory jobs",
+      D:"A law banning movement between states"
+    },
+    answer:"A",
+    hint:"Mechanization = fewer workers needed.",
+    explain:"Farm mechanization reduced rural labor demand, pushing many people toward urban industrial work."
+  },
+
+  // 25
+  {
+    stem:"Which sequence BEST explains how reformers used evidence to create Progressive change?",
+    prompt:"Choose the order that matches the reform process.",
+    choices:{
+      A:"Problems investigated → abuses exposed publicly → voters demand action → laws/regulations expand",
+      B:"Laws expand first → investigation begins → public ignores → problems grow",
+      C:"Public ignores problems → reforms pass → abuses increase → investigation ends",
+      D:"Abuses disappear first → exposure begins → demand falls → reforms expand"
+    },
+    answer:"A",
+    hint:"Expose problems → demand action → pass reforms.",
+    explain:"Progressive change often followed investigation and exposure, which increased public pressure for reform laws."
+  }
+];
+
 
   function $(id){ return document.getElementById(id); }
 
