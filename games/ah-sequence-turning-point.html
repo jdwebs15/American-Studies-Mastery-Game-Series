@@ -1,1 +1,632 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>American Studies — Game 4: Sequence & Turning Points (Mastery)</title>
+
+  <!-- ✅ SAME working pattern -->
+  <link rel="stylesheet" href="../styles.css">
+
+  <!-- ✅ Fallback styling so it never looks “blank” even if CSS fails -->
+  <style>
+    :root{
+      --bg:#0b1220; --text:#e7eefc; --muted:#a8b4cf;
+      --line:rgba(255,255,255,.12); --radius:18px;
+      --accent:#7aa2ff; --good:#2bd576; --bad:#ff5c7a; --warn:#ffd166;
+    }
+    body{
+      margin:0;
+      background:radial-gradient(1200px 800px at 30% 10%, rgba(122,162,255,.18), transparent 60%), var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:18px;
+    }
+    .gameShell{ width:min(980px,100%); }
+    .panel{
+      background:rgba(17,26,47,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 12px 35px rgba(0,0,0,.25);
+      padding:16px;
+    }
+    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between}
+    .kpis{display:flex; gap:10px; flex-wrap:wrap}
+    .kpi{
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .kpi strong{color:var(--text)}
+    .title{font-weight:900; font-size:18px}
+    .desc{color:var(--muted); margin-top:2px; font-size:13px}
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+      margin-top:8px;
+    }
+    .hr{height:1px; background:var(--line); margin:14px 0}
+
+    .qwrap{margin-top:14px}
+    .qmeta{display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+    .stem{margin-top:10px; font-size:18px; line-height:1.35; font-weight:900;}
+    .mini{margin-top:8px; color:var(--muted); font-size:13px; line-height:1.4}
+
+    .choices{display:grid; gap:10px; margin-top:12px}
+    .choice{
+      text-align:left;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      transition:transform .08s ease, border-color .12s ease, background .12s ease;
+      font-size:15px;
+      line-height:1.35;
+    }
+    .choice:hover{transform:translateY(-1px); border-color:rgba(122,162,255,.35)}
+    .choice[disabled]{opacity:.55; cursor:not-allowed; transform:none}
+
+    .msg{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(0,0,0,.18);
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .msg.good{border-color:rgba(43,213,118,.35)}
+    .msg.bad{border-color:rgba(255,92,122,.35)}
+    .msg.warn{border-color:rgba(255,209,102,.35)}
+    .msgTitle{font-weight:900; margin-bottom:6px; color:var(--text)}
+
+    .hintBox{
+      margin-top:10px;
+      border:1px dashed rgba(255,209,102,.45);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(255,209,102,.06);
+      color:var(--muted);
+      display:none;
+    }
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .btn:hover{border-color:rgba(122,162,255,.35)}
+    .btn.primary{background:rgba(122,162,255,.18); border-color:rgba(122,162,255,.35)}
+    .btn.good{background:rgba(43,213,118,.14); border-color:rgba(43,213,118,.35)}
+    .btn.bad{background:rgba(255,92,122,.12); border-color:rgba(255,92,122,.35)}
+    .btn[disabled]{opacity:.5; cursor:not-allowed}
+
+    .nameGate{display:grid; gap:10px; margin-top:10px;}
+    input[type="text"]{
+      width:min(420px,100%);
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      outline:none;
+      font-size:15px;
+    }
+    .small{font-size:13px; color:var(--muted)}
+
+    .finishCard{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+    }
+    .code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gameShell">
+    <div class="panel">
+
+      <div class="row">
+        <div>
+          <div class="title">American Studies — Game 4</div>
+          <div class="desc">Sequence & Turning Points • timeline logic • 100% mastery required</div>
+          <div class="pill">Directions: Choose the answer that correctly identifies the sequence/turning-point logic.</div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><strong>Name:</strong> <span id="nameOut">—</span></div>
+          <div class="kpi"><strong>Score:</strong> <span id="scoreOut">0 / 0</span></div>
+          <div class="kpi"><strong>Accuracy:</strong> <span id="accOut">0%</span></div>
+          <div class="kpi"><strong>Progress:</strong> <span id="progOut">0 / 0</span></div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <!-- NAME GATE -->
+      <div id="gate">
+        <div class="msg warn">
+          <div class="msgTitle">Start</div>
+          <div>Enter your name to begin. Questions are randomized each run. Mastery requires <strong>100% accuracy</strong> across all questions.</div>
+        </div>
+        <div class="nameGate">
+          <input id="nameIn" type="text" placeholder="Student Name" maxlength="40" />
+          <div class="actions">
+            <button class="btn primary" id="btnStart">Start Game</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAME -->
+      <div id="game" style="display:none;">
+        <div class="qwrap">
+          <div class="qmeta">
+            <div><strong>Question:</strong> <span id="qNum">1</span> / <span id="qTotal">0</span></div>
+            <div><strong>Attempt on this question:</strong> <span id="attemptThis">0</span></div>
+          </div>
+
+          <div class="stem" id="stem">—</div>
+          <div class="mini" id="prompt">—</div>
+
+          <div class="choices" id="choices"></div>
+
+          <div class="hintBox" id="hintBox"></div>
+
+          <div class="msg" id="feedback" style="display:none;">
+            <div class="msgTitle" id="fbTitle">—</div>
+            <div id="fbText">—</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn bad" id="btnRestart">Restart Run</button>
+            <button class="btn good" id="btnFinish" disabled>Finish / Submit</button>
+          </div>
+
+          <div class="small" style="margin-top:10px;">
+            Mastery unlocks only when <strong>all questions are completed</strong> and <strong>accuracy is 100%</strong>.
+          </div>
+        </div>
+
+        <!-- FINISH SCREEN -->
+        <div id="finish" style="display:none;">
+          <div class="finishCard">
+            <div class="msgTitle">Run Summary</div>
+            <div class="small" id="summaryLine">—</div>
+            <div class="hr"></div>
+            <div class="code" id="summaryCode">—</div>
+            <div class="actions" style="margin-top:12px;">
+              <button class="btn primary" id="btnNewRun">New Randomized Run</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     GAME 4 — Sequence & Turning Points (Mastery Shell)
+     - Single best answer (A-D)
+     - Miss counts once per question (first incorrect attempt)
+     - Correct first try -> 3s explanation -> auto advance
+     - Correct after miss -> brief pause -> advance
+     ========================================================= */
+
+  // ✅ TEST SET (10) — swap to full 25–30 after you confirm it runs
+  var questions = [
+    {
+      stem:"Which sequence BEST represents a common pattern of change during rapid industrialization?",
+      prompt:"Choose the option that places events in the most logical order.",
+      choices:{
+        A:"Factory growth → increased demand for workers → city population rises → housing crowding/tenements",
+        B:"Tenements built first → factories close → workers move away → cities grow",
+        C:"Public sanitation improves first → disease increases → overcrowding decreases → urbanization begins",
+        D:"Cities shrink first → mechanized farming increases labor needs → people move to farms"
+      },
+      answer:"A",
+      hint:"Think: jobs pull people in, then cities strain to house them.",
+      explain:"Industrial jobs drew workers to cities, which increased population and led to overcrowding and tenement growth."
+    },
+    {
+      stem:"Which event is a turning point that helped speed up urban growth in the late 1800s?",
+      prompt:"A turning point is an event/change that causes major effects afterward.",
+      choices:{
+        A:"Mechanized farming reduced rural labor needs",
+        B:"A decrease in immigration to the U.S.",
+        C:"An end to factory production in northern cities",
+        D:"A requirement that families move from cities to farms"
+      },
+      answer:"A",
+      hint:"Look for a change that pushes workers off farms.",
+      explain:"Mechanized farming reduced the need for farm labor, pushing workers toward cities and accelerating urbanization."
+    },
+    {
+      stem:"Which sequence BEST explains how poor city infrastructure contributed to disease outbreaks?",
+      prompt:"Choose the option that correctly shows cause → effect over time.",
+      choices:{
+        A:"Overcrowding increases → sanitation systems overwhelmed → contaminated water/filth → disease spreads",
+        B:"Disease decreases → sanitation collapses → overcrowding ends → cities shrink",
+        C:"Clean water expands → sanitation improves → overcrowding rises → disease increases",
+        D:"Cities shrink → tenements expand → clean water improves → disease spreads"
+      },
+      answer:"A",
+      hint:"Overcrowding strains services; sanitation failure increases risk.",
+      explain:"Rapid growth overwhelmed sanitation, increasing contamination and spreading diseases like cholera and tuberculosis."
+    },
+    {
+      stem:"Which turning point BEST explains why labor unions expanded in the industrial era?",
+      prompt:"Choose the option that represents a key reason unions grew.",
+      choices:{
+        A:"Unsafe conditions and long hours led workers to organize for reforms",
+        B:"All employers voluntarily increased wages and safety",
+        C:"The government immediately enforced strong labor protections everywhere",
+        D:"Industrial jobs disappeared, eliminating workplace concerns"
+      },
+      answer:"A",
+      hint:"Unions grow when workers need collective power to change conditions.",
+      explain:"Workers organized to address unsafe conditions, long hours, and low pay, contributing to union growth."
+    },
+    {
+      stem:"Which sequence BEST explains how laissez-faire policies contributed to trusts/monopolies?",
+      prompt:"Choose the option that correctly connects government policy to business outcomes.",
+      choices:{
+        A:"Limited regulation → corporations expand rapidly → consolidation → trusts/monopolies form",
+        B:"Strict regulation → corporations shrink → competition ends → monopolies form",
+        C:"High taxes on corporations → businesses close → trusts increase",
+        D:"Elections end → regulation increases → monopolies disappear"
+      },
+      answer:"A",
+      hint:"Hands-off oversight allows consolidation.",
+      explain:"Laissez-faire reduced oversight, enabling rapid growth and consolidation into trusts and monopolies."
+    },
+    {
+      stem:"Which sequence BEST explains a push-pull pattern behind the Great Migration?",
+      prompt:"Choose the option that correctly identifies push factors followed by pull factors.",
+      choices:{
+        A:"Jim Crow segregation/violence → African Americans leave South → industrial jobs in North → migration increases",
+        B:"Industrial jobs end in North → opportunities shrink → discrimination ends in South → migration increases",
+        C:"Segregation ends in South → people leave anyway → farms expand → migration increases",
+        D:"Factory wages drop in North → workers move South → Jim Crow expands → migration increases"
+      },
+      answer:"A",
+      hint:"Push = leaving oppression; pull = moving toward jobs.",
+      explain:"Oppression and violence pushed people out of the South, while northern jobs pulled migrants to cities."
+    },
+    {
+      stem:"Which turning point BEST explains the rise of reform movements in the Progressive Era?",
+      prompt:"Choose the option that most directly increased demand for reform.",
+      choices:{
+        A:"Public exposure of corruption and unsafe conditions increased pressure for reform",
+        B:"An end to political corruption in all cities",
+        C:"A complete removal of corporate influence from politics",
+        D:"The elimination of industrial workplaces"
+      },
+      answer:"A",
+      hint:"Look for what made people demand change.",
+      explain:"Exposés and public awareness of problems increased political pressure for reforms."
+    },
+    {
+      stem:"Which sequence BEST explains how new technology changed daily life in the early 1900s?",
+      prompt:"Choose the option that shows technology → change in behavior/markets.",
+      choices:{
+        A:"Electricity expands → appliances available → home tasks easier → consumer markets grow",
+        B:"Appliances disappear → electricity spreads → tasks harder → markets shrink",
+        C:"Cities shrink → automobiles vanish → travel expands → markets grow",
+        D:"Communication declines → radios expand → information slows → markets shrink"
+      },
+      answer:"A",
+      hint:"Technology often reduces time/cost, increasing consumption.",
+      explain:"Electric power enabled appliances and conveniences, changing daily life and expanding consumer markets."
+    },
+    {
+      stem:"Which turning point BEST explains why the reservation system expanded in the West?",
+      prompt:"Choose the option that best shows policy shift with major effects.",
+      choices:{
+        A:"Federal policy moved toward confining tribes to specific lands as settlement expanded",
+        B:"The government ended westward settlement to protect tribal lands",
+        C:"All treaties guaranteed tribal sovereignty permanently without enforcement issues",
+        D:"Settlers avoided tribal lands, reducing conflict"
+      },
+      answer:"A",
+      hint:"Think: settlement pressure → policy to remove/confine.",
+      explain:"As settlement expanded, federal policy increasingly confined tribes to reservations, reshaping life and land control."
+    },
+    {
+      stem:"Which sequence BEST explains the relationship between segregation laws and Supreme Court support in the late 1800s?",
+      prompt:"Choose the option that correctly links law → court decision → outcome.",
+      choices:{
+        A:"Jim Crow laws expand → Plessy upholds 'separate but equal' → segregation strengthens",
+        B:"Segregation ends → Plessy bans discrimination → Jim Crow expands",
+        C:"Voting rights expand → Plessy protects equality → segregation increases",
+        D:"Reconstruction continues → Plessy ends Jim Crow → equality achieved"
+      },
+      answer:"A",
+      hint:"Plessy supported segregation, not equality.",
+      explain:"Jim Crow expanded, and Plessy upheld segregation, enabling discrimination to continue and strengthen."
+    }
+  ];
+
+  function $(id){ return document.getElementById(id); }
+
+  var state = {
+    player:"",
+    startISO:null,
+    endISO:null,
+    order:[],
+    idx:0,
+    correct:0,
+    misses:0,
+    missedSet:{},
+    attemptThis:0,
+    locked:false,
+    timer:null
+  };
+
+  function nowISO(){ return new Date().toISOString(); }
+  function fmt(dt){ return new Date(dt).toLocaleString(); }
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp = a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+
+  function calcAcc(){
+    var totalQ = questions.length;
+    var perfectCorrect = totalQ - state.misses;
+    var acc = Math.round((perfectCorrect / totalQ) * 100);
+    if(acc<0) acc=0; if(acc>100) acc=100;
+    return acc;
+  }
+
+  function updateKPIs(){
+    $("nameOut").textContent = state.player || "—";
+    $("scoreOut").textContent = state.correct + " / " + questions.length;
+    $("accOut").textContent = calcAcc() + "%";
+    $("progOut").textContent = state.idx + " / " + questions.length;
+  }
+
+  function showFeedback(type, title, text){
+    var box = $("feedback");
+    box.style.display = "block";
+    box.className = "msg " + type;
+    $("fbTitle").textContent = title;
+    $("fbText").textContent = text;
+  }
+  function hideFeedback(){ $("feedback").style.display = "none"; }
+
+  function setHint(text){
+    var hb = $("hintBox");
+    if(!text){
+      hb.style.display = "none";
+      hb.textContent = "";
+      return;
+    }
+    hb.style.display = "block";
+    hb.textContent = "Hint: " + text;
+  }
+
+  function disableChoices(disabled){
+    var btns = $("choices").querySelectorAll("button.choice");
+    for(var i=0;i<btns.length;i++) btns[i].disabled = disabled;
+  }
+
+  function renderQuestion(){
+    hideFeedback();
+    setHint("");
+    state.attemptThis = 0;
+    $("attemptThis").textContent = "0";
+
+    var qIndex = state.order[state.idx];
+    var q = questions[qIndex];
+
+    $("qNum").textContent = String(state.idx + 1);
+    $("qTotal").textContent = String(questions.length);
+    $("stem").textContent = q.stem;
+    $("prompt").textContent = q.prompt || "";
+
+    var html = "";
+    var keys = ["A","B","C","D"];
+    for(var k=0;k<keys.length;k++){
+      var key = keys[k];
+      html += '<button class="choice" data-key="' + key + '"><strong>' + key + '.</strong> ' + q.choices[key] + '</button>';
+    }
+    $("choices").innerHTML = html;
+
+    var btns = $("choices").querySelectorAll("button.choice");
+    for(var i=0;i<btns.length;i++){
+      btns[i].addEventListener("click", function(){
+        if(state.locked) return;
+        checkAnswer(this.getAttribute("data-key"));
+      });
+    }
+
+    updateKPIs();
+  }
+
+  function updateFinishLock(){
+    var acc = calcAcc();
+    var doneAll = state.idx >= questions.length;
+    var mastery = doneAll && acc === 100;
+
+    $("btnFinish").disabled = !mastery;
+
+    if(doneAll){
+      if(mastery){
+        showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
+      }else{
+        showFeedback("warn","Run complete — not mastery",
+          "You finished the run, but accuracy is " + acc + "%. Start a new randomized run and try for 100%.");
+      }
+    }
+  }
+
+  function advance(){
+    state.idx++;
+    updateKPIs();
+
+    if(state.idx >= questions.length){
+      disableChoices(true);
+      setHint("");
+      updateFinishLock();
+      return;
+    }
+    renderQuestion();
+  }
+
+  function checkAnswer(choice){
+    var qIndex = state.order[state.idx];
+    var q = questions[qIndex];
+
+    state.attemptThis++;
+    $("attemptThis").textContent = String(state.attemptThis);
+
+    var correctNow = (choice === q.answer);
+
+    if(correctNow){
+      state.correct = Math.min(questions.length, state.correct + 1);
+      updateKPIs();
+
+      disableChoices(true);
+      state.locked = true;
+
+      var firstTry = (state.attemptThis === 1);
+      clearTimeout(state.timer);
+
+      if(firstTry){
+        showFeedback("good","Correct (first try)", q.explain || "Correct.");
+        state.timer = setTimeout(function(){
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 3000);
+      }else{
+        showFeedback("good","Correct (after hint)", q.explain || "Correct.");
+        state.timer = setTimeout(function(){
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 800);
+      }
+      return;
+    }
+
+    if(!state.missedSet[qIndex]){
+      state.missedSet[qIndex] = true;
+      state.misses++;
+      updateKPIs();
+    }
+
+    showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
+    setHint(q.hint || "Identify the correct cause → effect or timeline order, then choose the BEST match.");
+  }
+
+  function startRun(){
+    var idxs = [];
+    for(var i=0;i<questions.length;i++) idxs.push(i);
+    state.order = shuffle(idxs);
+
+    state.idx = 0;
+    state.correct = 0;
+    state.misses = 0;
+    state.missedSet = {};
+    state.attemptThis = 0;
+    state.locked = false;
+    clearTimeout(state.timer);
+    state.timer = null;
+
+    state.startISO = nowISO();
+    state.endISO = null;
+
+    $("finish").style.display = "none";
+    renderQuestion();
+  }
+
+  function finishRun(){
+    state.endISO = nowISO();
+
+    var acc = calcAcc();
+    var mastery = (acc === 100 && state.idx >= questions.length);
+
+    $("summaryLine").textContent = mastery
+      ? "Mastery earned. Show this screen to your teacher."
+      : "Not mastery. Start a new randomized run and try again.";
+
+    $("summaryCode").textContent =
+      "NAME: " + state.player + "\n" +
+      "GAME: Game 4 — Sequence & Turning Points\n" +
+      "DATE: " + new Date(state.startISO).toLocaleDateString() + "\n" +
+      "START: " + fmt(state.startISO) + "\n" +
+      "END: " + fmt(state.endISO) + "\n" +
+      "QUESTIONS: " + questions.length + "\n" +
+      "MISSES: " + state.misses + "\n" +
+      "ACCURACY: " + acc + "%\n" +
+      "MASTERY: " + (mastery ? "YES" : "NO") + "\n";
+
+    $("finish").style.display = "block";
+    $("choices").innerHTML = "";
+    setHint("");
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    $("btnStart").addEventListener("click", function(){
+      var name = $("nameIn").value.trim();
+      if(!name){ alert("Please enter your name to begin."); return; }
+      state.player = name;
+      $("gate").style.display = "none";
+      $("game").style.display = "block";
+      startRun();
+    });
+
+    $("btnRestart").addEventListener("click", function(){
+      if(confirm("Restart with a new randomized run?")) startRun();
+    });
+
+    $("btnFinish").addEventListener("click", finishRun);
+    $("btnNewRun").addEventListener("click", startRun);
+
+    updateKPIs();
+  });
+
+})();
+</script>
+</body>
+</html>
 
