@@ -4,11 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>American Studies — Game 2: Select Two (Mastery)</title>
-<link rel="stylesheet" href="/American-Studies-Mastery-Game-Series/styles.css">
+
+  <!-- ✅ MOST RELIABLE: absolute path for GitHub Pages repo -->
+  <link rel="stylesheet" href="/American-Studies-Mastery-Game-Series/styles.css">
+
+  <!-- ✅ FALLBACK: prevents "blank white" even if styles.css fails -->
   <style>
-  :root{ --bg:#0b1220; --text:#e7eefc; }
-  body{ margin:0; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; }
-</style>
+    :root{
+      --bg:#0b1220;
+      --text:#e7eefc;
+      --muted:#a8b4cf;
+      --line:rgba(255,255,255,.12);
+      --radius:18px;
+    }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
     .gameShell{ width:min(980px,100%); margin:0 auto; padding:18px; }
     .panel{
       background:rgba(17,26,47,.72);
@@ -217,13 +232,9 @@
 <script>
 /* =========================================================
    SELECT TWO — Mastery Shell (Legend Rules)
-   - Student selects exactly 2, then clicks "Check Two"
-   - Miss counts once per question (first incorrect check)
-   - Correct on first try: show 3s explanation, then auto-advance
 ========================================================= */
 
 const questions = [
-  // TEST SET (5) — we'll replace with your full 25–30 after shell confirms
   {
     stem: "Which TWO factors MOST directly contributed to rapid urbanization during industrialization?",
     choices: {
@@ -336,7 +347,6 @@ function showFeedback(type, title, text){
   $("fbTitle").textContent = title;
   $("fbText").textContent = text;
 }
-
 function hideFeedback(){ $("feedback").style.display = "none"; }
 
 function setHint(text){
@@ -377,9 +387,9 @@ function renderQuestion(){
   $("stem").textContent = q.stem;
 
   const entries = Object.entries(q.choices);
-  $("choices").innerHTML = entries.map(([k,v]) => {
-    return `<button class="choice" data-key="${k}"><strong>${k}.</strong> ${v}</button>`;
-  }).join("");
+  $("choices").innerHTML = entries.map(([k,v]) =>
+    `<button class="choice" data-key="${k}"><strong>${k}.</strong> ${v}</button>`
+  ).join("");
 
   $("choices").querySelectorAll("button.choice").forEach(btn=>{
     btn.addEventListener("click", ()=>{
@@ -483,7 +493,6 @@ function checkTwo(){
     return;
   }
 
-  // wrong: count miss once per question
   if(!state.missedSet.has(qIndex)){
     state.missedSet.add(qIndex);
     state.misses++;
@@ -541,30 +550,31 @@ function finishRun(){
   setHint("");
 }
 
-$("btnStart").addEventListener("click", ()=>{
-  const name = $("nameIn").value.trim();
-  if(!name){
-    alert("Please enter your name to begin.");
-    return;
-  }
-  state.player = name;
-  $("gate").style.display = "none";
-  $("game").style.display = "block";
-  startRun();
+document.addEventListener("DOMContentLoaded", ()=>{
+  $("btnStart").addEventListener("click", ()=>{
+    const name = $("nameIn").value.trim();
+    if(!name){
+      alert("Please enter your name to begin.");
+      return;
+    }
+    state.player = name;
+    $("gate").style.display = "none";
+    $("game").style.display = "block";
+    startRun();
+  });
+
+  $("btnCheck").addEventListener("click", checkTwo);
+  $("btnClear").addEventListener("click", clearSelections);
+
+  $("btnRestart").addEventListener("click", ()=>{
+    if(confirm("Restart with a new randomized run?")) restartRun();
+  });
+
+  $("btnFinish").addEventListener("click", finishRun);
+  $("btnNewRun").addEventListener("click", restartRun);
+
+  updateKPIs();
 });
-
-$("btnCheck").addEventListener("click", checkTwo);
-$("btnClear").addEventListener("click", clearSelections);
-
-$("btnRestart").addEventListener("click", ()=>{
-  if(confirm("Restart with a new randomized run?")) restartRun();
-});
-
-$("btnFinish").addEventListener("click", finishRun);
-$("btnNewRun").addEventListener("click", restartRun);
-
-updateKPIs();
 </script>
 </body>
 </html>
-
