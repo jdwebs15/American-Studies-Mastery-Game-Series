@@ -5,21 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>American Studies — Game 3: BEST Explains (Mastery)</title>
 
-  <!-- ✅ Most reliable path from /games/ -->
-  <link rel="stylesheet" href="/American-Studies-Mastery-Game-Series/styles.css">
+  <!-- ✅ Use SAME pattern as Game 2 -->
+  <link rel="stylesheet" href="../styles.css">
 
-  <!-- ✅ Fallback so it NEVER shows blank if styles.css fails -->
+  <!-- ✅ Fallback so it never renders “blank” even if CSS fails -->
   <style>
     :root{
-      --bg:#0b1220;
-      --text:#e7eefc;
-      --muted:#a8b4cf;
-      --line:rgba(255,255,255,.12);
-      --radius:18px;
-      --accent:#7aa2ff;
-      --good:#2bd576;
-      --bad:#ff5c7a;
-      --warn:#ffd166;
+      --bg:#0b1220; --text:#e7eefc; --muted:#a8b4cf;
+      --line:rgba(255,255,255,.12); --radius:18px;
+      --accent:#7aa2ff; --good:#2bd576; --bad:#ff5c7a; --warn:#ffd166;
     }
     body{
       margin:0;
@@ -27,9 +21,12 @@
       color:var(--text);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:18px;
     }
-
-    .gameShell{ width:min(980px,100%); margin:0 auto; padding:18px; }
+    .gameShell{ width:min(980px,100%); }
     .panel{
       background:rgba(17,26,47,.72);
       border:1px solid var(--line);
@@ -157,6 +154,7 @@
 <body>
   <div class="gameShell">
     <div class="panel">
+
       <div class="row">
         <div>
           <div class="title">American Studies — Game 3</div>
@@ -173,7 +171,7 @@
 
       <div class="hr"></div>
 
-      <!-- NAME GATE -->
+      <!-- NAME GATE (renders even if JS breaks) -->
       <div id="gate">
         <div class="msg warn">
           <div class="msgTitle">Start</div>
@@ -196,7 +194,6 @@
           </div>
 
           <div class="stem" id="stem">—</div>
-
           <div class="choices" id="choices"></div>
 
           <div class="hintBox" id="hintBox"></div>
@@ -234,710 +231,379 @@
   </div>
 
 <script>
-/* =========================================================
-   BEST EXPLAINS — Mastery Shell (Legend Rules)
-   - Wrong counts once per question (first incorrect)
-   - Wrong shows hint; accuracy reflects miss even after correct
-   - Correct first try shows 3s explain then auto-advance
-   - Finish locked until all questions complete AND 100% accuracy
-========================================================= */
+(function(){
+  "use strict";
 
-const questions = [
-  // 30 items, balanced correct A/B/C/D (8A, 8B, 7C, 7D)
-
-  /* CS 8 — Industrialization */
-  {
-    stem: "Which statement BEST explains how mechanized farming contributed to urbanization?",
-    choices: {
-      A: "Mechanized farming reduced rural labor needs, pushing workers toward city factory jobs.",
-      B: "Mechanized farming forced factories to close, causing workers to return to farms.",
-      C: "Mechanized farming eliminated all economic opportunities in cities.",
-      D: "Mechanized farming ended the need for transportation networks."
+  // ✅ TEST SET (10) — once this runs clean, we’ll swap to your full 25–30
+  var questions = [
+    {
+      stem:"Which statement BEST explains how mechanized farming contributed to urbanization?",
+      choices:{
+        A:"Mechanized farming reduced rural labor needs, pushing workers toward city factory jobs.",
+        B:"Mechanized farming forced factories to close, causing workers to return to farms.",
+        C:"Mechanized farming eliminated all economic opportunities in cities.",
+        D:"Mechanized farming ended the need for transportation networks."
+      },
+      answer:"A",
+      hint:"Think: fewer jobs on farms → people move.",
+      explain:"Mechanization lowered the need for farm labor, creating a push factor toward urban factory jobs."
     },
-    answer: "A",
-    hint: "Think: fewer jobs on farms → people move.",
-    explain: "Mechanization lowered the need for farm labor, creating a push factor that moved people toward urban industrial jobs."
-  },
-  {
-    stem: "Which statement BEST explains why assembly lines increased factory output?",
-    choices: {
-      A: "Assembly lines required every worker to master multiple crafts at once.",
-      B: "Assembly lines divided production into repeated steps, increasing efficiency and speed.",
-      C: "Assembly lines reduced the use of machines in factories.",
-      D: "Assembly lines prevented businesses from producing goods in large quantities."
+    {
+      stem:"Which statement BEST explains why assembly lines increased factory output?",
+      choices:{
+        A:"Assembly lines required every worker to master multiple crafts at once.",
+        B:"Assembly lines divided production into repeated steps, increasing efficiency and speed.",
+        C:"Assembly lines reduced the use of machines in factories.",
+        D:"Assembly lines prevented businesses from producing goods in large quantities."
+      },
+      answer:"B",
+      hint:"Efficiency comes from breaking tasks into smaller steps.",
+      explain:"Assembly lines improved efficiency by dividing production into repeated steps, increasing speed and output."
     },
-    answer: "B",
-    hint: "Efficiency comes from breaking tasks into smaller steps.",
-    explain: "Assembly lines improved efficiency by dividing production into repeated steps, increasing speed and output."
-  },
-  {
-    stem: "Which statement BEST explains one way new technologies changed American life during industrialization?",
-    choices: {
-      A: "New technologies reduced communication and isolated communities.",
-      B: "New technologies ended the need for electricity in cities.",
-      C: "New technologies improved communication and daily life, supporting an urban industrial society.",
-      D: "New technologies caused the U.S. to return to an agrarian economy."
+    {
+      stem:"Which statement BEST explains why labor unions grew during industrialization?",
+      choices:{
+        A:"Workers organized to improve unsafe conditions, long hours, and low wages.",
+        B:"Workers organized to eliminate all factory production nationwide.",
+        C:"Workers organized because government already enforced strong protections everywhere.",
+        D:"Workers organized because corporations voluntarily increased wages and safety."
+      },
+      answer:"A",
+      hint:"Unions form when workers want reforms.",
+      explain:"Unions grew as workers responded to unsafe conditions and unfair hours/wages in industrial workplaces."
     },
-    answer: "C",
-    hint: "Think: modern communication/industry grows.",
-    explain: "Innovations like electric light and the telephone improved daily life and supported growth of an urban industrial society."
-  },
-  {
-    stem: "Which statement BEST explains why rapid industrial growth created new challenges in cities?",
-    choices: {
-      A: "Industrial growth decreased city populations and reduced housing demand.",
-      B: "Industrial growth eliminated public health concerns in urban areas.",
-      C: "Industrial growth improved sanitation automatically without reform.",
-      D: "Industrial growth drew large populations to cities, creating overcrowding and sanitation problems."
+    {
+      stem:"Which statement BEST explains how laissez-faire policies influenced big business?",
+      choices:{
+        A:"Laissez-faire immediately prevented trusts and monopolies.",
+        B:"Laissez-faire limited regulation, allowing corporations to expand and consolidate power.",
+        C:"Laissez-faire required strict government control of all industries.",
+        D:"Laissez-faire eliminated corporate influence in politics by 1900."
+      },
+      answer:"B",
+      hint:"Laissez-faire = hands-off regulation.",
+      explain:"Limited regulation allowed corporations to grow quickly and consolidate through trusts and monopolies."
     },
-    answer: "D",
-    hint: "More people + limited housing/services = problems.",
-    explain: "Industrial growth attracted large populations to cities faster than housing and sanitation systems could expand."
-  },
-
-  /* CS 9 — Labor & laissez-faire */
-  {
-    stem: "Which statement BEST explains why labor unions grew during industrialization?",
-    choices: {
-      A: "Workers organized to improve unsafe conditions, long hours, and low wages.",
-      B: "Workers organized to eliminate all factory production nationwide.",
-      C: "Workers organized because government already enforced strong protections everywhere.",
-      D: "Workers organized because corporations voluntarily increased wages and safety."
+    {
+      stem:"Which statement BEST explains one major effect of mass immigration on U.S. cities?",
+      choices:{
+        A:"It reduced demand for workers in industrial centers.",
+        B:"It increased the labor supply and added cultural diversity to cities.",
+        C:"It ended nativist sentiment in the United States.",
+        D:"It caused most Americans to move back to farms."
+      },
+      answer:"B",
+      hint:"Think: workers + cultural diffusion.",
+      explain:"Immigration helped meet worker demand and increased cultural diversity in growing industrial cities."
     },
-    answer: "A",
-    hint: "Unions form when workers want reforms.",
-    explain: "Unions grew as workers responded to unsafe conditions and unfair hours/wages in industrial workplaces."
-  },
-  {
-    stem: "Which statement BEST explains how laissez-faire policies influenced big business?",
-    choices: {
-      A: "Laissez-faire immediately prevented the creation of trusts and monopolies.",
-      B: "Laissez-faire limited regulation, allowing corporations to expand and consolidate power.",
-      C: "Laissez-faire required strict government control of all industries.",
-      D: "Laissez-faire eliminated corporate influence in politics by 1900."
+    {
+      stem:"Which statement BEST explains how urbanization created public health challenges?",
+      choices:{
+        A:"Rapid population growth overwhelmed sanitation and clean water systems, increasing disease risk.",
+        B:"Urbanization eliminated the need for sanitation infrastructure.",
+        C:"Urbanization guaranteed strict inspections that prevented disease.",
+        D:"Urbanization reduced crowding as cities became less populated."
+      },
+      answer:"A",
+      hint:"Infrastructure couldn’t keep up with growth.",
+      explain:"Rapid growth overwhelmed sanitation systems, contributing to disease outbreaks and poor public health."
     },
-    answer: "B",
-    hint: "Laissez-faire = hands-off regulation.",
-    explain: "Limited regulation allowed corporations to grow quickly and consolidate through trusts and monopolies."
-  },
-  {
-    stem: "Which statement BEST explains why some labor disputes became violent in the late 1800s?",
-    choices: {
-      A: "Workers and employers always agreed on wages and safety reforms.",
-      B: "Strikes sometimes disrupted commerce, and resistance by employers/government could escalate conflict.",
-      C: "Labor unions refused to negotiate under any circumstances.",
-      D: "Businesses had no interest in protecting profits during strikes."
+    {
+      stem:"Which statement BEST explains why westward settlement intensified conflict with American Indians?",
+      choices:{
+        A:"Settlers and the government sought land/resources used by American Indians, increasing conflict.",
+        B:"American Indians encouraged settlers to take tribal lands without negotiation.",
+        C:"Westward settlement reduced contact and eliminated disputes.",
+        D:"All groups agreed to share land equally with no tension."
+      },
+      answer:"A",
+      hint:"Land + resources + competition.",
+      explain:"Expansion increased competition for land and resources, intensifying conflict and coercive policies."
     },
-    answer: "B",
-    hint: "Disruption + resistance can escalate.",
-    explain: "Strikes disrupted business and public order; employer and government resistance sometimes escalated tensions into violence."
-  },
-  {
-    stem: "Which statement BEST explains how collective bargaining helped unions pursue reforms?",
-    choices: {
-      A: "It allowed employers to ignore worker demands without consequence.",
-      B: "It replaced negotiations with violence as the primary strategy.",
-      C: "It provided a method for workers to negotiate as a group for wages and conditions.",
-      D: "It prevented workers from organizing across factories."
+    {
+      stem:"Which statement BEST explains the impact of Plessy v. Ferguson on civil rights?",
+      choices:{
+        A:"It declared segregation unconstitutional and ended Jim Crow laws.",
+        B:"It upheld segregation by accepting 'separate but equal' as constitutional.",
+        C:"It required integrated schools nationwide by 1900.",
+        D:"It guaranteed equal voting access in all southern states."
+      },
+      answer:"B",
+      hint:"Plessy supported segregation, not equality.",
+      explain:"Plessy upheld 'separate but equal,' enabling segregation and discrimination to persist."
     },
-    answer: "C",
-    hint: "Collective bargaining = negotiating together.",
-    explain: "Collective bargaining let workers negotiate as a unified group for improved wages, hours, and safety."
-  },
-
-  /* CS 10 — Immigration, migration, urbanization */
-  {
-    stem: "Which statement BEST explains one major effect of mass immigration at the turn of the 20th century?",
-    choices: {
-      A: "It reduced the demand for workers in industrial centers.",
-      B: "It increased the labor supply and added cultural diversity to American cities.",
-      C: "It ended nativist sentiment in the United States.",
-      D: "It caused most Americans to move from cities back to farms."
+    {
+      stem:"Which statement BEST explains why Progressives supported antitrust actions?",
+      choices:{
+        A:"They wanted to increase monopoly power to stabilize prices.",
+        B:"They believed monopolies protected consumers from harm.",
+        C:"They sought to reduce the power of trusts/monopolies to promote fair competition.",
+        D:"They wanted to eliminate elections and political participation."
+      },
+      answer:"C",
+      hint:"Antitrust = limiting monopoly power.",
+      explain:"Progressives used antitrust actions to curb monopolies and promote fair competition."
     },
-    answer: "B",
-    hint: "Think: workers + cultural diffusion.",
-    explain: "Immigration helped meet worker demand and increased cultural diversity as ethnic traits spread into American life."
-  },
-  {
-    stem: "Which statement BEST explains why many immigrants and internal migrants lived in tenements?",
-    choices: {
-      A: "Tenements offered spacious housing with private yards at low cost.",
-      B: "Tenements were often the only affordable option near factories in crowded cities.",
-      C: "Tenements were built mainly for wealthy families seeking luxury housing.",
-      D: "Tenements were designed to prevent overcrowding and disease in all cases."
-    },
-    answer: "B",
-    hint: "Location near jobs + affordability.",
-    explain: "Tenements were often inexpensive and located near jobs, even though they were frequently overcrowded and unsanitary."
-  },
-  {
-    stem: "Which statement BEST explains why the Great Migration changed northern cities?",
-    choices: {
-      A: "It reduced the labor force in northern industrial areas.",
-      B: "It ended all racial discrimination nationwide.",
-      C: "It increased urban populations and contributed to economic and cultural change.",
-      D: "It caused factories to close due to a lack of workers."
-    },
-    answer: "C",
-    hint: "More people + jobs + culture.",
-    explain: "The Great Migration increased northern urban populations, affected labor markets, and contributed to cultural change."
-  },
-  {
-    stem: "Which statement BEST explains how urbanization created public health challenges?",
-    choices: {
-      A: "Rapid population growth overwhelmed sanitation and clean water systems, increasing disease risk.",
-      B: "Urbanization eliminated the need for clean water and sanitation infrastructure.",
-      C: "Urbanization guaranteed strict building inspections and prevented disease spread.",
-      D: "Urbanization reduced crowding as cities became less populated."
-    },
-    answer: "A",
-    hint: "Infrastructure couldn’t keep up with growth.",
-    explain: "Rapid growth often overwhelmed sanitation systems, contributing to disease outbreaks and poor public health."
-  },
-
-  /* CS 11 — Westward expansion & American Indians */
-  {
-    stem: "Which statement BEST explains why westward settlement intensified conflict with American Indians?",
-    choices: {
-      A: "Settlers and the government sought land/resources used by American Indians, increasing competition and conflict.",
-      B: "American Indians encouraged settlers to take tribal lands without negotiation.",
-      C: "Westward settlement reduced contact between groups and eliminated disputes.",
-      D: "All groups agreed to share land equally with no tension."
-    },
-    answer: "A",
-    hint: "Land + resources + competition.",
-    explain: "Expansion increased competition for land and resources, intensifying conflicts between settlers/U.S. policies and American Indians."
-  },
-  {
-    stem: "Which statement BEST explains how the reservation system affected American Indians?",
-    choices: {
-      A: "It increased Native control over traditional lands across the West.",
-      B: "It required settlers to leave the West and return east.",
-      C: "It confined many American Indians to limited areas, restricting traditional lifeways.",
-      D: "It ended federal involvement in Native land policy."
-    },
-    answer: "C",
-    hint: "Reservations = restricted land and movement.",
-    explain: "The reservation system confined Native peoples to limited lands, restricting movement and traditional practices."
-  },
-  {
-    stem: "Which statement BEST explains the purpose of Indian residential schools?",
-    choices: {
-      A: "To preserve Native languages and cultural traditions in all regions.",
-      B: "To pressure American Indians to assimilate by replacing Native culture with European American norms.",
-      C: "To end all government involvement in Native education.",
-      D: "To return tribal lands to Native nations through education programs."
-    },
-    answer: "B",
-    hint: "Assimilation = replacing culture.",
-    explain: "Boarding schools aimed to assimilate Native children by suppressing languages and traditions and teaching European American norms."
-  },
-  {
-    stem: "Which statement BEST explains why events like Wounded Knee became symbols of the Plains Wars era?",
-    choices: {
-      A: "They reflected the end of conflict as the U.S. returned land to tribes.",
-      B: "They showed that assimilation policies were voluntary and widely accepted.",
-      C: "They represented peaceful agreements that expanded tribal sovereignty.",
-      D: "They reflected violent consequences of expansion and forced control over Native peoples."
-    },
-    answer: "D",
-    hint: "Think: violence tied to expansion/control.",
-    explain: "Wounded Knee symbolized the violent consequences of westward expansion and coercive U.S. control over Native peoples."
-  },
-
-  /* CS 12 — Post-Reconstruction racism institutionalized */
-  {
-    stem: "Which statement BEST explains why the end of Reconstruction contributed to the rise of Jim Crow laws?",
-    choices: {
-      A: "Federal enforcement weakened, allowing state/local governments to institutionalize segregation and discrimination.",
-      B: "Federal troops expanded in the South, enforcing desegregation immediately.",
-      C: "Reconstruction reforms were strengthened and protected in every southern state.",
-      D: "The Supreme Court outlawed segregation nationwide after Reconstruction ended."
-    },
-    answer: "A",
-    hint: "Less federal enforcement → more local discrimination.",
-    explain: "With reduced federal enforcement, many southern governments enacted Jim Crow laws that institutionalized segregation and discrimination."
-  },
-  {
-    stem: "Which statement BEST explains the impact of Plessy v. Ferguson on civil rights in the United States?",
-    choices: {
-      A: "It declared segregation unconstitutional and ended Jim Crow laws.",
-      B: "It upheld segregation by accepting 'separate but equal' as constitutional.",
-      C: "It required integrated schools nationwide by 1900.",
-      D: "It guaranteed equal voting access in all southern states."
-    },
-    answer: "B",
-    hint: "Plessy supported segregation, not equality.",
-    explain: "Plessy v. Ferguson upheld segregation by endorsing 'separate but equal,' enabling Jim Crow practices to continue."
-  },
-  {
-    stem: "Which statement BEST explains how voting restrictions reinforced discrimination after Reconstruction?",
-    choices: {
-      A: "Restrictions expanded political participation for African Americans across the South.",
-      B: "Restrictions removed barriers to voting and ended intimidation tactics.",
-      C: "Restrictions limited political participation through laws and intimidation, reducing African American voting power.",
-      D: "Restrictions guaranteed equal access to polling locations in all counties."
-    },
-    answer: "C",
-    hint: "Barriers + intimidation = reduced participation.",
-    explain: "Voting restrictions and intimidation limited African American political participation, reinforcing unequal power structures."
-  },
-  {
-    stem: "Which statement BEST explains how groups like the Ku Klux Klan influenced society after Reconstruction?",
-    choices: {
-      A: "They used violence and intimidation to reinforce racial hierarchy and suppress civil rights.",
-      B: "They promoted racial equality and protected African Americans from discrimination.",
-      C: "They eliminated the need for Jim Crow laws by supporting integration.",
-      D: "They ended political conflict by encouraging equal voting rights."
-    },
-    answer: "A",
-    hint: "Think: terror + suppression.",
-    explain: "White supremacist groups used terror and intimidation to suppress civil rights and reinforce segregation and racial hierarchy."
-  },
-
-  /* CS 13 — Progressive Era */
-  {
-    stem: "Which statement BEST explains why Progressives supported antitrust actions?",
-    choices: {
-      A: "They wanted to increase monopoly power to stabilize prices.",
-      B: "They believed monopolies protected consumers from harm.",
-      C: "They wanted government to stop regulating business entirely.",
-      D: "They sought to reduce the power of trusts/monopolies to promote fair competition."
-    },
-    answer: "D",
-    hint: "Antitrust = limiting monopoly power.",
-    explain: "Progressives used antitrust actions to curb monopolies and trusts and promote fairer competition in the economy."
-  },
-  {
-    stem: "Which statement BEST explains how muckrakers contributed to Progressive reforms?",
-    choices: {
-      A: "They exposed corruption and abuses, increasing public pressure for reform.",
-      B: "They discouraged the public from paying attention to social problems.",
-      C: "They promoted laissez-faire and opposed regulation.",
-      D: "They ended the need for reform by praising city governments."
-    },
-    answer: "A",
-    hint: "Expose problems → public pressure.",
-    explain: "Muckrakers investigated and exposed abuses and corruption, helping build support for reforms."
-  },
-  {
-    stem: "Which statement BEST explains the purpose of consumer protection laws like the Pure Food and Drug Act?",
-    choices: {
-      A: "To reduce government oversight of products sold to the public.",
-      B: "To protect consumers by improving safety and honesty in food and medicine.",
-      C: "To support monopolies by eliminating competition among producers.",
-      D: "To end inspections of factories and processing plants."
-    },
-    answer: "B",
-    hint: "Consumer protection = safer products.",
-    explain: "These laws aimed to protect consumers by requiring safer, more honest labeling and standards for food and medicine."
-  },
-  {
-    stem: "Which statement BEST explains how settlement houses addressed problems of urbanization?",
-    choices: {
-      A: "They increased overcrowding by encouraging more tenement housing.",
-      B: "They ended immigration by restricting cultural diversity in cities.",
-      C: "They provided services and support to immigrant and working-class communities.",
-      D: "They eliminated the need for public sanitation reforms."
-    },
-    answer: "C",
-    hint: "Settlement houses = community support/services.",
-    explain: "Settlement houses offered education and social services to help immigrant and working-class families in crowded urban environments."
-  },
-
-  /* Integration items (CS 8–13) */
-  {
-    stem: "Which statement BEST explains the relationship between industrialization and immigration in many U.S. cities?",
-    choices: {
-      A: "Industrialization reduced factory jobs, leading immigrants to avoid cities.",
-      B: "Industrialization created job opportunities that attracted immigrants seeking work.",
-      C: "Immigration ended the growth of industrial centers by limiting labor supply.",
-      D: "Immigration caused factories to close by increasing wages immediately."
-    },
-    answer: "B",
-    hint: "Factories needed workers; immigrants filled demand.",
-    explain: "Industrialization expanded job opportunities, attracting immigrants who sought work in growing industrial cities."
-  },
-  {
-    stem: "Which statement BEST explains why Progressive reforms expanded government’s role?",
-    choices: {
-      A: "Progressives argued that government should address social and economic problems caused by industrialization.",
-      B: "Progressives believed government should never regulate business under any circumstances.",
-      C: "Progressives opposed public health improvements in cities.",
-      D: "Progressives wanted to eliminate elections and reduce political participation."
-    },
-    answer: "A",
-    hint: "Reforms = government action to fix problems.",
-    explain: "Progressives supported a larger government role to respond to problems like corruption, unsafe products, and poor urban conditions."
-  },
-  {
-    stem: "Which statement BEST explains why urbanization often increased tension in some communities?",
-    choices: {
-      A: "Urbanization reduced job competition and eliminated crowding.",
-      B: "Urbanization ended nativism by separating cultural groups completely.",
-      C: "Urbanization created abundant housing and clean water for everyone immediately.",
-      D: "Urbanization increased crowding and job competition, sometimes intensifying social tension."
-    },
-    answer: "D",
-    hint: "Crowding + competition can fuel tension.",
-    explain: "Rapid urban growth increased competition for jobs and housing and created crowding, which sometimes heightened social tensions."
-  },
-  {
-    stem: "Which statement BEST explains how westward expansion connected to industrial growth?",
-    choices: {
-      A: "Industrial growth reduced demand for western resources, slowing expansion.",
-      B: "Industrial growth increased demand for raw materials, encouraging expansion into the West.",
-      C: "Industrial growth eliminated the need for railroads and transportation networks.",
-      D: "Industrial growth caused Americans to abandon new land opportunities."
-    },
-    answer: "B",
-    hint: "Industry needs resources.",
-    explain: "Industrialization increased demand for resources like minerals and land, encouraging expansion and settlement in the West."
-  },
-
-  /* Add 8 more to reach 30 total */
-  {
-    stem: "Which statement BEST explains why trusts and monopolies became more common during industrialization?",
-    choices: {
-      A: "Businesses consolidated to reduce competition and control prices in a largely unregulated environment.",
-      B: "Businesses avoided consolidation because regulation was extremely strict everywhere.",
-      C: "Workers demanded trusts to reduce wages across industries.",
-      D: "Monopolies formed only because unions required them by law."
-    },
-    answer: "A",
-    hint: "Less regulation + desire to control markets.",
-    explain: "In a hands-off regulatory environment, corporations consolidated to reduce competition and control markets and prices."
-  },
-  {
-    stem: "Which statement BEST explains why many city governments struggled during rapid urbanization?",
-    choices: {
-      A: "City governments had too many resources and too few residents.",
-      B: "City governments did not need to provide services like sanitation or transportation.",
-      C: "City governments could expand infrastructure instantly without cost.",
-      D: "City governments faced rapid population growth that outpaced housing, sanitation, and services."
-    },
-    answer: "D",
-    hint: "Growth faster than infrastructure.",
-    explain: "Urban populations grew quickly, and housing, sanitation, and other services often could not keep up."
-  },
-  {
-    stem: "Which statement BEST explains one key reason strikes were used as a union tactic?",
-    choices: {
-      A: "Strikes increased company profits by raising production immediately.",
-      B: "Strikes stopped work to pressure employers to negotiate and accept reforms.",
-      C: "Strikes prevented workers from organizing as a group.",
-      D: "Strikes were designed to eliminate all negotiation permanently."
-    },
-    answer: "B",
-    hint: "Work stoppage = leverage.",
-    explain: "Strikes created leverage by stopping production, pressuring employers to negotiate on wages and working conditions."
-  },
-  {
-    stem: "Which statement BEST explains how Jim Crow laws affected everyday life in the South?",
-    choices: {
-      A: "They enforced segregation in public spaces, limiting equal access and opportunity.",
-      B: "They guaranteed equal facilities and ended discrimination through strict enforcement.",
-      C: "They abolished racial classification in public institutions.",
-      D: "They expanded voting rights for African Americans without restrictions."
-    },
-    answer: "A",
-    hint: "Jim Crow = enforced segregation.",
-    explain: "Jim Crow laws enforced racial segregation and reinforced inequality in public spaces and services."
-  },
-  {
-    stem: "Which statement BEST explains why Progressive reformers supported public health improvements in cities?",
-    choices: {
-      A: "They believed disease spread was unrelated to sanitation and clean water.",
-      B: "They wanted to increase overcrowding to lower housing costs.",
-      C: "They believed improved sanitation and safe water would reduce disease in crowded cities.",
-      D: "They opposed city services because they increased government responsibility."
-    },
-    answer: "C",
-    hint: "Sanitation + clean water reduce disease.",
-    explain: "Progressives supported sanitation and clean-water improvements because these reduced disease in crowded urban environments."
-  },
-  {
-    stem: "Which statement BEST explains one reason immigrants often formed ethnic neighborhoods in cities?",
-    choices: {
-      A: "Ethnic neighborhoods offered community support, language familiarity, and cultural connections.",
-      B: "Ethnic neighborhoods eliminated job opportunities for new arrivals.",
-      C: "Ethnic neighborhoods existed because the government forced immigrants to live only in rural areas.",
-      D: "Ethnic neighborhoods prevented cultural diffusion into American society."
-    },
-    answer: "A",
-    hint: "Support + familiarity.",
-    explain: "Ethnic neighborhoods provided social support networks and cultural familiarity, helping immigrants adjust to city life."
-  },
-  {
-    stem: "Which statement BEST explains why the Dawes Act is connected to assimilation policies toward American Indians?",
-    choices: {
-      A: "It promoted tribal land ownership and protected traditional communal land use.",
-      B: "It aimed to break up tribal lands into individual allotments, encouraging assimilation into American farming culture.",
-      C: "It ended federal involvement in Native land issues permanently.",
-      D: "It guaranteed sovereignty and self-rule for all tribes in the West."
-    },
-    answer: "B",
-    hint: "Allotment = change land system + assimilation.",
-    explain: "The Dawes Act used allotment to break up communal lands, pressuring assimilation into Euro-American economic and cultural systems."
-  },
-  {
-    stem: "Which statement BEST explains why antitrust enforcement was viewed as a public good during the Progressive era?",
-    choices: {
-      A: "It protected monopolies from competition, stabilizing markets for consumers.",
-      B: "It eliminated all government involvement in the economy permanently.",
-      C: "It helped limit corporate concentration, supporting competition and reducing abuse of power.",
-      D: "It guaranteed that wages would be equal across all industries immediately."
-    },
-    answer: "C",
-    hint: "Antitrust limits abuse of monopoly power.",
-    explain: "Antitrust enforcement aimed to curb corporate concentration, promote competition, and reduce economic abuses."
-  }
-];
-
-const $ = (id)=>document.getElementById(id);
-
-const state = {
-  player: "",
-  startISO: null,
-  endISO: null,
-  order: [],
-  idx: 0,
-  correct: 0,
-  misses: 0,
-  missedSet: new Set(),
-  attemptThis: 0,
-  locked: false,
-  timer: null
-};
-
-function nowISO(){ return new Date().toISOString(); }
-function fmt(dt){ return new Date(dt).toLocaleString(); }
-
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    const tmp = a[i];
-    a[i] = a[j];
-    a[j] = tmp;
-  }
-  return a;
-}
-
-function calcAcc(){
-  const totalQ = questions.length;
-  const perfectCorrect = totalQ - state.misses;
-  const acc = Math.round((perfectCorrect / totalQ) * 100);
-  return Math.max(0, Math.min(100, acc));
-}
-
-function updateKPIs(){
-  $("nameOut").textContent = state.player || "—";
-  $("scoreOut").textContent = `${state.correct} / ${questions.length}`;
-  $("accOut").textContent = `${calcAcc()}%`;
-  $("progOut").textContent = `${state.idx} / ${questions.length}`;
-}
-
-function showFeedback(type, title, text){
-  const box = $("feedback");
-  box.style.display = "block";
-  box.className = `msg ${type}`;
-  $("fbTitle").textContent = title;
-  $("fbText").textContent = text;
-}
-function hideFeedback(){ $("feedback").style.display = "none"; }
-
-function setHint(text){
-  const hb = $("hintBox");
-  if(!text){
-    hb.style.display = "none";
-    hb.textContent = "";
-    return;
-  }
-  hb.style.display = "block";
-  hb.textContent = `Hint: ${text}`;
-}
-
-function disableChoices(disabled){
-  $("choices").querySelectorAll("button.choice").forEach(b => b.disabled = disabled);
-}
-
-function renderQuestion(){
-  hideFeedback();
-  setHint("");
-  state.attemptThis = 0;
-  $("attemptThis").textContent = "0";
-
-  const qIndex = state.order[state.idx];
-  const q = questions[qIndex];
-
-  $("qNum").textContent = String(state.idx + 1);
-  $("qTotal").textContent = String(questions.length);
-  $("stem").textContent = q.stem;
-
-  const entries = Object.entries(q.choices);
-  $("choices").innerHTML = entries.map(([k,v]) =>
-    `<button class="choice" data-key="${k}"><strong>${k}.</strong> ${v}</button>`
-  ).join("");
-
-  $("choices").querySelectorAll("button.choice").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      if(state.locked) return;
-      checkAnswer(btn.dataset.key);
-    });
-  });
-
-  updateKPIs();
-}
-
-function updateFinishLock(){
-  const acc = calcAcc();
-  const doneAll = state.idx >= questions.length;
-  const mastery = doneAll && acc === 100;
-  $("btnFinish").disabled = !mastery;
-
-  if(doneAll){
-    if(mastery){
-      showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
-    }else{
-      showFeedback("warn","Run complete — not mastery",
-        `You finished the run, but accuracy is ${acc}%. Start a new randomized run and try for 100%.`);
+    {
+      stem:"Which statement BEST explains how muckrakers contributed to Progressive reforms?",
+      choices:{
+        A:"They exposed corruption and abuses, increasing public pressure for reform.",
+        B:"They discouraged the public from paying attention to social problems.",
+        C:"They promoted laissez-faire and opposed regulation.",
+        D:"They ended the need for reform by praising city governments."
+      },
+      answer:"A",
+      hint:"Expose problems → public pressure.",
+      explain:"Muckrakers investigated and publicized abuses, helping build support for reforms."
     }
-  }
-}
+  ];
 
-function advance(){
-  state.idx++;
-  updateKPIs();
+  function $(id){ return document.getElementById(id); }
 
-  if(state.idx >= questions.length){
-    disableChoices(true);
-    setHint("");
-    updateFinishLock();
-    return;
-  }
-  renderQuestion();
-}
+  var state = {
+    player:"",
+    startISO:null,
+    endISO:null,
+    order:[],
+    idx:0,
+    correct:0,
+    misses:0,
+    missedSet:{},
+    attemptThis:0,
+    locked:false,
+    timer:null
+  };
 
-function checkAnswer(choice){
-  if(state.locked) return;
+  function nowISO(){ return new Date().toISOString(); }
+  function fmt(dt){ return new Date(dt).toLocaleString(); }
 
-  const qIndex = state.order[state.idx];
-  const q = questions[qIndex];
-
-  state.attemptThis++;
-  $("attemptThis").textContent = String(state.attemptThis);
-
-  const correctNow = (choice === q.answer);
-
-  if(correctNow){
-    state.correct = Math.min(questions.length, state.correct + 1);
-    updateKPIs();
-
-    disableChoices(true);
-    state.locked = true;
-
-    const firstTry = state.attemptThis === 1;
-    if(firstTry){
-      showFeedback("good","Correct (first try)", q.explain || "Correct.");
-      clearTimeout(state.timer);
-      state.timer = setTimeout(()=>{
-        state.locked = false;
-        disableChoices(false);
-        advance();
-      }, 3000);
-    }else{
-      showFeedback("good","Correct (after hint)", q.explain || "Correct.");
-      clearTimeout(state.timer);
-      state.timer = setTimeout(()=>{
-        state.locked = false;
-        disableChoices(false);
-        advance();
-      }, 800);
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var tmp = a[i]; a[i]=a[j]; a[j]=tmp;
     }
-    return;
+    return a;
   }
 
-  // wrong: count miss once per question
-  if(!state.missedSet.has(qIndex)){
-    state.missedSet.add(qIndex);
-    state.misses++;
-    updateKPIs();
+  function calcAcc(){
+    var totalQ = questions.length;
+    var perfectCorrect = totalQ - state.misses;
+    var acc = Math.round((perfectCorrect / totalQ) * 100);
+    if(acc<0) acc=0; if(acc>100) acc=100;
+    return acc;
   }
 
-  showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
-  setHint(q.hint || "Re-read the stem: it asks BEST explains cause-effect or relationship.");
-}
+  function updateKPIs(){
+    $("nameOut").textContent = state.player || "—";
+    $("scoreOut").textContent = state.correct + " / " + questions.length;
+    $("accOut").textContent = calcAcc() + "%";
+    $("progOut").textContent = state.idx + " / " + questions.length;
+  }
 
-function startRun(){
-  state.order = shuffle([...Array(questions.length).keys()]);
-  state.idx = 0;
-  state.correct = 0;
-  state.misses = 0;
-  state.missedSet = new Set();
-  state.attemptThis = 0;
-  state.locked = false;
-  clearTimeout(state.timer);
-  state.timer = null;
+  function showFeedback(type, title, text){
+    var box = $("feedback");
+    box.style.display = "block";
+    box.className = "msg " + type;
+    $("fbTitle").textContent = title;
+    $("fbText").textContent = text;
+  }
+  function hideFeedback(){ $("feedback").style.display = "none"; }
 
-  state.startISO = nowISO();
-  state.endISO = null;
-
-  $("finish").style.display = "none";
-  renderQuestion();
-}
-
-function restartRun(){ startRun(); }
-
-function finishRun(){
-  state.endISO = nowISO();
-
-  const acc = calcAcc();
-  const mastery = acc === 100 && state.idx >= questions.length;
-
-  $("summaryLine").textContent = mastery
-    ? "Mastery earned. Show this screen to your teacher."
-    : "Not mastery. Start a new randomized run and try again.";
-
-  $("summaryCode").textContent =
-    `NAME: ${state.player}\n` +
-    `GAME: Game 3 — BEST Explains\n` +
-    `DATE: ${new Date(state.startISO).toLocaleDateString()}\n` +
-    `START: ${fmt(state.startISO)}\n` +
-    `END: ${fmt(state.endISO)}\n` +
-    `QUESTIONS: ${questions.length}\n` +
-    `MISSES: ${state.misses}\n` +
-    `ACCURACY: ${acc}%\n` +
-    `MASTERY: ${mastery ? "YES" : "NO"}\n`;
-
-  $("finish").style.display = "block";
-  $("choices").innerHTML = "";
-  setHint("");
-}
-
-document.addEventListener("DOMContentLoaded", ()=>{
-  $("btnStart").addEventListener("click", ()=>{
-    const name = $("nameIn").value.trim();
-    if(!name){
-      alert("Please enter your name to begin.");
+  function setHint(text){
+    var hb = $("hintBox");
+    if(!text){
+      hb.style.display = "none";
+      hb.textContent = "";
       return;
     }
-    state.player = name;
-    $("gate").style.display = "none";
-    $("game").style.display = "block";
-    startRun();
+    hb.style.display = "block";
+    hb.textContent = "Hint: " + text;
+  }
+
+  function disableChoices(disabled){
+    var btns = $("choices").querySelectorAll("button.choice");
+    for(var i=0;i<btns.length;i++) btns[i].disabled = disabled;
+  }
+
+  function renderQuestion(){
+    hideFeedback();
+    setHint("");
+    state.attemptThis = 0;
+    $("attemptThis").textContent = "0";
+
+    var qIndex = state.order[state.idx];
+    var q = questions[qIndex];
+
+    $("qNum").textContent = String(state.idx + 1);
+    $("qTotal").textContent = String(questions.length);
+    $("stem").textContent = q.stem;
+
+    var html = "";
+    var keys = ["A","B","C","D"];
+    for(var k=0;k<keys.length;k++){
+      var key = keys[k];
+      html += '<button class="choice" data-key="' + key + '"><strong>' + key + '.</strong> ' + q.choices[key] + '</button>';
+    }
+    $("choices").innerHTML = html;
+
+    var btns = $("choices").querySelectorAll("button.choice");
+    for(var i=0;i<btns.length;i++){
+      btns[i].addEventListener("click", function(){
+        if(state.locked) return;
+        checkAnswer(this.getAttribute("data-key"));
+      });
+    }
+
+    updateKPIs();
+  }
+
+  function updateFinishLock(){
+    var acc = calcAcc();
+    var doneAll = state.idx >= questions.length;
+    var mastery = doneAll && acc === 100;
+
+    $("btnFinish").disabled = !mastery;
+
+    if(doneAll){
+      if(mastery){
+        showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
+      }else{
+        showFeedback("warn","Run complete — not mastery",
+          "You finished the run, but accuracy is " + acc + "%. Start a new randomized run and try for 100%.");
+      }
+    }
+  }
+
+  function advance(){
+    state.idx++;
+    updateKPIs();
+
+    if(state.idx >= questions.length){
+      disableChoices(true);
+      setHint("");
+      updateFinishLock();
+      return;
+    }
+    renderQuestion();
+  }
+
+  function checkAnswer(choice){
+    var qIndex = state.order[state.idx];
+    var q = questions[qIndex];
+
+    state.attemptThis++;
+    $("attemptThis").textContent = String(state.attemptThis);
+
+    var correctNow = (choice === q.answer);
+
+    if(correctNow){
+      state.correct = Math.min(questions.length, state.correct + 1);
+      updateKPIs();
+
+      disableChoices(true);
+      state.locked = true;
+
+      var firstTry = (state.attemptThis === 1);
+      clearTimeout(state.timer);
+
+      if(firstTry){
+        showFeedback("good","Correct (first try)", q.explain || "Correct.");
+        state.timer = setTimeout(function(){
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 3000);
+      }else{
+        showFeedback("good","Correct (after hint)", q.explain || "Correct.");
+        state.timer = setTimeout(function(){
+          state.locked = false;
+          disableChoices(false);
+          advance();
+        }, 800);
+      }
+      return;
+    }
+
+    // wrong: count miss once per question
+    if(!state.missedSet[qIndex]){
+      state.missedSet[qIndex] = true;
+      state.misses++;
+      updateKPIs();
+    }
+
+    showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
+    setHint(q.hint || "Re-read the stem: it asks BEST explains cause-effect or relationship.");
+  }
+
+  function startRun(){
+    var idxs = [];
+    for(var i=0;i<questions.length;i++) idxs.push(i);
+    state.order = shuffle(idxs);
+
+    state.idx = 0;
+    state.correct = 0;
+    state.misses = 0;
+    state.missedSet = {};
+    state.attemptThis = 0;
+    state.locked = false;
+    clearTimeout(state.timer);
+    state.timer = null;
+
+    state.startISO = nowISO();
+    state.endISO = null;
+
+    $("finish").style.display = "none";
+    renderQuestion();
+  }
+
+  function finishRun(){
+    state.endISO = nowISO();
+
+    var acc = calcAcc();
+    var mastery = (acc === 100 && state.idx >= questions.length);
+
+    $("summaryLine").textContent = mastery
+      ? "Mastery earned. Show this screen to your teacher."
+      : "Not mastery. Start a new randomized run and try again.";
+
+    $("summaryCode").textContent =
+      "NAME: " + state.player + "\n" +
+      "GAME: Game 3 — BEST Explains\n" +
+      "DATE: " + new Date(state.startISO).toLocaleDateString() + "\n" +
+      "START: " + fmt(state.startISO) + "\n" +
+      "END: " + fmt(state.endISO) + "\n" +
+      "QUESTIONS: " + questions.length + "\n" +
+      "MISSES: " + state.misses + "\n" +
+      "ACCURACY: " + acc + "%\n" +
+      "MASTERY: " + (mastery ? "YES" : "NO") + "\n";
+
+    $("finish").style.display = "block";
+    $("choices").innerHTML = "";
+    setHint("");
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    $("btnStart").addEventListener("click", function(){
+      var name = $("nameIn").value.trim();
+      if(!name){ alert("Please enter your name to begin."); return; }
+      state.player = name;
+      $("gate").style.display = "none";
+      $("game").style.display = "block";
+      startRun();
+    });
+
+    $("btnRestart").addEventListener("click", function(){
+      if(confirm("Restart with a new randomized run?")) startRun();
+    });
+
+    $("btnFinish").addEventListener("click", finishRun);
+    $("btnNewRun").addEventListener("click", startRun);
+
+    updateKPIs();
   });
 
-  $("btnRestart").addEventListener("click", ()=>{
-    if(confirm("Restart with a new randomized run?")) restartRun();
-  });
-
-  $("btnFinish").addEventListener("click", finishRun);
-  $("btnNewRun").addEventListener("click", restartRun);
-
-  updateKPIs();
-});
+})();
 </script>
 </body>
 </html>
-
