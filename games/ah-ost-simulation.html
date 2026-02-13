@@ -248,221 +248,401 @@
 
   // 30 mixed OST-style questions (single best answer)
   // Balanced answer keys across A/B/C/D.
-  var questions = [
-    { tag:"Most Direct Cause",
-      stem:"Which factor MOST directly contributed to rapid urbanization in the late 1800s?",
-      choices:{A:"Factory jobs attracted workers to cities",B:"The end of immigration reduced city growth",C:"Railroads eliminated the need for cities",D:"Voting rights expanded in rural areas"},
-      answer:"A",
-      hint:"Think: what pulled workers into cities?",
-      explain:"Industrial factory jobs acted as a pull factor drawing people into cities."
+  const questions = [
+  {
+    cause: "Mechanized farming increased agricultural production and made farm labor more efficient.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Many rural workers were no longer needed on farms and moved to cities for jobs.",
+      B: "The federal government required families to relocate to industrial centers.",
+      C: "Factory owners reduced production because fewer workers were available.",
+      D: "Cities banned new housing construction to slow population growth."
     },
-    { tag:"Best Explains",
-      stem:"Which statement BEST explains why tenements contributed to disease outbreaks?",
-      choices:{A:"Tenements had large private yards",B:"Tenements were overcrowded and lacked sanitation",C:"Tenements were located only in rural areas",D:"Tenements required strict health inspections"},
-      answer:"B",
-      hint:"Link housing density to sanitation.",
-      explain:"Overcrowding and poor sanitation made it easier for diseases like tuberculosis and cholera to spread."
+    effect: "Urban areas grew rapidly as more people shifted from rural living to urban living.",
+    answer: "A",
+    hint: "One link explains why people LEFT farms.",
+    explain: "Mechanized farming reduced the need for rural labor, pushing people to cities and accelerating urban growth."
+  },
+  {
+    cause: "Industrialization increased the demand for workers in industrial centers.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Immigrants came from other countries to take jobs in industrial centers.",
+      B: "The U.S. ended all immigration to prevent overcrowding.",
+      C: "Most factories relocated to rural farmland to avoid cities.",
+      D: "Workers abandoned wage labor for subsistence farming."
     },
-    { tag:"Most Likely Result",
-      stem:"A city’s population doubles faster than housing and sewer systems expand. Which outcome is MOST likely?",
-      choices:{A:"Improved public health immediately",B:"Less crowding in neighborhoods",C:"Overcrowding and sanitation problems increase",D:"Factories shut down nationwide"},
-      answer:"C",
-      hint:"Fast growth strains infrastructure.",
-      explain:"Rapid growth often overwhelms housing and sanitation, worsening living conditions."
+    effect: "Mass immigration helped fill a demand for workers and increased diversity.",
+    answer: "A",
+    hint: "Link = workers arriving to meet job demand.",
+    explain: "Factory growth created jobs; immigrants arrived to fill labor needs, contributing to mass immigration and diversity."
+  },
+  {
+    cause: "Technological innovations made production more efficient as machines replaced human labor.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Factories increased output and relied more on machine-based production.",
+      B: "Skilled labor became more important than ever in mass production.",
+      C: "Production slowed because machines were banned in workplaces.",
+      D: "The U.S. economy returned to a predominance of agricultural workers."
     },
-    { tag:"Best Supports",
-      stem:"Which evidence BEST supports the claim that laissez-faire policies strengthened big business?",
-      choices:{A:"Businesses faced strict federal oversight",B:"Corporations grew with limited regulation and formed trusts",C:"Labor unions controlled most industries",D:"Immigration ended due to factory closures"},
-      answer:"B",
-      hint:"Look for limited regulation + consolidation.",
-      explain:"Minimal oversight helped corporations expand and consolidate into trusts and monopolies."
+    effect: "Industrial production expanded and the economy shifted toward factory work.",
+    answer: "A",
+    hint: "Machines → efficiency → more output.",
+    explain: "New machines increased efficiency and output, strengthening industrial production and accelerating the shift toward factory work."
+  },
+  {
+    cause: "The mechanized assembly line and mass production expanded during industrialization.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Factories increasingly replaced skilled tasks with repetitive, standardized work.",
+      B: "Workers moved from unskilled to highly specialized artisan labor.",
+      C: "Mass production required fewer factories and less output overall.",
+      D: "Most industries stopped using machines to protect skilled trades."
     },
-    { tag:"Cause & Effect",
-      stem:"Mechanized farming increased efficiency. What was a major effect on rural labor?",
-      choices:{A:"More farm jobs were created",B:"Fewer workers were needed on farms",C:"Farm wages rose everywhere",D:"Urban factories closed"},
-      answer:"B",
-      hint:"Machines replace labor.",
-      explain:"Mechanization reduced labor needs, pushing some workers off farms."
+    effect: "There was a transition from skilled to unskilled labor in many industries.",
+    answer: "A",
+    hint: "Assembly line = repetitive tasks.",
+    explain: "Assembly lines break work into simple steps, reducing the need for skilled labor and increasing unskilled, repetitive jobs."
+  },
+  {
+    cause: "Laissez-faire policies limited government regulation of big business.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Corporations were able to grow rapidly with limited oversight.",
+      B: "The government immediately broke up large companies to prevent consolidation.",
+      C: "Business owners were required to share profits equally with workers.",
+      D: "Trusts and monopolies were outlawed before they could form."
     },
-    { tag:"Best Explains",
-      stem:"Which statement BEST explains why labor unions grew during industrialization?",
-      choices:{A:"Workers wanted to reduce voting rights",B:"Workers organized to address unsafe conditions and low wages",C:"Workers preferred fewer protections in factories",D:"Workers tried to end immigration completely"},
-      answer:"B",
-      hint:"Unions form to improve work conditions.",
-      explain:"Unions expanded as workers collectively pursued safer workplaces and better pay."
+    effect: "Monopolies and trusts formed and concentrated economic power.",
+    answer: "A",
+    hint: "Hands-off policies → fewer limits on business growth.",
+    explain: "Limited regulation allowed corporations to expand and consolidate, helping trusts and monopolies form."
+  },
+  {
+    cause: "Laissez-faire policies allowed the formation of monopolies and trusts.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Some corporations controlled markets by reducing competition.",
+      B: "Workers gained immediate control of major industries.",
+      C: "Small businesses eliminated all large corporations overnight.",
+      D: "Government regulation increased sharply and restricted corporate growth."
     },
-    { tag:"Most Direct Result",
-      stem:"Which was a direct result of immigrants forming ethnic neighborhoods in cities?",
-      choices:{A:"Cultural traditions were preserved and spread",B:"Cities became less diverse",C:"Industrialization ended",D:"Reservation policies expanded"},
-      answer:"A",
-      hint:"Think cultural diffusion.",
-      explain:"Ethnic neighborhoods preserved traditions while contributing to cultural diffusion."
+    effect: "Corporate power expanded and shaped economic life during industrialization.",
+    answer: "A",
+    hint: "Trusts/monopolies = less competition.",
+    explain: "When trusts and monopolies form, competition drops and large companies gain control over markets and prices."
+  },
+  {
+    cause: "Unregulated working conditions included long hours, low wages, and unsafe workplaces.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Workers organized to address workplace problems through labor unions.",
+      B: "Factory owners reduced hours and raised wages without pressure.",
+      C: "Workplace hazards ended because machines were removed from factories.",
+      D: "Employees stopped working for wages and returned to rural farms."
     },
-    { tag:"Best Explains",
-      stem:"Which statement BEST explains the relationship between nativism and job competition?",
-      choices:{A:"Nativism decreased when jobs were scarce",B:"Nativism increased as some blamed immigrants for economic competition",C:"Nativism ended as cities grew",D:"Nativism had no connection to immigration"},
-      answer:"B",
-      hint:"Competition can fuel scapegoating.",
-      explain:"Job competition often increased anti-immigrant attitudes and policies."
+    effect: "Labor organizations grew amidst unregulated working conditions.",
+    answer: "A",
+    hint: "Bad conditions → organizing.",
+    explain: "Unsafe conditions and low pay pushed workers to organize, fueling the growth of labor unions."
+  },
+  {
+    cause: "Conflict between corporations and labor increased during industrialization.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Labor unions grew to push for workplace reforms.",
+      B: "All strikes ended because workers were satisfied with conditions.",
+      C: "Corporations eliminated factories to avoid disagreements.",
+      D: "Workers gained voting rights in company elections to choose owners."
     },
-    { tag:"Most Likely Cause",
-      stem:"Which factor MOST likely contributed to the Great Migration?",
-      choices:{A:"End of Jim Crow laws in the South",B:"Expanded segregation and racial violence in the South",C:"No job opportunities in the North",D:"Elimination of discrimination nationwide by 1900"},
-      answer:"B",
-      hint:"Push factors from the South.",
-      explain:"Segregation and violence pushed many African Americans to relocate."
+    effect: "Organized labor expanded and demanded change in workplaces.",
+    answer: "A",
+    hint: "Conflict → unions grow.",
+    explain: "Disputes over wages, hours, and safety contributed to union growth and increased labor demands."
+  },
+  {
+    cause: "Labor unions advocated for workplace reforms.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "They pushed for shorter work days, increased pay, safer conditions, and restrictions on child labor.",
+      B: "They demanded fewer safety rules and longer workdays.",
+      C: "They focused only on ending all public transportation in cities.",
+      D: "They urged workers to avoid collective action and accept employer decisions."
     },
-    { tag:"Most Likely Result",
-      stem:"Northern factories expanded during wartime production. Which outcome is MOST likely?",
-      choices:{A:"Reduced demand for workers",B:"More rural farm labor",C:"Increased migration to northern industrial cities",D:"An end to urbanization"},
-      answer:"C",
-      hint:"Industry needs labor.",
-      explain:"Industrial demand pulled migrants to northern cities."
+    effect: "Labor reform became a major issue in industrial workplaces.",
+    answer: "A",
+    hint: "The link is the specific reforms list.",
+    explain: "Union advocacy centered on hours, pay, safety, and child labor restrictions—core workplace reform goals."
+  },
+  {
+    cause: "Labor unions used collective bargaining to negotiate with employers.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Workers negotiated as a group to seek better pay and working conditions.",
+      B: "Employers refused to speak with any workers at all.",
+      C: "Government outlawed negotiation and required individual contracts only.",
+      D: "Unions ended all discussion and relied only on voting in elections."
     },
+    effect: "Collective action increased pressure on employers to consider reforms.",
+    answer: "A",
+    hint: "Collective bargaining = negotiating as a group.",
+    explain: "Collective bargaining lets workers negotiate together, increasing leverage for improved wages and conditions."
+  },
+  {
+    cause: "Labor unions used strikes and boycotts to achieve their goals.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Work stoppages and consumer pressure disrupted business operations.",
+      B: "Workers increased production to reward factory owners.",
+      C: "Unions avoided any action that could affect profits.",
+      D: "Boycotts increased sales for targeted companies."
+    },
+    effect: "Employers often faced economic pressure to respond to labor demands.",
+    answer: "A",
+    hint: "Strikes/boycotts are economic pressure tools.",
+    explain: "Strikes stop labor; boycotts reduce sales—both pressure employers by impacting profits."
+  },
+  {
+    cause: "Business owners resisted labor organizing and union demands.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Labor organizations sometimes faced violent backlash and government intervention.",
+      B: "Employers immediately granted all union requests without conflict.",
+      C: "Unions gained control of the federal government overnight.",
+      D: "Factory owners stopped hiring and ended industrial production nationwide."
+    },
+    effect: "Labor conflicts sometimes escalated into violence and public attention.",
+    answer: "A",
+    hint: "Backlash + intervention is the key idea.",
+    explain: "Union efforts often met resistance that could turn violent, sometimes prompting government involvement."
+  },
+  {
+    cause: "Mass immigration increased in the United States at the turn of the 20th century.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Immigrants helped fill labor demand and influenced city growth.",
+      B: "Immigration ended because there were no jobs in industrial centers.",
+      C: "Cities stopped growing because immigrants only lived on farms.",
+      D: "Immigration caused factories to close due to labor shortages."
+    },
+    effect: "American life changed through greater diversity and expanding cities.",
+    answer: "A",
+    hint: "Immigration connected to jobs and cities.",
+    explain: "Immigrants filled job demand and contributed to urban growth and cultural change."
+  },
+  {
+    cause: "Mass immigration made the country more diverse.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Ethnic traits diffused into American culture through food, language, and traditions.",
+      B: "All cultural differences disappeared immediately upon arrival.",
+      C: "Immigrants were legally required to abandon all traditions and languages.",
+      D: "Immigration reduced cultural diversity and eliminated ethnic neighborhoods."
+    },
+    effect: "American culture changed as new traditions became part of everyday life.",
+    answer: "A",
+    hint: "The key phrase is diffusion of ethnic traits.",
+    explain: "Immigration increased diversity and spread cultural traits into American life."
+  },
+  {
+    cause: "Mass immigration and rapid city growth created competition for jobs and resources.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Nativist sentiment increased in response to newcomers and change.",
+      B: "Nativism disappeared because everyone supported immigration.",
+      C: "City populations declined as people returned to farms.",
+      D: "Immigrants caused wages to rise equally across all industries immediately."
+    },
+    effect: "Anti-immigrant attitudes and social tensions increased in many communities.",
+    answer: "A",
+    hint: "Think reaction against immigrants.",
+    explain: "Rapid immigration and change often fueled nativist attitudes and social conflict."
+  },
+  {
+    cause: "Many people left farms for cities seeking greater job opportunities.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Internal migration contributed to the growth of urban areas.",
+      B: "Internal migration ended because farm jobs increased everywhere.",
+      C: "Cities lost population as factories relocated to rural towns only.",
+      D: "Public transportation disappeared, preventing any movement."
+    },
+    effect: "Urban populations expanded and cities faced new infrastructure pressures.",
+    answer: "A",
+    hint: "Internal migration → urban growth.",
+    explain: "When people move from rural farms to cities for work, urban areas expand and face greater demands."
+  },
+  {
+    cause: "African Americans fled the rural South during the Great Migration.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "They sought to escape discrimination and secure better-paying jobs in the urban North.",
+      B: "They moved because segregation had ended completely in the South by 1900.",
+      C: "They were forced to relocate by laws requiring northern migration.",
+      D: "They left because northern factories stopped hiring workers."
+    },
+    effect: "Northern cities changed economically and culturally as migration increased.",
+    answer: "A",
+    hint: "Push + pull: discrimination + jobs.",
+    explain: "The Great Migration was driven by escaping discrimination and pursuing better-paying jobs in northern cities."
+  },
+  {
+    cause: "The Great Migration increased the population of northern cities.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Migrants became workers and consumers, changing northern city economies.",
+      B: "Northern cities lost jobs because no one worked in factories anymore.",
+      C: "Urban culture declined because art and music disappeared.",
+      D: "Migration ended city growth by reducing demand for housing."
+    },
+    effect: "Northern cities were transformed economically through expanded labor and consumption.",
+    answer: "A",
+    hint: "Economic change: workers + consumers.",
+    explain: "The Great Migration reshaped city economies as migrants contributed labor and consumer demand."
+  },
+  {
+    cause: "The Great Migration created new African American urban communities.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Culture expanded through art, music, and literature in northern cities.",
+      B: "Cultural life ended because cities banned all public performance.",
+      C: "Migration reduced cultural expression by eliminating neighborhoods.",
+      D: "Migrants avoided cities and returned immediately to rural life."
+    },
+    effect: "Northern cities changed culturally as new communities influenced American culture.",
+    answer: "A",
+    hint: "Look for “art, music, and literature.”",
+    explain: "Migration supported cultural growth and influence through new communities and creative expression."
+  },
+  {
+    cause: "Urbanization changed the physical nature of cities.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Buildings became taller and tenement buildings provided housing for working families.",
+      B: "Cities replaced tall buildings with farms and open fields.",
+      C: "All families lived in single houses with large yards in city centers.",
+      D: "Urban housing disappeared as people stopped moving to cities."
+    },
+    effect: "Cities expanded upward and housing density increased.",
+    answer: "A",
+    hint: "The link names the physical change.",
+    explain: "Urbanization often meant taller buildings and tenements to house working families in dense city areas."
+  },
+  {
+    cause: "Rapid city growth created overcrowded housing and limited sanitation services.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Disease spread more easily and living conditions worsened in some neighborhoods.",
+      B: "Overcrowding eliminated crime and improved public health immediately.",
+      C: "Sanitation improvements always kept pace with population growth.",
+      D: "Overcrowding reduced demand for housing and lowered city populations."
+    },
+    effect: "Urban areas experienced increased disease and poor living conditions.",
+    answer: "A",
+    hint: "Overcrowding + lack of sanitation → disease.",
+    explain: "Crowding and inadequate sanitation contributed to disease and worsening living conditions in rapidly growing cities."
+  },
+  {
+    cause: "Large numbers of immigrants settled in the same urban areas.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Ethnic neighborhoods emerged as groups lived near shared language, culture, and support networks.",
+      B: "Immigrants were evenly distributed so ethnic neighborhoods never formed.",
+      C: "Cities outlawed neighborhoods based on cultural identity.",
+      D: "Immigrants moved only to isolated rural farmland far from cities."
+    },
+    effect: "Many cities developed distinct cultural districts and communities.",
+    answer: "A",
+    hint: "Look for “emergence of ethnic neighborhoods.”",
+    explain: "As immigrants clustered for support and familiarity, ethnic neighborhoods formed and shaped city life."
+  },
+  {
+    cause: "Urban populations grew and people needed to travel to work efficiently.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Public transportation improved to move larger numbers of commuters.",
+      B: "Transportation was eliminated, preventing commuting.",
+      C: "Cities banned commuting to reduce congestion.",
+      D: "Workers were required to live inside factories."
+    },
+    effect: "Cities became more connected and commuters could travel for employment and leisure.",
+    answer: "A",
+    hint: "Growth → transportation improvements.",
+    explain: "Urban growth increased demand for transit, leading to improvements that enabled commuting and city expansion."
+  },
+  {
+    cause: "A growing middle class could commute for employment and leisure activities.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "People increasingly lived farther from workplaces while still participating in city economies.",
+      B: "Commuting ended because transportation no longer existed.",
+      C: "Middle-class growth reduced city connections and travel.",
+      D: "Commuters refused to work and returned only to rural farming."
+    },
+    effect: "Urban life expanded beyond downtown centers as commuting became easier.",
+    answer: "A",
+    hint: "Commuting changes where people can live.",
+    explain: "As commuting became possible, people could live farther from workplaces, reshaping the geography of urban life."
+  },
+  {
+    cause: "Industrialization increased demand for natural resources.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Westward migration increased as Americans sought land and resources.",
+      B: "Americans moved eastward away from resources and land.",
+      C: "Resource demand ended, reducing settlement pressures.",
+      D: "The government banned settlement in all western territories immediately."
+    },
+    effect: "Continued settlement intensified conflict over land in the West.",
+    answer: "A",
+    hint: "Resources → migration → conflict.",
+    explain: "Demand for resources encouraged westward movement, increasing competition for land and leading to conflict."
+  },
+  {
+    cause: "New technologies transformed production and daily life.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Innovations like the telephone and incandescent light bulb changed communication and living patterns.",
+      B: "Technology declined and the U.S. returned to pre-industrial methods.",
+      C: "Factories stopped producing because inventions reduced efficiency.",
+      D: "Cities grew smaller because technology eliminated the need for work."
+    },
+    effect: "Economic and social life modernized as new inventions spread.",
+    answer: "A",
+    hint: "Pick the option that names real industrial-era inventions.",
+    explain: "Industrial-era inventions reshaped communication and daily routines, contributing to modernization."
+  },
+  {
+    cause: "Skyscrapers and taller buildings became common in expanding cities.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Cities could house more people and businesses in limited space.",
+      B: "Cities ran out of space and were forced to shut down completely.",
+      C: "Taller buildings prevented any economic activity from occurring.",
+      D: "Urban areas returned to rural living patterns."
+    },
+    effect: "Urban centers increased density and economic activity.",
+    answer: "A",
+    hint: "Upward growth = more space in the same footprint.",
+    explain: "Taller buildings allowed cities to concentrate housing and business, increasing density and economic development."
+  },
+  {
+    cause: "Crowded urban neighborhoods developed faster than city services could expand.",
+    prompt: "Choose the BEST link in the chain.",
+    options: {
+      A: "Crime, disease, and poor living conditions increased in some areas.",
+      B: "City growth eliminated social problems by itself.",
+      C: "Overcrowding guaranteed cleaner water and better sanitation.",
+      D: "Public services always expanded ahead of population growth."
+    },
+    effect: "Urbanization created serious challenges for infrastructure and public health.",
+    answer: "A",
+    hint: "This is the “problems list” from urbanization.",
+    explain: "Rapid growth often outpaced services, increasing overcrowding, disease, and other urban challenges."
+  }
+];
 
-    { tag:"Most Direct Cause",
-      stem:"Which factor MOST directly encouraged western settlement in the 1800s?",
-      choices:{A:"The Dawes Act ended all land sales",B:"The Homestead Act offered land to settlers",C:"Tenements improved rural living",D:"Plessy ended segregation"},
-      answer:"B",
-      hint:"Think land incentives.",
-      explain:"Land opportunities encouraged settlement in western territories."
-    },
-    { tag:"Cause & Effect",
-      stem:"The Dawes Act divided tribal land into individual plots. What was a major effect?",
-      choices:{A:"Tribal landholdings decreased as land was sold",B:"Tribal land increased nationwide",C:"Cities depopulated rapidly",D:"Industrial unions dissolved"},
-      answer:"A",
-      hint:"What happened to surplus land?",
-      explain:"The policy reduced tribal land and opened land to settlers."
-    },
-    { tag:"Best Explains",
-      stem:"Which statement BEST explains how railroads transformed the West?",
-      choices:{A:"They reduced trade by isolating territories",B:"They improved transportation and expanded markets",C:"They ended immigration in cities",D:"They eliminated factory jobs"},
-      answer:"B",
-      hint:"Transportation + markets.",
-      explain:"Railroads connected regions, boosted trade, and encouraged settlement."
-    },
-    { tag:"Best Supports",
-      stem:"Which evidence BEST supports the claim that Progressive reformers wanted to reduce political corruption?",
-      choices:{A:"They promoted patronage and machine control",B:"They opposed all government reform",C:"They supported reforms targeting political machines",D:"They eliminated elections in cities"},
-      answer:"C",
-      hint:"Look for reforms aimed at machines.",
-      explain:"Progressives pushed changes to reduce patronage and increase accountability."
-    },
-    { tag:"Most Likely Result",
-      stem:"Muckrakers published investigations of unsafe food production. What was a likely result?",
-      choices:{A:"Less public awareness of problems",B:"Increased pressure for consumer protection laws",C:"End of industrialization",D:"Expansion of Jim Crow laws"},
-      answer:"B",
-      hint:"Exposure → public pressure → reform.",
-      explain:"Public outrage often increased support for food and drug regulation."
-    },
-    { tag:"Most Direct Cause",
-      stem:"Which factor MOST directly led to antitrust legislation?",
-      choices:{A:"Overcrowding in tenements",B:"Trusts and monopolies limiting competition",C:"The end of westward settlement",D:"Reduced immigration to cities"},
-      answer:"B",
-      hint:"Think monopoly power.",
-      explain:"Antitrust laws aimed to curb monopolies and restore competition."
-    },
-    { tag:"Best Explains",
-      stem:"Plessy v. Ferguson had what effect on segregation?",
-      choices:{A:"It legally supported segregation under 'separate but equal'",B:"It ended segregation nationwide",C:"It expanded voting rights protections",D:"It required integrated schools immediately"},
-      answer:"A",
-      hint:"Plessy upheld segregation.",
-      explain:"The ruling gave legal cover to Jim Crow segregation for decades."
-    },
-    { tag:"Most Likely Result",
-      stem:"Literacy tests and poll taxes were used in the South primarily to—",
-      choices:{A:"Increase voter turnout",B:"Expand immigrant voting access",C:"Disenfranchise African American voters",D:"Strengthen labor unions"},
-      answer:"C",
-      hint:"These are barriers to voting.",
-      explain:"These restrictions reduced political participation by targeting African Americans and poor voters."
-    },
-    { tag:"Best Supports",
-      stem:"Which evidence BEST supports the claim that urbanization strained city services?",
-      choices:{A:"Cities had excess housing and empty streets",B:"Cities expanded sewer and transit systems instantly",C:"Overcrowding and sanitation problems increased",D:"Cities stopped attracting new residents"},
-      answer:"C",
-      hint:"Look for infrastructure strain signs.",
-      explain:"Overcrowding and sanitation breakdowns indicate services couldn’t keep pace."
-    },
-    { tag:"Most Direct Result",
-      stem:"Which was a direct result of unsafe working conditions in factories?",
-      choices:{A:"Workers formed unions and demanded reforms",B:"Trusts disappeared immediately",C:"Cities became less populated",D:"Immigration ended permanently"},
-      answer:"A",
-      hint:"Worker response.",
-      explain:"Unsafe conditions contributed to union growth and reform efforts."
-    },
-
-    // Remaining 10 (kept OST-style + balanced answers)
-    { tag:"Best Explains",
-      stem:"Which statement BEST explains why cities grew into industrial centers?",
-      choices:{A:"Cities eliminated factory jobs",B:"Cities concentrated capital, labor, and transportation networks",C:"Cities reduced access to markets",D:"Cities forced all residents to farm"},
-      answer:"B",
-      hint:"Think: money + workers + transportation.",
-      explain:"Cities concentrated resources and networks that supported industrial growth."
-    },
-    { tag:"Most Likely Cause",
-      stem:"A reformer argues that political machines weaken democracy. Which concern is MOST likely behind this claim?",
-      choices:{A:"Machines increase voter choice through fair elections",B:"Machines trade favors for votes and control services",C:"Machines eliminate corruption in city government",D:"Machines stop immigration to cities"},
-      answer:"B",
-      hint:"Patronage and vote trading.",
-      explain:"Machines often used patronage and favors to maintain power."
-    },
-    { tag:"Most Likely Result",
-      stem:"If factory wages remain low while the cost of city housing rises, which outcome is MOST likely?",
-      choices:{A:"More workers can afford spacious homes",B:"Working-class families crowd into cheaper housing",C:"Cities immediately reduce population",D:"Industrialization ends"},
-      answer:"B",
-      hint:"Housing pressure forces crowding.",
-      explain:"High housing costs push workers into overcrowded, cheaper housing options."
-    },
-    { tag:"Best Supports",
-      stem:"Which evidence BEST supports the claim that mechanized farming contributed to urbanization?",
-      choices:{A:"Farm labor needs increased sharply",B:"Rural workers moved to cities after losing farm jobs",C:"Cities eliminated factory employment",D:"Railroads stopped transporting goods"},
-      answer:"B",
-      hint:"Look for movement from rural to urban.",
-      explain:"Reduced farm labor demand pushed workers toward city employment."
-    },
-    { tag:"Cause & Effect",
-      stem:"When corporations gained greater influence in politics during industrialization, one likely effect was—",
-      choices:{A:"Greater pressure to keep government regulation limited",B:"Immediate elimination of trusts",C:"Instant equal wages for all workers",D:"End of immigration to cities"},
-      answer:"A",
-      hint:"Business influence often resists regulation.",
-      explain:"Corporate influence often supported policies favoring limited regulation."
-    },
-    { tag:"Best Explains",
-      stem:"Why did settlement houses emerge in many cities during the Progressive Era?",
-      choices:{A:"To reduce immigration by force",B:"To provide services and support to immigrant and working-class communities",C:"To expand political machines",D:"To encourage child labor in factories"},
-      answer:"B",
-      hint:"Community aid and services.",
-      explain:"Settlement houses offered education, childcare, and social services to improve urban living."
-    },
-    { tag:"Most Likely Result",
-      stem:"If a city improves clean water access and waste removal, which outcome is MOST likely?",
-      choices:{A:"Higher disease rates",B:"Lower public health outcomes",C:"Improved public health and fewer outbreaks",D:"More tenement overcrowding"},
-      answer:"C",
-      hint:"Sanitation reduces disease.",
-      explain:"Clean water and sanitation reduce the spread of infectious disease."
-    },
-    { tag:"Best Supports",
-      stem:"Which evidence BEST supports the idea that industrialization changed daily life for consumers?",
-      choices:{A:"Goods were produced more slowly and became rare",B:"Mass production lowered costs and increased availability",C:"Factories disappeared from cities",D:"Transportation networks collapsed"},
-      answer:"B",
-      hint:"Cost + availability.",
-      explain:"Mass production increased supply and lowered prices for many goods."
-    },
-    { tag:"Most Direct Cause",
-      stem:"Which factor MOST directly contributed to labor strikes becoming more common?",
-      choices:{A:"Shorter hours and higher pay everywhere",B:"Workers were satisfied with conditions",C:"Long hours, low wages, and unsafe workplaces",D:"An end to industrial employment"},
-      answer:"C",
-      hint:"Strikes respond to bad conditions.",
-      explain:"Poor conditions and low pay led workers to strike and organize."
-    },
-    { tag:"Best Explains",
-      stem:"Which statement BEST explains why reformers criticized child labor during industrialization?",
-      choices:{A:"It reduced the need for schools and education",B:"It protected children from unsafe work",C:"It placed children in dangerous conditions and limited education",D:"It increased wages for adult workers"},
-      answer:"C",
-      hint:"Safety + schooling.",
-      explain:"Child labor exposed children to danger and reduced educational opportunities."
-    }
-  ];
 
   function $(id){ return document.getElementById(id); }
 
