@@ -1,228 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>American Studies — Game 1: Cause & Effect (Mastery)</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <style>
-    /* Game-specific layout additions (keeps your global styles.css intact) */
-    .gameShell{
-      width:min(980px,100%);
-      margin:0 auto;
-      padding:18px;
-    }
-    .panel{
-      background:rgba(17,26,47,.72);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:0 12px 35px rgba(0,0,0,.25);
-      padding:16px;
-    }
-    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between}
-    .kpis{display:flex; gap:10px; flex-wrap:wrap}
-    .kpi{
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,.05);
-      color:var(--muted);
-      font-size:13px;
-    }
-    .kpi strong{color:var(--text)}
-    .qwrap{margin-top:14px}
-    .qmeta{display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-size:13px}
-    .stem{
-      margin-top:10px;
-      font-size:18px;
-      line-height:1.35;
-      font-weight:800;
-    }
-    .choices{display:grid; gap:10px; margin-top:12px}
-    .choice{
-      text-align:left;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      cursor:pointer;
-      transition:transform .08s ease, border-color .12s ease;
-      font-size:15px;
-      line-height:1.35;
-    }
-    .choice:hover{transform:translateY(-1px); border-color:rgba(122,162,255,.35)}
-    .choice[disabled]{opacity:.55; cursor:not-allowed; transform:none}
-    .msg{
-      margin-top:12px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-      background:rgba(0,0,0,.18);
-      color:var(--muted);
-      line-height:1.45;
-    }
-    .msg.good{border-color:rgba(43,213,118,.35)}
-    .msg.bad{border-color:rgba(255,92,122,.35)}
-    .msg.warn{border-color:rgba(255,209,102,.35)}
-    .msgTitle{font-weight:900; margin-bottom:6px; color:var(--text)}
-    .hintBox{
-      margin-top:10px;
-      border:1px dashed rgba(255,209,102,.45);
-      border-radius:14px;
-      padding:10px 12px;
-      background:rgba(255,209,102,.06);
-      color:var(--muted);
-      display:none;
-    }
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
-    .btn{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight:800;
-    }
-    .btn:hover{border-color:rgba(122,162,255,.35)}
-    .btn.primary{background:rgba(122,162,255,.18); border-color:rgba(122,162,255,.35)}
-    .btn.good{background:rgba(43,213,118,.14); border-color:rgba(43,213,118,.35)}
-    .btn.bad{background:rgba(255,92,122,.12); border-color:rgba(255,92,122,.35)}
-    .btn[disabled]{opacity:.5; cursor:not-allowed}
-    .nameGate{
-      display:grid;
-      gap:10px;
-      margin-top:10px;
-    }
-    input[type="text"]{
-      width:min(420px,100%);
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      outline:none;
-      font-size:15px;
-    }
-    .small{font-size:13px; color:var(--muted)}
-    .hr{height:1px; background:var(--line); margin:14px 0}
-    .finishCard{
-      margin-top:14px;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-    }
-    .code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:13px;
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:10px;
-      overflow:auto;
-      white-space:pre-wrap;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="gameShell">
-    <div class="panel">
-      <div class="row">
-        <div>
-          <div class="title">American Studies — Game 1</div>
-          <div class="desc">Cause & Effect • OST-style stems • 100% mastery required</div>
-        </div>
-        <div class="kpis">
-          <div class="kpi"><strong id="kpiName">Name:</strong> <span id="nameOut">—</span></div>
-          <div class="kpi"><strong>Score:</strong> <span id="scoreOut">0 / 0</span></div>
-          <div class="kpi"><strong>Accuracy:</strong> <span id="accOut">0%</span></div>
-          <div class="kpi"><strong>Progress:</strong> <span id="progOut">0 / 0</span></div>
-        </div>
-      </div>
-
-      <div class="hr"></div>
-
-      <!-- NAME GATE -->
-      <div id="gate">
-        <div class="msg warn">
-          <div class="msgTitle">Start</div>
-          <div>Enter your name to begin. Questions are randomized each run. Mastery requires <strong>100% accuracy</strong> across all questions.</div>
-        </div>
-        <div class="nameGate">
-          <input id="nameIn" type="text" placeholder="Student Name" maxlength="40" />
-          <div class="actions">
-            <button class="btn primary" id="btnStart">Start Game</button>
-          </div>
-          <div class="small">Tip: If you miss any question, you can still finish the run — but mastery will not unlock unless accuracy is 100%.</div>
-        </div>
-      </div>
-
-      <!-- GAME -->
-      <div id="game" style="display:none;">
-        <div class="qwrap">
-          <div class="qmeta">
-            <div><strong>Question:</strong> <span id="qNum">1</span> / <span id="qTotal">0</span></div>
-            <div><strong>Attempt on this question:</strong> <span id="attemptThis">0</span></div>
-          </div>
-
-          <div class="stem" id="stem">—</div>
-
-          <div class="choices" id="choices"></div>
-
-          <div class="hintBox" id="hintBox"></div>
-
-          <div class="msg" id="feedback" style="display:none;">
-            <div class="msgTitle" id="fbTitle">—</div>
-            <div id="fbText">—</div>
-          </div>
-
-          <div class="actions">
-            <button class="btn bad" id="btnRestart">Restart Run</button>
-            <button class="btn good" id="btnFinish" disabled>Finish / Submit</button>
-          </div>
-
-          <div class="small" style="margin-top:10px;">
-            Mastery unlocks only when <strong>all questions are completed</strong> and <strong>accuracy is 100%</strong>.
-          </div>
-        </div>
-
-        <!-- FINISH SCREEN -->
-        <div id="finish" style="display:none;">
-          <div class="finishCard">
-            <div class="msgTitle">Run Summary</div>
-            <div class="small" id="summaryLine">—</div>
-            <div class="hr"></div>
-            <div class="code" id="summaryCode">—</div>
-            <div class="actions" style="margin-top:12px;">
-              <button class="btn primary" id="btnNewRun">New Randomized Run</button>
-            </div>
-            <div class="small" style="margin-top:10px;">
-              If accuracy is not 100%, mastery is not earned — hit <strong>New Randomized Run</strong> and try again.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 <script>
 /* =========================================================
    UNIVERSAL MASTERY GAME SHELL (Legend Rules)
-   - Accuracy reflects the first miss (even if corrected)
-   - Randomized question order each run
-   - Correct on first try: show 3s explanation then auto-advance
-   - Wrong: show hint; when corrected, advance but miss stays counted
-   - Finish unlocks ONLY at end when acc === 100
 ========================================================= */
 
-/** ✅ Replace ONLY this array per game */
+/** ✅ 30 questions: CS 8–13 Industrialization → Progressivism */
 const questions = [
-  // Placeholder items — we'll replace with your real 25–30 for this game
-  {
-    const questions = [
   {
     stem: "Which factor MOST directly contributed to rapid urbanization in the late 1800s?",
     choices: {
@@ -573,7 +355,7 @@ const questions = [
   }
 ];
 
-
+// ---------- game engine ----------
 const $ = (id)=>document.getElementById(id);
 
 const state = {
@@ -582,10 +364,10 @@ const state = {
   endISO: null,
   order: [],
   idx: 0,
-  attempts: 0,         // total attempts across game
-  correct: 0,          // number of questions correct (eventually)
-  misses: 0,           // number of questions missed at least once
-  missedSet: new Set(),// q index set where first miss occurred
+  attempts: 0,
+  correct: 0,
+  misses: 0,
+  missedSet: new Set(),
   attemptThis: 0,
   locked: false,
   timer: null
@@ -596,7 +378,6 @@ function fmt(dt){
   const d = new Date(dt);
   return d.toLocaleString();
 }
-
 function shuffle(arr){
   const a = arr.slice();
   for(let i=a.length-1;i>0;i--){
@@ -605,24 +386,18 @@ function shuffle(arr){
   }
   return a;
 }
-
 function calcAcc(){
-  // Accuracy = (correct first-try count?) No — your rule is: accuracy reflects misses.
-  // We model accuracy as: (total questions - misses) / total questions
-  // because one miss on a question means the run isn't perfect.
   const totalQ = questions.length;
   const perfectCorrect = totalQ - state.misses;
   const acc = Math.round((perfectCorrect / totalQ) * 100);
   return Math.max(0, Math.min(100, acc));
 }
-
 function updateKPIs(){
   $("nameOut").textContent = state.player || "—";
   $("scoreOut").textContent = `${state.correct} / ${questions.length}`;
   $("accOut").textContent = `${calcAcc()}%`;
   $("progOut").textContent = `${state.idx} / ${questions.length}`;
 }
-
 function showFeedback(type, title, text){
   const box = $("feedback");
   box.style.display = "block";
@@ -630,11 +405,7 @@ function showFeedback(type, title, text){
   $("fbTitle").textContent = title;
   $("fbText").textContent = text;
 }
-
-function hideFeedback(){
-  $("feedback").style.display = "none";
-}
-
+function hideFeedback(){ $("feedback").style.display = "none"; }
 function setHint(text){
   const hb = $("hintBox");
   if(!text){
@@ -645,22 +416,17 @@ function setHint(text){
   hb.style.display = "block";
   hb.textContent = `Hint: ${text}`;
 }
-
 function disableChoices(disabled){
   const buttons = $("choices").querySelectorAll("button.choice");
   buttons.forEach(b => b.disabled = disabled);
 }
-
 function renderQuestion(){
   hideFeedback();
   setHint("");
-
   state.attemptThis = 0;
   $("attemptThis").textContent = "0";
-
   const qIndex = state.order[state.idx];
   const q = questions[qIndex];
-
   $("qNum").textContent = String(state.idx + 1);
   $("qTotal").textContent = String(questions.length);
   $("stem").textContent = q.stem;
@@ -677,14 +443,11 @@ function renderQuestion(){
   updateKPIs();
   updateFinishLock();
 }
-
 function updateFinishLock(){
   const acc = calcAcc();
   const doneAll = state.idx >= questions.length;
   const mastery = doneAll && acc === 100;
   $("btnFinish").disabled = !mastery;
-
-  // Only show mastery messaging at end; no early triggers.
   if(doneAll){
     if(mastery){
       showFeedback("good","Mastery reached","100% accuracy across the full run. Click Finish / Submit.");
@@ -694,13 +457,10 @@ function updateFinishLock(){
     }
   }
 }
-
 function advance(){
   state.idx++;
   updateKPIs();
-
   if(state.idx >= questions.length){
-    // end of run
     disableChoices(true);
     setHint("");
     updateFinishLock();
@@ -708,13 +468,10 @@ function advance(){
   }
   renderQuestion();
 }
-
 function handleAnswer(letter){
   if(state.locked) return;
-
   const qIndex = state.order[state.idx];
   const q = questions[qIndex];
-
   state.attempts++;
   state.attemptThis++;
   $("attemptThis").textContent = String(state.attemptThis);
@@ -722,10 +479,8 @@ function handleAnswer(letter){
   const isCorrect = (letter === q.answer);
 
   if(isCorrect){
-    // if first attempt correct → show explanation 3 seconds then advance
     state.correct = Math.min(questions.length, state.correct + 1);
     updateKPIs();
-
     disableChoices(true);
     state.locked = true;
 
@@ -733,7 +488,6 @@ function handleAnswer(letter){
 
     if(firstTry){
       showFeedback("good","Correct (first try)", q.explain || "Correct.");
-      // 3 second explanation delay
       clearTimeout(state.timer);
       state.timer = setTimeout(()=>{
         state.locked = false;
@@ -741,7 +495,6 @@ function handleAnswer(letter){
         advance();
       }, 3000);
     }else{
-      // corrected after hint/miss
       showFeedback("good","Correct (after hint)", q.explain || "Correct.");
       clearTimeout(state.timer);
       state.timer = setTimeout(()=>{
@@ -750,12 +503,9 @@ function handleAnswer(letter){
         advance();
       }, 800);
     }
-
     return;
   }
 
-  // wrong answer
-  // Count a miss only once per question (first time they miss it)
   if(!state.missedSet.has(qIndex)){
     state.missedSet.add(qIndex);
     state.misses++;
@@ -765,7 +515,6 @@ function handleAnswer(letter){
   showFeedback("bad","Not yet","Use the hint and try again. Your accuracy will reflect this miss.");
   setHint(q.hint || "Look for the key cause/effect language in the question.");
 }
-
 function startRun(){
   state.order = shuffle([...Array(questions.length).keys()]);
   state.idx = 0;
@@ -785,15 +534,9 @@ function startRun(){
   $("game").style.display = "block";
   renderQuestion();
 }
-
-function restartRun(){
-  // Back to start of game run (new random order)
-  startRun();
-}
-
+function restartRun(){ startRun(); }
 function finishRun(){
   state.endISO = nowISO();
-
   const acc = calcAcc();
   const mastery = acc === 100 && state.idx >= questions.length;
 
@@ -856,9 +599,5 @@ $("btnNewRun").addEventListener("click", ()=>{
   restartRun();
 });
 
-// Initialize KPIs (pre-start)
 updateKPIs();
 </script>
-</body>
-</html>
-
