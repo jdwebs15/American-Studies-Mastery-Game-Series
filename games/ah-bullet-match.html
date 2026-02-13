@@ -1,1 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>American Studies — Game 5: Bullet Match (Mastery)</title>
+
+<link rel="stylesheet" href="../styles.css">
+
+<style>
+:root{
+  --bg:#0b1220; --text:#e7eefc; --muted:#a8b4cf;
+  --line:rgba(255,255,255,.12); --radius:18px;
+  --accent:#7aa2ff; --good:#2bd576; --bad:#ff5c7a; --warn:#ffd166;
+}
+body{
+  margin:0;
+  background:radial-gradient(1200px 800px at 30% 10%, rgba(122,162,255,.18), transparent 60%), var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  min-height:100vh;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:18px;
+}
+.gameShell{ width:min(980px,100%); }
+.panel{
+  background:rgba(17,26,47,.72);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+  padding:16px;
+}
+.row{display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between}
+.kpis{display:flex; gap:10px; flex-wrap:wrap}
+.kpi{
+  padding:8px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+  font-size:13px;
+}
+.kpi strong{color:var(--text)}
+.title{font-weight:900; font-size:18px}
+.desc{color:var(--muted); font-size:13px}
+.pill{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:var(--muted);
+  font-size:13px;
+  margin-top:8px;
+}
+.hr{height:1px; background:var(--line); margin:14px 0}
+.qwrap{margin-top:14px}
+.qmeta{color:var(--muted); font-size:13px}
+.stem{
+  margin-top:10px;
+  font-size:18px;
+  font-weight:900;
+  line-height:1.4;
+}
+.bullet{
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  border:1px dashed var(--line);
+  background:rgba(255,255,255,.05);
+  font-size:15px;
+}
+.choices{display:grid; gap:10px; margin-top:12px}
+.choice{
+  text-align:left;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  cursor:pointer;
+}
+.choice:hover{border-color:rgba(122,162,255,.35)}
+.choice[disabled]{opacity:.55; cursor:not-allowed}
+.msg{
+  margin-top:12px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  background:rgba(0,0,0,.18);
+}
+.msg.good{border-color:rgba(43,213,118,.35)}
+.msg.bad{border-color:rgba(255,92,122,.35)}
+.msg.warn{border-color:rgba(255,209,102,.35)}
+.msgTitle{font-weight:900; margin-bottom:6px}
+.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+.btn{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:900;
+}
+.btn.good{background:rgba(43,213,118,.14)}
+.btn.bad{background:rgba(255,92,122,.12)}
+.btn.primary{background:rgba(122,162,255,.18)}
+.btn[disabled]{opacity:.5; cursor:not-allowed}
+.nameGate{display:grid; gap:10px; margin-top:10px}
+input{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+}
+.finishCard{
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.18);
+}
+.code{
+  font-family:monospace;
+  font-size:13px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px;
+  white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+<div class="gameShell">
+<div class="panel">
+
+<div class="row">
+<div>
+<div class="title">American Studies — Game 5</div>
+<div class="desc">Bullet Match • Content Elaboration Conditioning • 100% mastery required</div>
+<div class="pill">Match the bullet-point fact to the correct topic.</div>
+</div>
+<div class="kpis">
+<div class="kpi"><strong>Name:</strong> <span id="nameOut">—</span></div>
+<div class="kpi"><strong>Score:</strong> <span id="scoreOut">0 / 0</span></div>
+<div class="kpi"><strong>Accuracy:</strong> <span id="accOut">0%</span></div>
+<div class="kpi"><strong>Progress:</strong> <span id="progOut">0 / 0</span></div>
+</div>
+</div>
+
+<div class="hr"></div>
+
+<div id="gate">
+<div class="msg warn">
+<div class="msgTitle">Start</div>
+Enter your name to begin. Mastery requires 100% accuracy.
+</div>
+<div class="nameGate">
+<input id="nameIn" type="text" placeholder="Student Name"/>
+<button class="btn primary" id="btnStart">Start Game</button>
+</div>
+</div>
+
+<div id="game" style="display:none;">
+<div class="qwrap">
+<div class="qmeta">Question <span id="qNum">1</span> / <span id="qTotal">0</span></div>
+<div class="stem">Which topic BEST matches this content elaboration bullet?</div>
+<div class="bullet" id="bulletText"></div>
+<div class="choices" id="choices"></div>
+
+<div class="msg" id="feedback" style="display:none;">
+<div class="msgTitle" id="fbTitle"></div>
+<div id="fbText"></div>
+</div>
+
+<div class="actions">
+<button class="btn bad" id="btnRestart">Restart Run</button>
+<button class="btn good" id="btnFinish" disabled>Finish / Submit</button>
+</div>
+</div>
+
+<div id="finish" style="display:none;">
+<div class="finishCard">
+<div class="msgTitle">Run Summary</div>
+<div class="code" id="summaryCode"></div>
+<button class="btn primary" id="btnNewRun">New Run</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var questions = [
+{
+bullet:"Rapid factory expansion created high demand for industrial workers in urban centers.",
+choices:{
+A:"Urbanization",
+B:"Westward Settlement",
+C:"Plessy v. Ferguson",
+D:"Dawes Act"
+},
+answer:"A",
+explain:"Industrial job growth drew workers into cities, accelerating urbanization."
+},
+{
+bullet:"The division of tribal lands into individual allotments aimed to assimilate Native Americans.",
+choices:{
+A:"Jim Crow Laws",
+B:"Dawes Act",
+C:"Settlement Houses",
+D:"Antitrust Legislation"
+},
+answer:"B",
+explain:"The Dawes Act divided tribal lands to encourage assimilation into Euro-American farming practices."
+},
+{
+bullet:"Investigative journalists exposed unsafe food production and political corruption.",
+choices:{
+A:"Laissez-Faire",
+B:"Muckrakers",
+C:"Great Migration",
+D:"Assembly Line"
+},
+answer:"B",
+explain:"Muckrakers publicized abuses, helping build support for Progressive reforms."
+},
+{
+bullet:"The Supreme Court upheld segregation under the doctrine of 'separate but equal.'",
+choices:{
+A:"Dawes Act",
+B:"Homestead Act",
+C:"Plessy v. Ferguson",
+D:"Sherman Antitrust Act"
+},
+answer:"C",
+explain:"Plessy v. Ferguson upheld segregation, reinforcing Jim Crow laws."
+},
+{
+bullet:"Workers organized collectively to demand improved wages and safer working conditions.",
+choices:{
+A:"Labor Unions",
+B:"Monopolies",
+C:"Laissez-Faire",
+D:"Reservation System"
+},
+answer:"A",
+explain:"Labor unions formed to address unsafe conditions, long hours, and low wages."
+},
+{
+bullet:"Limited government regulation allowed businesses to expand rapidly with little oversight.",
+choices:{
+A:"Antitrust Reform",
+B:"Laissez-Faire",
+C:"Settlement Houses",
+D:"Populism"
+},
+answer:"B",
+explain:"Laissez-faire policies limited regulation, enabling rapid corporate growth."
+},
+{
+bullet:"African Americans migrated north seeking industrial jobs and escape from segregation.",
+choices:{
+A:"Homestead Movement",
+B:"Urbanization",
+C:"Great Migration",
+D:"Progressivism"
+},
+answer:"C",
+explain:"The Great Migration involved African Americans moving north for opportunity and safety."
+},
+{
+bullet:"Rapid population growth overwhelmed sanitation and housing infrastructure.",
+choices:{
+A:"Urbanization",
+B:"Isolationism",
+C:"Reconstruction",
+D:"Imperialism"
+},
+answer:"A",
+explain:"Urban growth created overcrowding and public health challenges."
+},
+{
+bullet:"Large corporations combined to eliminate competition and control markets.",
+choices:{
+A:"Trusts and Monopolies",
+B:"Settlement Houses",
+C:"Jim Crow Laws",
+D:"Temperance Movement"
+},
+answer:"A",
+explain:"Trusts and monopolies consolidated industries to reduce competition."
+},
+{
+bullet:"Community centers provided education and assistance to immigrants in cities.",
+choices:{
+A:"Labor Strikes",
+B:"Settlement Houses",
+C:"Dawes Act",
+D:"Sharecropping"
+},
+answer:"B",
+explain:"Settlement houses supported immigrant communities with education and services."
+}
+];
+
+function $(id){return document.getElementById(id);}
+
+var state={player:"",idx:0,order:[],correct:0,misses:0,missedSet:{}};
+
+function shuffle(arr){
+var a=arr.slice();
+for(var i=a.length-1;i>0;i--){
+var j=Math.floor(Math.random()*(i+1));
+var t=a[i];a[i]=a[j];a[j]=t;
+}
+return a;
+}
+
+function calcAcc(){
+var total=questions.length;
+return Math.round(((total-state.misses)/total)*100);
+}
+
+function updateKPIs(){
+$("nameOut").textContent=state.player||"—";
+$("scoreOut").textContent=state.correct+" / "+questions.length;
+$("accOut").textContent=calcAcc()+"%";
+$("progOut").textContent=state.idx+" / "+questions.length;
+}
+
+function renderQuestion(){
+var q=questions[state.order[state.idx]];
+$("qNum").textContent=state.idx+1;
+$("qTotal").textContent=questions.length;
+$("bulletText").textContent=q.bullet;
+
+var html="";
+for(var key in q.choices){
+html+='<button class="choice" data-key="'+key+'"><strong>'+key+'.</strong> '+q.choices[key]+'</button>';
+}
+$("choices").innerHTML=html;
+
+var btns=$("choices").querySelectorAll("button.choice");
+for(var i=0;i<btns.length;i++){
+btns[i].addEventListener("click",function(){
+checkAnswer(this.getAttribute("data-key"));
+});
+}
+
+updateKPIs();
+}
+
+function checkAnswer(choice){
+var qIndex=state.order[state.idx];
+var q=questions[qIndex];
+
+if(choice===q.answer){
+state.correct++;
+$("feedback").style.display="block";
+$("feedback").className="msg good";
+$("fbTitle").textContent="Correct";
+$("fbText").textContent=q.explain;
+setTimeout(nextQuestion,2000);
+}else{
+if(!state.missedSet[qIndex]){
+state.missedSet[qIndex]=true;
+state.misses++;
+}
+$("feedback").style.display="block";
+$("feedback").className="msg bad";
+$("fbTitle").textContent="Not yet";
+$("fbText").textContent="Re-read the bullet and identify the specific content topic.";
+}
+updateKPIs();
+}
+
+function nextQuestion(){
+state.idx++;
+if(state.idx>=questions.length){
+$("btnFinish").disabled=calcAcc()!==100;
+return;
+}
+$("feedback").style.display="none";
+renderQuestion();
+}
+
+function startRun(){
+var idxs=[];
+for(var i=0;i<questions.length;i++)idxs.push(i);
+state.order=shuffle(idxs);
+state.idx=0;
+state.correct=0;
+state.misses=0;
+state.missedSet={};
+renderQuestion();
+}
+
+$("btnStart").addEventListener("click",function(){
+var name=$("nameIn").value.trim();
+if(!name){alert("Enter your name.");return;}
+state.player=name;
+$("gate").style.display="none";
+$("game").style.display="block";
+startRun();
+});
+
+$("btnRestart").addEventListener("click",startRun);
+
+})();
+</script>
+</body>
+</html>
 
